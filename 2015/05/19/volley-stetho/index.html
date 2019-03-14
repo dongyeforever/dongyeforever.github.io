@@ -1,0 +1,395 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>android神器Stetho调试Volley | dongye&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="dongye">
+    
+    <meta name="description" content="Stetho简介Stetho 是 Facebook 开源的一个 Android 调试工具。是一个 Chrome Developer Tools 的扩展，可用来检测应用的网络、数据库、WebKit 等方面的功能。开发者也可通过它的 dumpapp 工具提供强大的命令行接口来访问应用内部。无需root查">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="dongye&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="dongye&#39;s blog" title="dongye&#39;s blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="dongye&#39;s blog">dongye&#39;s blog</a></h1>
+				<h2 class="blog-motto">Read the Fucking Source Code</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">存档</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:dongyeforever.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/19/volley-stetho/" title="android神器Stetho调试Volley" itemprop="url">android神器Stetho调试Volley</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://dongyeforever.github.io" title="dongye">dongye</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-05-19T04:19:16.000Z" itemprop="datePublished">2015-05-19</time>
+    更新日期:<time datetime="2019-03-14T06:10:20.156Z" itemprop="dateModified">2019-03-14</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Stetho简介"><span class="toc-number">1.</span> <span class="toc-text">Stetho简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stetho结合OkHttp使用"><span class="toc-number">2.</span> <span class="toc-text">Stetho结合OkHttp使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-添加依赖"><span class="toc-number">2.0.1.</span> <span class="toc-text">1.添加依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-Stetho初始化配置"><span class="toc-number">2.0.2.</span> <span class="toc-text">2.Stetho初始化配置</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#Stetho结合Volley使用"><span class="toc-number">3.</span> <span class="toc-text">Stetho结合Volley使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-添加依赖-1"><span class="toc-number">3.0.1.</span> <span class="toc-text">1.添加依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-Stetho初始化配置-1"><span class="toc-number">3.0.2.</span> <span class="toc-text">2.Stetho初始化配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#补充：使用中遇到的坑"><span class="toc-number">4.</span> <span class="toc-text">补充：使用中遇到的坑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#我的测试代码和效果图如下："><span class="toc-number">5.</span> <span class="toc-text">我的测试代码和效果图如下：</span></a></li>
+		</div>
+		
+		<h3 id="Stetho简介"><a href="#Stetho简介" class="headerlink" title="Stetho简介"></a>Stetho简介</h3><p>Stetho 是 Facebook 开源的一个 Android 调试工具。是一个 Chrome Developer Tools 的扩展，可用来检测应用的网络、数据库、WebKit 等方面的功能。开发者也可通过它的 dumpapp 工具提供强大的命令行接口来访问应用内部。无需root查看sqlite文件、sharedpreference文件等等。更多详细介绍可以进入<a href="http://facebook.github.io/stetho/" target="_blank" rel="noopener">Stetho官网</a>。</p>
+<h3 id="Stetho结合OkHttp使用"><a href="#Stetho结合OkHttp使用" class="headerlink" title="Stetho结合OkHttp使用"></a>Stetho结合OkHttp使用</h3><h5 id="1-添加依赖"><a href="#1-添加依赖" class="headerlink" title="1.添加依赖"></a>1.添加依赖</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Gradle dependency on Stetho </span><br><span class="line">  dependencies &#123; </span><br><span class="line">    compile 'com.facebook.stetho:stetho:1.1.1' </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-Stetho初始化配置"><a href="#2-Stetho初始化配置" class="headerlink" title="2.Stetho初始化配置"></a>2.Stetho初始化配置</h5><p>在App的Application中完成初始化。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate();</span><br><span class="line">    Stetho.initialize(</span><br><span class="line">      Stetho.newInitializerBuilder(<span class="keyword">this</span>)</span><br><span class="line">        .enableDumpapp(</span><br><span class="line">            Stetho.defaultDumperPluginsProvider(<span class="keyword">this</span>))</span><br><span class="line">        .enableWebKitInspector(</span><br><span class="line">            Stetho.defaultInspectorModulesProvider(<span class="keyword">this</span>))</span><br><span class="line">        .build());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>官网中使用OkHttp为实例，使用如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line">client.networkInterceptors().add(<span class="keyword">new</span> StethoInterceptor());</span><br></pre></td></tr></table></figure></p>
+<p>然后就可以运行App进行调试，基本上可以满足调试需求了。</p>
+<h3 id="Stetho结合Volley使用"><a href="#Stetho结合Volley使用" class="headerlink" title="Stetho结合Volley使用"></a>Stetho结合Volley使用</h3><p>官网中Stetho是结合OkHttp的使用，如果项目中使用Volley做为网络请求框架，可以做如下修改。还是使用OkHttp做为Volley中HttpStack的实现，我们知道，Volley中网络请求在Android2.3及以上基于HttpURLConnection，2.3以下基于HttpClient实现，通过增加HttpStack的具体实现即可。这里使用<a href="https://gist.github.com/bryanstern/4e8f1cb5a8e14c202750" target="_blank" rel="noopener">Bryan Stern分享的代码</a>。（网页可能被墙，可以通过VPN访问。需要VPN的可以<a href="http://reftizi.com/?r=bf31aecac9700bac" target="_blank" rel="noopener">点击这里</a>）</p>
+<h5 id="1-添加依赖-1"><a href="#1-添加依赖-1" class="headerlink" title="1.添加依赖"></a>1.添加依赖</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">compile 'com.facebook.stetho:stetho:1.1.1'</span><br><span class="line">compile 'com.facebook.stetho:stetho-okhttp:1.1.1'</span><br><span class="line">compile 'com.squareup.okhttp:okhttp:2.3.0'</span><br></pre></td></tr></table></figure>
+<h5 id="2-Stetho初始化配置-1"><a href="#2-Stetho初始化配置-1" class="headerlink" title="2.Stetho初始化配置"></a>2.Stetho初始化配置</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line">client.networkInterceptors().add(<span class="keyword">new</span> StethoInterceptor());</span><br><span class="line">mRequestQueue = Volley.newRequestQueue(getApplicationContext(), <span class="keyword">new</span> OkHttpStack(client));</span><br></pre></td></tr></table></figure>
+<p>好了，基本上这样就能使用Stetho神器调试你的App了，感觉到强大了么~。</p>
+<h3 id="补充：使用中遇到的坑"><a href="#补充：使用中遇到的坑" class="headerlink" title="补充：使用中遇到的坑"></a>补充：使用中遇到的坑</h3><ul>
+<li><p>Stetho inspect窗口空白 </p>
+<p>如果出现调试窗口空白，先升级下Chrome吧。升级最新版后再试一下（我被这个坑了）。</p>
+</li>
+<li><p>Stetho inspect窗口还是空白 </p>
+<p>如果Chrome是最新版，无论如何刷新都是空白，那么恭喜你你可能被墙了~用VPN试试吧 <a href="!http://reftizi.com/?r=bf31aecac9700bac">可以戳这里哦</a></p>
+</li>
+</ul>
+<h3 id="我的测试代码和效果图如下："><a href="#我的测试代码和效果图如下：" class="headerlink" title="我的测试代码和效果图如下："></a>我的测试代码和效果图如下：</h3><p>自定义Application类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAppliation</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onCreate();</span><br><span class="line">		context = getApplicationContext();</span><br><span class="line">		instance = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">		Stetho.initialize(</span><br><span class="line">				Stetho.newInitializerBuilder(<span class="keyword">this</span>)</span><br><span class="line">						.enableDumpapp(Stetho.defaultDumperPluginsProvider(<span class="keyword">this</span>))</span><br><span class="line">						.enableWebKitInspector(Stetho.defaultInspectorModulesProvider(<span class="keyword">this</span>))</span><br><span class="line">						.build());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span> The Volley Request queue</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> RequestQueue <span class="title">getRequestQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// lazy initialize the request queue, the queue instance will be</span></span><br><span class="line">		<span class="comment">// created when it is accessed for the first time</span></span><br><span class="line">		<span class="keyword">synchronized</span> (App.class) &#123;</span><br><span class="line">			<span class="keyword">if</span> (mRequestQueue == <span class="keyword">null</span>) &#123;</span><br><span class="line">				OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line">				client.networkInterceptors().add(<span class="keyword">new</span> StethoInterceptor());</span><br><span class="line">				mRequestQueue = Volley.newRequestQueue(getApplicationContext(), <span class="keyword">new</span> OkHttpStack(client));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> mRequestQueue;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Activity类代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> TextView tv;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.layout_main);</span><br><span class="line">        tv = (TextView)findViewById(R.id.tv);</span><br><span class="line"></span><br><span class="line">        RequestQueue queue = App.getInstance().getRequestQueue();</span><br><span class="line">        String url = <span class="string">"https://publicobject.com/helloworld.txt"</span>;</span><br><span class="line">        StringRequest request = <span class="keyword">new</span> StringRequest(Request.Method.GET, url, <span class="keyword">new</span> Response.Listener&lt;String&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">                LogUtil.d(s);</span><br><span class="line">                tv.setText(s);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="keyword">new</span> com.android.volley.Response.ErrorListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onErrorResponse</span><span class="params">(VolleyError volleyError)</span> </span>&#123;</span><br><span class="line">                LogUtil.e(volleyError.toString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        queue.add(request);</span><br><span class="line"></span><br><span class="line">        SharedPrfUtil.setInt(<span class="string">"uid"</span>,<span class="number">669</span>);</span><br><span class="line">        SharedPrfUtil.setString(<span class="string">"username"</span>,<span class="string">"dongye"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现效果如下图：</p>
+<p><img src="http://dongyeforever.qiniudn.com/stetho-all.png" alt="Stetho调试效果图"></p>
+<p><img src="http://dongyeforever.qiniudn.com/stetho-inspect.png" alt="调试程序列表"></p>
+<p><img src="http://dongyeforever.qiniudn.com/inspect-network.png" alt="调试网络请求"></p>
+<p><img src="http://dongyeforever.qiniudn.com/inspect-sharedpreference.png" alt="读取数据存储"></p>
+<p>欢迎转载，转载请注明出处：<a href="http://www.dongye.tk/2015/05/19/volley-stetho/" target="_blank" rel="noopener">http://www.dongye.tk/2015/05/19/volley-stetho</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/stetho/">stetho</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Android/">Android</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://dongyeforever.github.io/2015/05/19/volley-stetho/" data-title="android神器Stetho调试Volley | dongye&#39;s blog" data-tsina class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2016/04/20/retrofit-intro/" title="Retrofit初探">
+  <strong>PREVIOUS:</strong><br>
+  <span>
+  Retrofit初探</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/11/05/android-DisLrukCache/" title="Android DiskLruCache完全解析，硬盘缓存的最佳方案">
+ <strong>NEXT:</strong><br> 
+ <span>Android DiskLruCache完全解析，硬盘缓存的最佳方案
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Stetho简介"><span class="toc-number">1.</span> <span class="toc-text">Stetho简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stetho结合OkHttp使用"><span class="toc-number">2.</span> <span class="toc-text">Stetho结合OkHttp使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-添加依赖"><span class="toc-number">2.0.1.</span> <span class="toc-text">1.添加依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-Stetho初始化配置"><span class="toc-number">2.0.2.</span> <span class="toc-text">2.Stetho初始化配置</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#Stetho结合Volley使用"><span class="toc-number">3.</span> <span class="toc-text">Stetho结合Volley使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-添加依赖-1"><span class="toc-number">3.0.1.</span> <span class="toc-text">1.添加依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-Stetho初始化配置-1"><span class="toc-number">3.0.2.</span> <span class="toc-text">2.Stetho初始化配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#补充：使用中遇到的坑"><span class="toc-number">4.</span> <span class="toc-text">补充：使用中遇到的坑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#我的测试代码和效果图如下："><span class="toc-number">5.</span> <span class="toc-text">我的测试代码和效果图如下：</span></a></li>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Android/" title="Android">Android<sup>16</sup></a></li>
+		
+			<li><a href="/categories/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>1</sup></a></li>
+		
+			<li><a href="/categories/小程序/" title="小程序">小程序<sup>1</sup></a></li>
+		
+			<li><a href="/categories/随笔/" title="随笔">随笔<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Retrofit/" title="Retrofit">Retrofit<sup>3</sup></a></li>
+		
+			<li><a href="/tags/android-studio/" title="android studio">android studio<sup>4</sup></a></li>
+		
+			<li><a href="/tags/cache/" title="cache">cache<sup>2</sup></a></li>
+		
+			<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+		
+			<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+		
+			<li><a href="/tags/stetho/" title="stetho">stetho<sup>1</sup></a></li>
+		
+			<li><a href="/tags/小程序/" title="小程序">小程序<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2019 
+		
+		<a href="http://dongyeforever.github.io" target="_blank" title="dongye">dongye</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"dongye"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-76853415-1', 'dongye.tk');  
+ga('send', 'pageview');
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:5em;right:50px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"></a>
+</div>
+<script src="/js/totop.js"></script>
+
+
+  </body>
+</html>

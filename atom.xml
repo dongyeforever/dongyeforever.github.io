@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[dongye's blog]]></title>
+  <subtitle><![CDATA[瞄准目标 死磕到底]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://dongyeforever.github.io/"/>
+  <updated>2014-11-28T02:10:11.826Z</updated>
+  <id>http://dongyeforever.github.io/</id>
+  
+  <author>
+    <name><![CDATA[dongye]]></name>
+    <email><![CDATA[dongyeforever@gmail.com]]></email>
+  </author>
+  
+  <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Android DiskLruCache完全解析，硬盘缓存的最佳方案]]></title>
+    <link href="http://dongyeforever.github.io/2014/11/05/android-DisLrukCache/"/>
+    <id>http://dongyeforever.github.io/2014/11/05/android-DisLrukCache/</id>
+    <published>2014-11-05T02:03:51.000Z</published>
+    <updated>2014-11-05T05:10:24.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="概述">概述</h2>
+<p>　　上篇文章<a href="../android-LruCache">Android高效加载大图、多图解决方案</a>是翻译自Android Doc的，其中防止多图OOM的核心解决思路就是使用LruCache技术。但LruCache只是管理了内存中图片的存储与释放，如果图片从内存中被移除的话，那么又需要从网络上重新加载一次图片，这显然非常耗时。对此，Google又提供了一套硬盘缓存的解决方案：DiskLruCache(非Google官方编写，但获得官方认证)。只可惜，Android Doc中并没有对DiskLruCache的用法给出详细的说明，而网上关于DiskLruCache的资料也少之又少，因此今天我准备专门写一篇博客来详细讲解DiskLruCache的用法，以及分析它的工作原理，这应该也是目前网上关于DiskLruCache最详细的资料了。。</p>
+<p>　　那么我们先来看一下有哪些应用程序已经使用了DiskLruCache技术。在我所接触的应用范围里，Dropbox、Twitter、网易新闻等都是使用DiskLruCache来进行硬盘缓存的，其中Dropbox和Twitter大多数人应该都没用过，那么我们就从大家最熟悉的网易新闻开始着手分析，来对DiskLruCache有一个最初的认识吧。</p>
+<h2 id="初探">初探</h2>
+<p>　　相信所有人都知道，网易新闻中的数据都是从网络上获取的，包括了很多的新闻内容和新闻图片，如下图所示：<img src="http://img.blog.csdn.net/20140803100719140?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3VvbGluX2Jsb2c=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>　　但是不知道大家有没有发现，这些内容和图片在从网络上获取到之后都会存入到本地缓存中，因此即使手机在没有网络的情况下依然能够加载出以前浏览过的新闻。而使用的缓存技术不用多说，自然是DiskLruCache了，那么首先第一个问题，这些数据都被缓存在了手机的什么位置呢？</p>
+<p>　　其实DiskLruCache并没有限制数据的缓存位置，可以自由地进行设定，但是通常情况下多数应用程序都会将缓存的位置选择为 /sdcard/Android/data/<application package="">/cache 这个路径。选择在这个位置有两点好处：第一，这是存储在SD卡上的，因此即使缓存再多的数据也不会对手机的内置存储空间有任何影响，只要SD卡空间足够就行。第二，这个路径被Android系统认定为应用程序的缓存路径，当程序被卸载的时候，这里的数据也会一起被清除掉，这样就不会出现删除程序之后手机上还有很多残留数据的问题。</application></p>
+<p>　　那么这里还是以网易新闻为例，它的客户端的包名是com.netease.newsreader.activity，因此数据缓存地址就应该是 /sdcard/Android/data/com.netease.newsreader.activity/cache ，我们进入到这个目录中看一下，结果如下图所示：<img src="http://img.blog.csdn.net/20140803104231765?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3VvbGluX2Jsb2c=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>　　可以看到有很多个文件夹，因为网易新闻对多种类型的数据都进行了缓存，这里简单起见我们只分析图片缓存就好，所以进入到bitmap文件夹当中。然后你将会看到一堆文件名很长的文件，这些文件命名没有任何规则，完全看不懂是什么意思，但如果你一直向下滚动，将会看到一个名为journal的文件，如下图所示：<br><img src="http://img.blog.csdn.net/20140803140924754?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3VvbGluX2Jsb2c=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>　　那么这些文件到底都是什么呢？看到这里相信有些朋友已经是一头雾水了，这里我简单解释一下。上面那些文件名很长的文件就是一张张缓存的图片，每个文件都对应着一张图片，而journal文件是DiskLruCache的一个日志文件，程序对每张图片的操作记录都存放在这个文件中，基本上看到journal这个文件就标志着该程序使用DiskLruCache技术了。</p>
+<h2 id="下载">下载</h2>
+<p>　　好了，对DiskLruCache有了最初的认识之后，下面我们来学习一下DiskLruCache的用法吧。由于DiskLruCache并不是由Google官方编写的，所以这个类并没有被包含在Android API当中，我们需要将这个类从网上下载下来，然后手动添加到项目当中。DiskLruCache的源码在Google Source上，地址如下：</p>
+<p><a href="http://android.googlesource.com/platform/libcore/+/jb-mr2-release/luni/src/main/java/libcore/io/DiskLruCache.java" target="_blank" rel="external">http://android.googlesource.com/platform/libcore/+/jb-mr2-release/luni/src/main/java/libcore/io/DiskLruCache.java</a></p>
+<p>　　下载好了源码之后，只需要在项目中新建一个libcore.io包，然后将DiskLruCache.java文件复制到这个包中即可。</p>
+<h2 id="打开缓存">打开缓存</h2>
+<p>　　这样的话我们就把准备工作做好了，下面看一下DiskLruCache到底该如何使用。首先你要知道，DiskLruCache是不能new出实例的，如果我们要创建一个DiskLruCache的实例，则需要调用它的open()方法，接口如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> DiskLruCache <span class="title">open</span>(File directory, <span class="keyword">int</span> appVersion, <span class="keyword">int</span> valueCount, <span class="keyword">long</span> maxSize)</div></pre></td></tr></table></figure>
+
+<p>　　open()方法接收四个参数，第一个参数指定的是数据的缓存地址，第二个参数指定当前应用程序的版本号，第三个参数指定同一个key可以对应多少个缓存文件，基本都是传1，第四个参数指定最多可以缓存多少字节的数据。<br>其中缓存地址前面已经说过了，通常都会存放在 /sdcard/Android/data/<application package="">/cache 这个路径下面，但同时我们又需要考虑如果这个手机没有SD卡，或者SD正好被移除了的情况，因此比较优秀的程序都会专门写一个方法来获取缓存地址，如下所示：</application></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> File <span class="title">getDiskCacheDir</span>(Context context, String uniqueName) {</div><div class="line">    String cachePath;</div><div class="line">    <span class="keyword">if</span> (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())</div><div class="line">            || !Environment.isExternalStorageRemovable()) {</div><div class="line">        cachePath = context.getExternalCacheDir().getPath();</div><div class="line">    } <span class="keyword">else</span> {</div><div class="line">        cachePath = context.getCacheDir().getPath();</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> File(cachePath + File.separator + uniqueName);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　可以看到，当SD卡存在或者SD卡不可被移除的时候，就调用getExternalCacheDir()方法来获取缓存路径，否则就调用getCacheDir()方法来获取缓存路径。前者获取到的就是 /sdcard/Android/data/<application package="">/cache 这个路径，而后者获取到的是 /data/data/<application package="">/cache 这个路径。<br>　　接着又将获取到的路径和一个uniqueName进行拼接，作为最终的缓存路径返回。那么这个uniqueName又是什么呢？其实这就是为了对不同类型的数据进行区分而设定的一个唯一值，比如说在网易新闻缓存路径下看到的bitmap、object等文件夹。</application></application></p>
+<p>　　接着是应用程序版本号，我们可以使用如下代码简单地获取到当前应用程序的版本号：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAppVersion</span>(Context context) {</div><div class="line">    <span class="keyword">try</span> {</div><div class="line">        PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), <span class="number">0</span>);</div><div class="line">        <span class="keyword">return</span> info.versionCode;</div><div class="line">    } <span class="keyword">catch</span> (NameNotFoundException e) {</div><div class="line">        e.printStackTrace();</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　需要注意的是，每当版本号改变，缓存路径下存储的所有数据都会被清除掉，因为DiskLruCache认为当应用程序有版本更新的时候，所有的数据都应该从网上重新获取。<br>后面两个参数就没什么需要解释的了，第三个参数传1，第四个参数通常传入10M的大小就够了，这个可以根据自身的情况进行调节。</p>
+<p>　　因此，一个非常标准的open()方法就可以这样写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">DiskLruCache mDiskLruCache = <span class="keyword">null</span>;</div><div class="line"><span class="keyword">try</span> {</div><div class="line">    File cacheDir = getDiskCacheDir(context, <span class="string">"bitmap"</span>);</div><div class="line">    <span class="keyword">if</span> (!cacheDir.exists()) {</div><div class="line">        cacheDir.mkdirs();</div><div class="line">    }</div><div class="line">    mDiskLruCache = DiskLruCache.open(cacheDir, getAppVersion(context), <span class="number">1</span>, <span class="number">10</span> * <span class="number">1024</span> * <span class="number">1024</span>);</div><div class="line">} <span class="keyword">catch</span> (IOException e) {</div><div class="line">    e.printStackTrace();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　　首先调用getDiskCacheDir()方法获取到缓存地址的路径，然后判断一下该路径是否存在，如果不存在就创建一下。接着调用DiskLruCache的open()方法来创建实例，并把四个参数传入即可。<br>有了DiskLruCache的实例之后，我们就可以对缓存的数据进行操作了，操作类型主要包括写入、访问、移除等，我们一个个进行学习。</p>
+<h2 id="写入缓存">写入缓存</h2>
+<p>　　先来看写入，比如说现在有一张图片，地址是<a href="http://img.my.csdn.net/uploads/201309/01/1378037235_7476.jpg" target="_blank" rel="external">http://img.my.csdn.net/uploads/201309/01/1378037235_7476.jpg</a> ，那么为了将这张图片下载下来，就可以这样写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">downloadUrlToStream</span>(String urlString, OutputStream outputStream) {</div><div class="line">    HttpURLConnection urlConnection = <span class="keyword">null</span>;</div><div class="line">    BufferedOutputStream out = <span class="keyword">null</span>;</div><div class="line">    BufferedInputStream in = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">try</span> {</div><div class="line">        <span class="keyword">final</span> URL url = <span class="keyword">new</span> URL(urlString);</div><div class="line">        urlConnection = (HttpURLConnection) url.openConnection();</div><div class="line">        in = <span class="keyword">new</span> BufferedInputStream(urlConnection.getInputStream(), <span class="number">8</span> * <span class="number">1024</span>);</div><div class="line">        out = <span class="keyword">new</span> BufferedOutputStream(outputStream, <span class="number">8</span> * <span class="number">1024</span>);</div><div class="line">        <span class="keyword">int</span> b;</div><div class="line">        <span class="keyword">while</span> ((b = in.read()) != -<span class="number">1</span>) {</div><div class="line">            out.write(b);</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    } <span class="keyword">catch</span> (<span class="keyword">final</span> IOException e) {</div><div class="line">        e.printStackTrace();</div><div class="line">    } <span class="keyword">finally</span> {</div><div class="line">        <span class="keyword">if</span> (urlConnection != <span class="keyword">null</span>) {</div><div class="line">            urlConnection.disconnect();</div><div class="line">        }</div><div class="line">        <span class="keyword">try</span> {</div><div class="line">            <span class="keyword">if</span> (out != <span class="keyword">null</span>) {</div><div class="line">                out.close();</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span> (in != <span class="keyword">null</span>) {</div><div class="line">                in.close();</div><div class="line">            }</div><div class="line">        } <span class="keyword">catch</span> (<span class="keyword">final</span> IOException e) {</div><div class="line">            e.printStackTrace();</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　这段代码相当基础，相信大家都看得懂，就是访问urlString中传入的网址，并通过outputStream写入到本地。有了这个方法之后，下面我们就可以使用DiskLruCache来进行写入了，写入的操作是借助DiskLruCache.Editor这个类完成的。类似地，这个类也是不能new的，需要调用DiskLruCache的edit()方法来获取实例，接口如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> Editor <span class="title">edit</span>(String key) <span class="keyword">throws</span> IOException</div></pre></td></tr></table></figure>
+
+<p>　　可以看到，edit()方法接收一个参数key，这个key将会成为缓存文件的文件名，并且必须要和图片的URL是一一对应的。那么怎样才能让key和图片的URL能够一一对应呢？直接使用URL来作为key？不太合适，因为图片URL中可能包含一些特殊字符，这些字符有可能在命名文件时是不合法的。其实最简单的做法就是将图片的URL进行MD5编码，编码后的字符串肯定是唯一的，并且只会包含0-F这样的字符，完全符合文件的命名规则。<br>那么我们就写一个方法用来将字符串进行MD5编码，代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">hashKeyForDisk</span>(String key) {</div><div class="line">    String cacheKey;</div><div class="line">    <span class="keyword">try</span> {</div><div class="line">        <span class="keyword">final</span> MessageDigest mDigest = MessageDigest.getInstance(<span class="string">"MD5"</span>);</div><div class="line">        mDigest.update(key.getBytes());</div><div class="line">        cacheKey = bytesToHexString(mDigest.digest());</div><div class="line">    } <span class="keyword">catch</span> (NoSuchAlgorithmException e) {</div><div class="line">        cacheKey = String.valueOf(key.hashCode());</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> cacheKey;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> String <span class="title">bytesToHexString</span>(<span class="keyword">byte</span>[] bytes) {</div><div class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bytes.length; i++) {</div><div class="line">        String hex = Integer.toHexString(<span class="number">0xFF</span> & bytes[i]);</div><div class="line">        <span class="keyword">if</span> (hex.length() == <span class="number">1</span>) {</div><div class="line">            sb.append(<span class="string">'0'</span>);</div><div class="line">        }</div><div class="line">        sb.append(hex);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> sb.toString();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　代码很简单，现在我们只需要调用一下hashKeyForDisk()方法，并把图片的URL传入到这个方法中，就可以得到对应的key了。<br>因此，现在就可以这样写来得到一个DiskLruCache.Editor的实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">String imageUrl = <span class="string">"http://img.my.csdn.net/uploads/201309/01/1378037235_7476.jpg"</span>;</div><div class="line">String key = hashKeyForDisk(imageUrl);</div><div class="line">DiskLruCache.Editor editor = mDiskLruCache.edit(key);</div></pre></td></tr></table></figure>
+
+<p>BitmapWorkerTask 还要把新加载的图片的键值对放到缓存中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class BitmapWorkerTask extends AsyncTask&lt;Integer, Void, Bitmap&gt; {</div><div class="line">    <span class="comment">// 在后台加载图片。</span></div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="keyword">protected</span> Bitmap <span class="title">doInBackground</span>(Integer... params) {</div><div class="line">        <span class="keyword">final</span> Bitmap bitmap = decodeSampledBitmapFromResource(</div><div class="line">                getResources(), params[<span class="number">0</span>], <span class="number">100</span>, <span class="number">100</span>);</div><div class="line">        addBitmapToMemoryCache(String.valueOf(params[<span class="number">0</span>]), bitmap);</div><div class="line">        <span class="keyword">return</span> bitmap;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　有了DiskLruCache.Editor的实例之后，我们可以调用它的newOutputStream()方法来创建一个输出流，然后把它传入到downloadUrlToStream()中就能实现下载并写入缓存的功能了。注意newOutputStream()方法接收一个index参数，由于前面在设置valueCount的时候指定的是1，所以这里index传0就可以了。在写入操作执行完之后，我们还需要调用一下commit()方法进行提交才能使写入生效，调用abort()方法的话则表示放弃此次写入。<br>因此，一次完整写入操作的代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() {</div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span>() {</div><div class="line">        <span class="keyword">try</span> {</div><div class="line">            String imageUrl = <span class="string">"http://img.my.csdn.net/uploads/201309/01/1378037235_7476.jpg"</span>;</div><div class="line">            String key = hashKeyForDisk(imageUrl);</div><div class="line">            DiskLruCache.Editor editor = mDiskLruCache.edit(key);</div><div class="line">            <span class="keyword">if</span> (editor != <span class="keyword">null</span>) {</div><div class="line">                OutputStream outputStream = editor.newOutputStream(<span class="number">0</span>);</div><div class="line">                <span class="keyword">if</span> (downloadUrlToStream(imageUrl, outputStream)) {</div><div class="line">                    editor.commit();</div><div class="line">                } <span class="keyword">else</span> {</div><div class="line">                    editor.abort();</div><div class="line">                }</div><div class="line">            }</div><div class="line">            mDiskLruCache.flush();</div><div class="line">        } <span class="keyword">catch</span> (IOException e) {</div><div class="line">            e.printStackTrace();</div><div class="line">        }</div><div class="line">    }</div><div class="line">}).start();</div></pre></td></tr></table></figure>
+
+<p>　　由于这里调用了downloadUrlToStream()方法来从网络上下载图片，所以一定要确保这段代码是在子线程当中执行的。注意在代码的最后我还调用了一下flush()方法，这个方法并不是每次写入都必须要调用的，但在这里却不可缺少，我会在后面说明它的作用。<br>现在的话缓存应该是已经成功写入了，我们进入到SD卡上的缓存目录里看一下，如下图所示：<br><img src="http://img.blog.csdn.net/20140803220637609?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3VvbGluX2Jsb2c=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""><br>可以看到，这里有一个文件名很长的文件，和一个journal文件，那个文件名很长的文件自然就是缓存的图片了，因为是使用了MD5编码来进行命名的。</p>
+<h2 id="读取缓存">读取缓存</h2>
+<p>缓存已经写入成功之后，接下来我们就该学习一下如何读取了。读取的方法要比写入简单一些，主要是借助DiskLruCache的get()方法实现的，接口如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> Snapshot <span class="title">get</span>(String key) <span class="keyword">throws</span> IOException</div></pre></td></tr></table></figure>
+
+<p>很明显，get()方法要求传入一个key来获取到相应的缓存数据，而这个key毫无疑问就是将图片URL进行MD5编码后的值了，因此读取缓存数据的代码就可以这样写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">String imageUrl = <span class="string">"http://img.my.csdn.net/uploads/201309/01/1378037235_7476.jpg"</span>;</div><div class="line">String key = hashKeyForDisk(imageUrl);</div><div class="line">DiskLruCache.Snapshot snapShot = mDiskLruCache.get(key);</div></pre></td></tr></table></figure>
+
+<p>很奇怪的是，这里获取到的是一个DiskLruCache.Snapshot对象，这个对象我们该怎么利用呢？很简单，只需要调用它的getInputStream()方法就可以得到缓存文件的输入流了。同样地，getInputStream()方法也需要传一个index参数，这里传入0就好。有了文件的输入流之后，想要把缓存图片显示到界面上就轻而易举了。所以，一段完整的读取缓存，并将图片加载到界面上的代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> {</div><div class="line">    String imageUrl = <span class="string">"http://img.my.csdn.net/uploads/201309/01/1378037235_7476.jpg"</span>;</div><div class="line">    String key = hashKeyForDisk(imageUrl);</div><div class="line">    DiskLruCache.Snapshot snapShot = mDiskLruCache.get(key);</div><div class="line">    <span class="keyword">if</span> (snapShot != <span class="keyword">null</span>) {</div><div class="line">        InputStream is = snapShot.getInputStream(<span class="number">0</span>);</div><div class="line">        Bitmap bitmap = BitmapFactory.decodeStream(is);</div><div class="line">        mImage.setImageBitmap(bitmap);</div><div class="line">    }</div><div class="line">} <span class="keyword">catch</span> (IOException e) {</div><div class="line">    e.printStackTrace();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>我们使用了BitmapFactory的decodeStream()方法将文件流解析成Bitmap对象，然后把它设置到ImageView当中。如果运行一下程序，将会看到如下效果：<br><img src="http://img.blog.csdn.net/20140803235312515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3VvbGluX2Jsb2c=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>OK，图片已经成功显示出来了。注意这是我们从本地缓存中加载的，而不是从网络上加载的，因此即使在你手机没有联网的情况下，这张图片仍然可以显示出来。</p>
+<h2 id="移除缓存">移除缓存</h2>
+<p>学习完了写入缓存和读取缓存的方法之后，最难的两个操作你就都已经掌握了，那么接下来要学习的移除缓存对你来说也一定非常轻松了。移除缓存主要是借助DiskLruCache的remove()方法实现的，接口如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">boolean</span> <span class="title">remove</span>(String key) <span class="keyword">throws</span> IOException</div></pre></td></tr></table></figure>
+
+<p>相信你已经相当熟悉了，remove()方法中要求传入一个key，然后会删除这个key对应的缓存图片，示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> {</div><div class="line">    String imageUrl = <span class="string">"http://img.my.csdn.net/uploads/201309/01/1378037235_7476.jpg"</span>;  </div><div class="line">    String key = hashKeyForDisk(imageUrl);  </div><div class="line">    mDiskLruCache.remove(key);</div><div class="line">} <span class="keyword">catch</span> (IOException e) {</div><div class="line">    e.printStackTrace();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>用法虽然简单，但是你要知道，这个方法我们并不应该经常去调用它。因为你完全不需要担心缓存的数据过多从而占用SD卡太多空间的问题，DiskLruCache会根据我们在调用open()方法时设定的缓存最大值来自动删除多余的缓存。只有你确定某个key对应的缓存内容已经过期，需要从网络获取最新数据的时候才应该调用remove()方法来移除缓存。</p>
+<h2 id="其它API">其它API</h2>
+<p>除了写入缓存、读取缓存、移除缓存之外，DiskLruCache还提供了另外一些比较常用的API，我们简单学习一下。</p>
+<ol>
+<li>size()</li>
+</ol>
+<p>这个方法会返回当前缓存路径下所有缓存数据的总字节数，以byte为单位，如果应用程序中需要在界面上显示当前缓存数据的总大小，就可以通过调用这个方法计算出来。比如网易新闻中就有这样一个功能，如下图所示：<br><img src="http://img.blog.csdn.net/20140804204157148?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3VvbGluX2Jsb2c=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>2.flush()</p>
+<p>这个方法用于将内存中的操作记录同步到日志文件（也就是journal文件）当中。这个方法非常重要，因为DiskLruCache能够正常工作的前提就是要依赖于journal文件中的内容。前面在讲解写入缓存操作的时候我有调用过一次这个方法，但其实并不是每次写入缓存都要调用一次flush()方法的，频繁地调用并不会带来任何好处，只会额外增加同步journal文件的时间。比较标准的做法就是在Activity的onPause()方法中去调用一次flush()方法就可以了。</p>
+<p>3.close()</p>
+<p>这个方法用于将DiskLruCache关闭掉，是和open()方法对应的一个方法。关闭掉了之后就不能再调用DiskLruCache中任何操作缓存数据的方法，通常只应该在Activity的onDestroy()方法中去调用close()方法。</p>
+<p>4.delete()</p>
+<p>这个方法用于将所有的缓存数据全部删除，比如说网易新闻中的那个手动清理缓存功能，其实只需要调用一下DiskLruCache的delete()方法就可以实现了。</p>
+<h2 id="解读journal">解读journal</h2>
+<p>　　前面已经提到过，DiskLruCache能够正常工作的前提就是要依赖于journal文件中的内容，因此，能够读懂journal文件对于我们理解DiskLruCache的工作原理有着非常重要的作用。那么journal文件中的内容到底是什么样的呢？我们来打开瞧一瞧吧，如下图所示：<br><img src="http://img.blog.csdn.net/20140804233158296?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3VvbGluX2Jsb2c=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""><br>　　由于现在只缓存了一张图片，所以journal中并没有几行日志，我们一行行进行分析。第一行是个固定的字符串“libcore.io.DiskLruCache”，标志着我们使用的是DiskLruCache技术。第二行是DiskLruCache的版本号，这个值是恒为1的。第三行是应用程序的版本号，我们在open()方法里传入的版本号是什么这里就会显示什么。第四行是valueCount，这个值也是在open()方法中传入的，通常情况下都为1。第五行是一个空行。前五行也被称为journal文件的头，这部分内容还是比较好理解的，但是接下来的部分就要稍微动点脑筋了。</p>
+<p>　　第六行是以一个DIRTY前缀开始的，后面紧跟着缓存图片的key。通常我们看到DIRTY这个字样都不代表着什么好事情，意味着这是一条脏数据。没错，每当我们调用一次DiskLruCache的edit()方法时，都会向journal文件中写入一条DIRTY记录，表示我们正准备写入一条缓存数据，但不知结果如何。然后调用commit()方法表示写入缓存成功，这时会向journal中写入一条CLEAN记录，意味着这条“脏”数据被“洗干净了”，调用abort()方法表示写入缓存失败，这时会向journal中写入一条REMOVE记录。也就是说，每一行DIRTY的key，后面都应该有一行对应的CLEAN或者REMOVE的记录，否则这条数据就是“脏”的，会被自动删除掉。</p>
+<p>　　如果你足够细心的话应该还会注意到，第七行的那条记录，除了CLEAN前缀和key之外，后面还有一个152313，这是什么意思呢？其实，DiskLruCache会在每一行CLEAN记录的最后加上该条缓存数据的大小，以字节为单位。152313也就是我们缓存的那张图片的字节数了，换算出来大概是148.74K，和缓存图片刚刚好一样大，如下图所示：<br><img src="http://img.blog.csdn.net/20140805223723516?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3VvbGluX2Jsb2c=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""><br>前面我们所学的size()方法可以获取到当前缓存路径下所有缓存数据的总字节数，其实它的工作原理就是把journal文件中所有CLEAN记录的字节数相加，求出的总合再把它返回而已。</p>
+<p>　　除了DIRTY、CLEAN、REMOVE之外，还有一种前缀是READ的记录，这个就非常简单了，每当我们调用get()方法去读取一条缓存数据时，就会向journal文件中写入一条READ记录。因此，像网易新闻这种图片和数据量都非常大的程序，journal文件中就可能会有大量的READ记录。</p>
+<p>　　那么你可能会担心了，如果我不停频繁操作的话，就会不断地向journal文件中写入数据，那这样journal文件岂不是会越来越大？这倒不必担心，DiskLruCache中使用了一个redundantOpCount变量来记录用户操作的次数，每执行一次写入、读取或移除缓存的操作，这个变量值都会加1，当变量值达到2000的时候就会触发重构journal的事件，这时会自动把journal中一些多余的、不必要的记录全部清除掉，保证journal文件的大小始终保持在一个合理的范围内。</p>
+<p>　　好了，这样的话我们就算是把DiskLruCache的用法以及简要的工作原理分析完了。至于DiskLruCache的源码还是比较简单的， 限于篇幅原因就不在这里展开了，感兴趣的朋友可以自己去摸索。下一篇文章中，我会带着大家通过一个项目实战的方式来更加深入地理解DiskLruCache的用法。</p>
+<p>转自：<a href="http://blog.csdn.net/guolin_blog/article/details/28863651" target="_blank" rel="external">http://blog.csdn.net/guolin_blog/article/details/28863651</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="概述">概述</h2>
+<p>　　上篇文章<a href="../android-LruCache">Android高效加载大图、多图解决方案</a>是翻译自Android Doc的，其中防止多图OOM的核心解决思路就是使用LruCache技术。但LruCache]]>
+    </summary>
+    
+      <category term="cache" scheme="http://dongyeforever.github.io/tags/cache/"/>
+    
+      <category term="android" scheme="http://dongyeforever.github.io/categories/android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android高效加载大图、多图解决方案]]></title>
+    <link href="http://dongyeforever.github.io/2014/11/05/android-LruCache/"/>
+    <id>http://dongyeforever.github.io/2014/11/05/android-LruCache/</id>
+    <published>2014-11-05T01:03:51.000Z</published>
+    <updated>2014-11-05T04:55:20.000Z</updated>
+    <content type="html"><![CDATA[<p>本篇文章主要内容来自于Android Doc，我翻译之后又做了些加工，英文好的朋友也可以直接去读原文。</p>
+<p><a href="http://developer.android.com/training/displaying-bitmaps/index.html" target="_blank" rel="external">http://developer.android.com/training/displaying-bitmaps/index.html</a></p>
+<h2 id="高效加载大图片">高效加载大图片</h2>
+<p>　　我们在编写Android程序的时候经常要用到许多图片，不同图片总是会有不同的形状、不同的大小，但在大多数情况下，这些图片都会大于我们程序所需要的大小。比如说系统图片库里展示的图片大都是用手机摄像头拍出来的，这些图片的分辨率会比我们手机屏幕的分辨率高得多。大家应该知道，我们编写的应用程序都是有一定内存限制的，程序占用了过高的内存就容易出现OOM(OutOfMemory)异常。我们可以通过下面的代码看出每个应用程序最高可用内存是多少。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> maxMemory = (<span class="keyword">int</span>) (Runtime.getRuntime().maxMemory() / <span class="number">1024</span>);</div><div class="line">Log.d(<span class="string">"TAG"</span>, <span class="string">"Max memory is "</span> + maxMemory + <span class="string">"KB"</span>);</div></pre></td></tr></table></figure>
+
+<p>　　因此在展示高分辨率图片的时候，最好先将图片进行压缩。压缩后的图片大小应该和用来展示它的控件大小相近，在一个很小的ImageView上显示一张超大的图片不会带来任何视觉上的好处，但却会占用我们相当多宝贵的内存，而且在性能上还可能会带来负面影响。下面我们就来看一看，如何对一张大图片进行适当的压缩，让它能够以最佳大小显示的同时，还能防止OOM的出现。<br>　　BitmapFactory这个类提供了多个解析方法(decodeByteArray, decodeFile, decodeResource等)用于创建Bitmap对象，我们应该根据图片的来源选择合适的方法。比如SD卡中的图片可以使用decodeFile方法，网络上的图片可以使用decodeStream方法，资源文件中的图片可以使用decodeResource方法。这些方法会尝试为已经构建的bitmap分配内存，这时就会很容易导致OOM出现。为此每一种解析方法都提供了一个可选的BitmapFactory.Options参数，将这个参数的inJustDecodeBounds属性设置为true就可以让解析方法禁止为bitmap分配内存，返回值也不再是一个Bitmap对象，而是null。虽然Bitmap是null了，但是BitmapFactory.Options的outWidth、outHeight和outMimeType属性都会被赋值。这个技巧让我们可以在加载图片之前就获取到图片的长宽值和MIME类型，从而根据情况对图片进行压缩。如下代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</div><div class="line">options.inJustDecodeBounds = <span class="keyword">true</span>;</div><div class="line">BitmapFactory.decodeResource(getResources(), R.id.myimage, options);</div><div class="line"><span class="keyword">int</span> imageHeight = options.outHeight;</div><div class="line"><span class="keyword">int</span> imageWidth = options.outWidth;</div><div class="line">String imageType = options.outMimeType;</div></pre></td></tr></table></figure>
+
+<p>　　为了避免OOM异常，最好在解析每张图片的时候都先检查一下图片的大小，除非你非常信任图片的来源，保证这些图片都不会超出你程序的可用内存。<br>　　现在图片的大小已经知道了，我们就可以决定是把整张图片加载到内存中还是加载一个压缩版的图片到内存中。以下几个因素是我们需要考虑的：</p>
+<blockquote>
+<ul>
+<li>预估一下加载整张图片所需占用的内存。</li>
+<li>为了加载这一张图片你所愿意提供多少内存。</li>
+<li>用于展示这张图片的控件的实际大小。</li>
+<li>当前设备的屏幕尺寸和分辨率。</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> maxMemory = (<span class="keyword">int</span>) (Runtime.getRuntime().maxMemory() / <span class="number">1024</span>);</div><div class="line">Log.d(<span class="string">"TAG"</span>, <span class="string">"Max memory is "</span> + maxMemory + <span class="string">"KB"</span>);</div></pre></td></tr></table></figure>
+
+<p>　　比如，你的ImageView只有128*96像素的大小，只是为了显示一张缩略图，这时候把一张1024*768像素的图片完全加载到内存中显然是不值得的。</p>
+<p>　　那我们怎样才能对图片进行压缩呢？通过设置BitmapFactory.Options中inSampleSize的值就可以实现。比如我们有一张2048*1536像素的图片，将inSampleSize的值设置为4，就可以把这张图片压缩成512*384像素。原本加载这张图片需要占用13M的内存，压缩后就只需要占用0.75M了(假设图片是ARGB_8888类型，即每个像素点占用4个字节)。下面的方法可以根据传入的宽和高，计算出合适的inSampleSize值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">calculateInSampleSize</span>(BitmapFactory.Options options,</div><div class="line">        <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight) {</div><div class="line">    <span class="comment">// 源图片的高度和宽度</span></div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> height = options.outHeight;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> width = options.outWidth;</div><div class="line">    <span class="keyword">int</span> inSampleSize = <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span> (height &gt; reqHeight || width &gt; reqWidth) {</div><div class="line">        <span class="comment">// 计算出实际宽高和目标宽高的比率</span></div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> heightRatio = Math.round((<span class="keyword">float</span>) height / (<span class="keyword">float</span>) reqHeight);</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> widthRatio = Math.round((<span class="keyword">float</span>) width / (<span class="keyword">float</span>) reqWidth);</div><div class="line">        <span class="comment">// 选择宽和高中最小的比率作为inSampleSize的值，这样可以保证最终图片的宽和高</span></div><div class="line">        <span class="comment">// 一定都会大于等于目标的宽和高。</span></div><div class="line">        inSampleSize = heightRatio &lt; widthRatio ? heightRatio : widthRatio;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> inSampleSize;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　　使用这个方法，首先你要将BitmapFactory.Options的inJustDecodeBounds属性设置为true，解析一次图片。然后将BitmapFactory.Options连同期望的宽度和高度一起传递到到calculateInSampleSize方法中，就可以得到合适的inSampleSize值了。之后再解析一次图片，使用新获取到的inSampleSize值，并把inJustDecodeBounds设置为false，就可以得到压缩后的图片了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title">decodeSampledBitmapFromResource</span>(Resources res, <span class="keyword">int</span> resId,</div><div class="line">        <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight) {</div><div class="line">    <span class="comment">// 第一次解析将inJustDecodeBounds设置为true，来获取图片大小</span></div><div class="line">    <span class="keyword">final</span> BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</div><div class="line">    options.inJustDecodeBounds = <span class="keyword">true</span>;</div><div class="line">    BitmapFactory.decodeResource(res, resId, options);</div><div class="line">    <span class="comment">// 调用上面定义的方法计算inSampleSize值</span></div><div class="line">    options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);</div><div class="line">    <span class="comment">// 使用获取到的inSampleSize值再次解析图片</span></div><div class="line">    options.inJustDecodeBounds = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">return</span> BitmapFactory.decodeResource(res, resId, options);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>下面的代码非常简单地将任意一张图片压缩成100*100的缩略图，并在ImageView上展示。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mImageView.setImageBitmap(</div><div class="line">    decodeSampledBitmapFromResource(getResources(), R.id.myimage, <span class="number">100</span>, <span class="number">100</span>));</div></pre></td></tr></table></figure>
+
+<h2 id="使用图片缓存技术">使用图片缓存技术</h2>
+<p>　　在你应用程序的UI界面加载一张图片是一件很简单的事情，但是当你需要在界面上加载一大堆图片的时候，情况就变得复杂起来。在很多情况下，（比如使用ListView, GridView 或者 ViewPager 这样的组件），屏幕上显示的图片可以通过滑动屏幕等事件不断地增加，最终导致OOM。<br>为了保证内存的使用始终维持在一个合理的范围，通常会把被移除屏幕的图片进行回收处理。此时垃圾回收器也会认为你不再持有这些图片的引用，从而对这些图片进行GC操作。用这种思路来解决问题是非常好的，可是为了能让程序快速运行，在界面上迅速地加载图片，你又必须要考虑到某些图片被回收之后，用户又将它重新滑入屏幕这种情况。这时重新去加载一遍刚刚加载过的图片无疑是性能的瓶颈，你需要想办法去避免这个情况的发生。</p>
+<p>　　这个时候，使用内存缓存技术可以很好的解决这个问题，它可以让组件快速地重新加载和处理图片。下面我们就来看一看如何使用内存缓存技术来对图片进行缓存，从而让你的应用程序在加载很多图片的时候可以提高响应速度和流畅性。</p>
+<p>　　内存缓存技术对那些大量占用应用程序宝贵内存的图片提供了快速访问的方法。其中最核心的类是LruCache (此类在android-support-v4的包中提供) 。这个类非常适合用来缓存图片，它的主要算法原理是把最近使用的对象用强引用存储在 LinkedHashMap 中，并且把最近最少使用的对象在缓存值达到预设定值之前从内存中移除。</p>
+<p>　　在过去，我们经常会使用一种非常流行的内存缓存技术的实现，即软引用或弱引用 (SoftReference or WeakReference)。但是现在已经不再推荐使用这种方式了，因为从 Android 2.3 (API Level 9)开始，垃圾回收器会更倾向于回收持有软引用或弱引用的对象，这让软引用和弱引用变得不再可靠。另外，Android 3.0 (API Level 11)中，图片的数据会存储在本地的内存当中，因而无法用一种可预见的方式将其释放，这就有潜在的风险造成应用程序的内存溢出并崩溃。</p>
+<p>　　为了能够选择一个合适的缓存大小给LruCache,有以下多个因素应该放入考虑范围内，例如：</p>
+<blockquote>
+<ul>
+<li>你的设备可以为每个应用程序分配多大的内存？</li>
+<li>设备屏幕上一次最多能显示多少张图片？有多少图片需要进行预加载，因为有可能很快也会显示在屏幕上？</li>
+<li>你的设备的屏幕大小和分辨率分别是多少？一个超高分辨率的设备（例如 Galaxy Nexus) 比起一个较低分辨率的设备（例如 Nexus S），在持有相同数量图片的时候，需要更大的缓存空间。</li>
+<li>图片的尺寸和大小，还有每张图片会占据多少内存空间。</li>
+<li>图片被访问的频率有多高？会不会有一些图片的访问频率比其它图片要高？如果有的话，你也许应该让一些图片常驻在内存当中，或者使用多个LruCache 对象来区分不同组的图片。</li>
+<li>你能维持好数量和质量之间的平衡吗？有些时候，存储多个低像素的图片，而在后台去开线程加载高像素的图片会更加的有效。</li>
+</ul>
+</blockquote>
+<p>　　并没有一个指定的缓存大小可以满足所有的应用程序，这是由你决定的。你应该去分析程序内存的使用情况，然后制定出一个合适的解决方案。一个太小的缓存空间，有可能造成图片频繁地被释放和重新加载，这并没有好处。而一个太大的缓存空间，则有可能还是会引起 java.lang.OutOfMemory 的异常。</p>
+<p>下面是一个使用 LruCache 来缓存图片的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> LruCache&lt;String, Bitmap&gt; mMemoryCache;</div><div class="line"></div><div class="line"><span class="annotation">@Override</span></div><div class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span>(Bundle savedInstanceState) {</div><div class="line">    <span class="comment">// 获取到可用内存的最大值，使用内存超出这个值会引起OutOfMemory异常。</span></div><div class="line">    <span class="comment">// LruCache通过构造函数传入缓存值，以KB为单位。</span></div><div class="line">    <span class="keyword">int</span> maxMemory = (<span class="keyword">int</span>) (Runtime.getRuntime().maxMemory() / <span class="number">1024</span>);</div><div class="line">    <span class="comment">// 使用最大可用内存值的1/8作为缓存的大小。</span></div><div class="line">    <span class="keyword">int</span> cacheSize = maxMemory / <span class="number">8</span>;</div><div class="line">    mMemoryCache = <span class="keyword">new</span> LruCache&lt;String, Bitmap&gt;(cacheSize) {</div><div class="line">        <span class="annotation">@Override</span></div><div class="line">        <span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">sizeOf</span>(String key, Bitmap bitmap) {</div><div class="line">            <span class="comment">// 重写此方法来衡量每张图片的大小，默认返回图片数量。</span></div><div class="line">            <span class="keyword">return</span> bitmap.getByteCount() / <span class="number">1024</span>;</div><div class="line">        }</div><div class="line">    };</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBitmapToMemoryCache</span>(String key, Bitmap bitmap) {</div><div class="line">    <span class="keyword">if</span> (getBitmapFromMemCache(key) == <span class="keyword">null</span>) {</div><div class="line">        mMemoryCache.put(key, bitmap);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> Bitmap <span class="title">getBitmapFromMemCache</span>(String key) {</div><div class="line">    <span class="keyword">return</span> mMemoryCache.get(key);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　在这个例子当中，使用了系统分配给应用程序的八分之一内存来作为缓存大小。在中高配置的手机当中，这大概会有4兆(32/8)的缓存空间。一个全屏幕的 GridView 使用4张 800x480分辨率的图片来填充，则大概会占用1.5兆的空间(800<em>480</em>4)。因此，这个缓存大小可以存储2.5页的图片。<br>当向 ImageView 中加载一张图片时,首先会在 LruCache 的缓存中进行检查。如果找到了相应的键值，则会立刻更新ImageView ，否则开启一个后台线程来加载这张图片。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadBitmap</span>(<span class="keyword">int</span> resId, ImageView imageView) {</div><div class="line">    <span class="keyword">final</span> String imageKey = String.valueOf(resId);</div><div class="line">    <span class="keyword">final</span> Bitmap bitmap = getBitmapFromMemCache(imageKey);</div><div class="line">    <span class="keyword">if</span> (bitmap != <span class="keyword">null</span>) {</div><div class="line">        imageView.setImageBitmap(bitmap);</div><div class="line">    } <span class="keyword">else</span> {</div><div class="line">        imageView.setImageResource(R.drawable.image_placeholder);</div><div class="line">        BitmapWorkerTask task = <span class="keyword">new</span> BitmapWorkerTask(imageView);</div><div class="line">        task.execute(resId);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>BitmapWorkerTask 还要把新加载的图片的键值对放到缓存中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class BitmapWorkerTask extends AsyncTask&lt;Integer, Void, Bitmap&gt; {</div><div class="line">    <span class="comment">// 在后台加载图片。</span></div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="keyword">protected</span> Bitmap <span class="title">doInBackground</span>(Integer... params) {</div><div class="line">        <span class="keyword">final</span> Bitmap bitmap = decodeSampledBitmapFromResource(</div><div class="line">                getResources(), params[<span class="number">0</span>], <span class="number">100</span>, <span class="number">100</span>);</div><div class="line">        addBitmapToMemoryCache(String.valueOf(params[<span class="number">0</span>]), bitmap);</div><div class="line">        <span class="keyword">return</span> bitmap;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>　　掌握了以上两种方法，不管是要在程序中加载超大图片，还是要加载大量图片，都不用担心OOM的问题了!不过仅仅是理论地介绍不知道大家能不能完全理解，在后面的文章中我会演示如何在实际程序中灵活运用上述技巧来避免程序OOM，感兴趣的朋友请继续阅读<a href="../android-DisLrukCache">Android DiskLruCache完全解析，硬盘缓存的最佳方案</a></p>
+<p>转自：<a href="http://blog.csdn.net/guolin_blog/article/details/9316683" target="_blank" rel="external">http://blog.csdn.net/guolin_blog/article/details/9316683</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>本篇文章主要内容来自于Android Doc，我翻译之后又做了些加工，英文好的朋友也可以直接去读原文。</p>
+<p><a href="http://developer.android.com/training/displaying-bitmaps/index.html" ]]>
+    </summary>
+    
+      <category term="cache" scheme="http://dongyeforever.github.io/tags/cache/"/>
+    
+      <category term="android" scheme="http://dongyeforever.github.io/categories/android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android开发者工具]]></title>
+    <link href="http://dongyeforever.github.io/2014/10/26/AndroidDevTools/"/>
+    <id>http://dongyeforever.github.io/2014/10/26/AndroidDevTools/</id>
+    <published>2014-10-26T12:10:58.000Z</published>
+    <updated>2014-10-26T12:33:32.000Z</updated>
+    <content type="html"><![CDATA[<p>Android Api中文版</p>
+<p>地址：<a href="http://wikidroid.sinaapp.com/Android中文API" target="_blank" rel="external">http://wikidroid.sinaapp.com/Android中文API</a>)</p>
+<p>Android API指南中文版</p>
+<p>地址：<a href="http://wiki.eoeandroid.com/Android_API_Guides" target="_blank" rel="external">http://wiki.eoeandroid.com/Android_API_Guides</a></p>
+<p>Android Dev Guides<br>Google Java编程风格指南中文版</p>
+<p>英文地址：<a href="http://google-styleguide.googlecode.com/svn/trunk/javaguide.html" target="_blank" rel="external">http://google-styleguide.googlecode.com/svn/trunk/javaguide.html</a></p>
+<p>地址0：<a href="http://hawstein.com/posts/google-java-style.html" target="_blank" rel="external">http://hawstein.com/posts/google-java-style.html</a></p>
+<p>地址1：<a href="https://github.com/codeset/google-java-styleguide" target="_blank" rel="external">https://github.com/codeset/google-java-styleguide</a></p>
+<p>Android Proguard混淆配置指南</p>
+<p>地址：<a href="https://github.com/inferjay/AndroidProguardGuide/" target="_blank" rel="external">https://github.com/inferjay/AndroidProguardGuide/</a></p>
+<p>Gradle插件使用指南中文版</p>
+<p>地址：<a href="http://avatarqing.github.io/Gradle-Plugin-User-Guide-Chinese-Verision" target="_blank" rel="external">http://avatarqing.github.io/Gradle-Plugin-User-Guide-Chinese-Verision</a></p>
+<p>Gradle User Guide</p>
+<p>Gradle 1.12用户指南：<a href="http://pan.baidu.com/s/1dD7sC2d" target="_blank" rel="external">http://pan.baidu.com/s/1dD7sC2d</a></p>
+<p>Android Dev Tutorials<br>Android学习之路</p>
+<p>地址：<a href="http://stormzhang.github.io/android/2014/07/07/learn-android-from-rookie/" target="_blank" rel="external">http://stormzhang.github.io/android/2014/07/07/learn-android-from-rookie/</a></p>
+<p>Google Android官方培训课程中文版</p>
+<p>地址：<a href="http://hukai.me/android-training-course-in-chinese/index.html" target="_blank" rel="external">http://hukai.me/android-training-course-in-chinese/index.html</a></p>
+<p>Developing Android Apps</p>
+<p>地址：<a href="https://www.udacity.com/course/ud853" target="_blank" rel="external">https://www.udacity.com/course/ud853</a></p>
+<p>Java Design Patterns Samples in Java.</p>
+<p>Java Design Patterns</p>
+<p>Design Guides<br>Android设计指南非官方简体中文版</p>
+<p>Topfun镜像地址：<a href="http://www.topfun.us/adchs/index.html" target="_blank" rel="external">http://www.topfun.us/adchs/index.html</a></p>
+<p>Github镜像地址：<a href="http://adchs.github.io" target="_blank" rel="external">http://adchs.github.io</a></p>
+<p>ApkBus镜像地址：<a href="http://www.apkbus.com/design/" target="_blank" rel="external">http://www.apkbus.com/design/</a></p>
+<p>Segmentfault镜像地址：<a href="http://mirrors.segmentfault.com/adchs/" target="_blank" rel="external">http://mirrors.segmentfault.com/adchs/</a></p>
+<p>多看阅读镜像地址：<a href="http://www.duokan.com/book/47790" target="_blank" rel="external">http://www.duokan.com/book/47790</a></p>
+<p>Android Cheatsheet for Graphic Designers</p>
+<p>地址:<a href="http://petrnohejl.github.io/Android-Cheatsheet-For-Graphic-Designers/" target="_blank" rel="external">http://petrnohejl.github.io/Android-Cheatsheet-For-Graphic-Designers/</a></p>
+<p>Google Material Design 中文版</p>
+<p>地址：<a href="http://design.1sters.com" target="_blank" rel="external">http://design.1sters.com</a></p>
+<p>地址： <a href="http://www.ui.cn/Material/" target="_blank" rel="external">http://www.ui.cn/Material/</a></p>
+<p>Designer’s Guide To dpi</p>
+<p>地址：<a href="http://sebastien-gabriel.com/designers-guide-to-dpi/home" target="_blank" rel="external">http://sebastien-gabriel.com/designers-guide-to-dpi/home</a></p>
+<p>Email Design Guide</p>
+<p>地址：<a href="http://mailchimp.com/resources/email-design-guide/" target="_blank" rel="external">http://mailchimp.com/resources/email-design-guide/</a></p>
+<p>更多内容请访问： <a href="http://www.androiddevtools.cn" target="_blank" rel="external">http://www.androiddevtools.cn</a><br>License</p>
+<blockquote>
+<p>Copyright 2014 inferjay (<a href="http://www.androiddevtools.cn" target="_blank" rel="external">http://www.androiddevtools.cn</a>)<br>Licensed under the Apache License, Version 2.0 (the “License”);<br>you may not use this file except in compliance with the License.<br>You may obtain a copy of the License at<br>    <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="external">http://www.apache.org/licenses/LICENSE-2.0</a><br>Unless required by applicable law or agreed to in writing, software<br>distributed under the License is distributed on an “AS IS” BASIS,<br>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<br>See the License for the specific language governing permissions and<br>limitations under the License.</p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Android Api中文版</p>
+<p>地址：<a href="http://wikidroid.sinaapp.com/Android中文API" target="_blank" rel="external">http://wikidroid.sinaapp.com/]]>
+    </summary>
+    
+      <category term="android" scheme="http://dongyeforever.github.io/categories/android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[android studio添加.so文件]]></title>
+    <link href="http://dongyeforever.github.io/2014/10/12/android-studio-so/"/>
+    <id>http://dongyeforever.github.io/2014/10/12/android-studio-so/</id>
+    <published>2014-10-12T03:01:32.000Z</published>
+    <updated>2014-11-06T07:20:04.000Z</updated>
+    <content type="html"><![CDATA[<p>设置build.gradle文件：</p>
+<p>在配置的android节点下加入下面的内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sourceSets {  </div><div class="line">    main {  </div><div class="line">        jniLibs.srcDirs = [<span class="string">'libs'</span>]  </div><div class="line">    }  </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>或者在源码main子目录下建jniLibs目录，把libs下的so库按目录结构丢进去，如下图:</p>
+<p><img src="http://www.kuloud.com/usr/uploads/2014/06/193615179.png" alt=""></p>
+<p>欢迎转载，转载请注明出处：<a href="http://dongyeblog.tk/2014/10/12/android-studio-so/" target="_blank" rel="external">http://dongyeblog.tk/2014/10/12/android-studio-so/</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>设置build.gradle文件：</p>
+<p>在配置的android节点下加入下面的内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1]]>
+    </summary>
+    
+      <category term="android" scheme="http://dongyeforever.github.io/categories/android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[android studio常用快捷键]]></title>
+    <link href="http://dongyeforever.github.io/2014/10/12/android-studio-shortcutkey/"/>
+    <id>http://dongyeforever.github.io/2014/10/12/android-studio-shortcutkey/</id>
+    <published>2014-10-11T16:19:22.000Z</published>
+    <updated>2014-11-06T07:19:46.000Z</updated>
+    <content type="html"><![CDATA[<p>Eclipse中快捷键与Studio中的差别还是比较大，通过对比两者，让记忆更深刻。</p>
+<h2 id="常用快捷键">常用快捷键</h2>
+<p>显示快捷键列表：Ctrl+Shift+L (Eclipse)</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th style="text-align:center">Eclipse</th>
+<th style="text-align:right">Android studio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>打开资源</td>
+<td style="text-align:center">Ctrl+Shift+R</td>
+<td style="text-align:right">Ctrl+Shift+N</td>
+</tr>
+<tr>
+<td>打开类型</td>
+<td style="text-align:center">Ctrl+Shift+T</td>
+<td style="text-align:right">Ctrl+N</td>
+</tr>
+<tr>
+<td>导入包</td>
+<td style="text-align:center">Ctrl+Shift+M</td>
+<td style="text-align:right">Alt+回车</td>
+</tr>
+<tr>
+<td>当前文件的结构</td>
+<td style="text-align:center">Ctrl＋O</td>
+<td style="text-align:right">Ctrl＋F12</td>
+</tr>
+<tr>
+<td>格式化代码</td>
+<td style="text-align:center">Ctrl+Shift+F</td>
+<td style="text-align:right">Ctrl+Alt+L</td>
+</tr>
+<tr>
+<td>组织导入</td>
+<td style="text-align:center">Ctrl+Shift+O</td>
+<td style="text-align:right">Ctrl+Alt+O</td>
+</tr>
+<tr>
+<td>当前行往上或下移动</td>
+<td style="text-align:center">Alt+方向键</td>
+<td style="text-align:right">Ctrl+Shift+方向</td>
+</tr>
+<tr>
+<td>生成getter setter方法</td>
+<td style="text-align:center">Alt+Shift+s</td>
+<td style="text-align:right">Alt＋Insert</td>
+</tr>
+<tr>
+<td>重命名</td>
+<td style="text-align:center">Alt+Shift+R</td>
+<td style="text-align:right">Shift+F6</td>
+</tr>
+<tr>
+<td>自动补全代码</td>
+<td style="text-align:center">Alt+/</td>
+<td style="text-align:right">Ctrl+Shift+Space(会与输入法切换有冲突)</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center">Ctrl+空格</td>
+<td style="text-align:right">代码提示</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center">Ctrl+Alt+Space</td>
+<td style="text-align:right">类名或接口提示</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center">Ctrl+P</td>
+<td style="text-align:right">方法参数提示</td>
+</tr>
+<tr>
+<td>行操作</td>
+<td style="text-align:center">Ctrl+D 删除行</td>
+<td style="text-align:right">Ctrl+X 删除行</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:right">Ctrl+D 复制行</td>
+</tr>
+<tr>
+<td>定位在某行</td>
+<td style="text-align:center">Ctrl+L</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>返回上次位置</td>
+<td style="text-align:center">Alt+ left/right</td>
+<td style="text-align:right">Ctrl+Alt+ left/right</td>
+</tr>
+<tr>
+<td>注释</td>
+<td style="text-align:center">Ctrl+/</td>
+<td style="text-align:right">Ctrl+/ 或 Ctrl+Shift+/</td>
+</tr>
+</tbody>
+</table>
+<h2 id="调试">调试</h2>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th style="text-align:center">Eclipse</th>
+<th style="text-align:right">Android studio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>运行程序</td>
+<td style="text-align:center">Ctrl+F11</td>
+<td style="text-align:right">Shift+F10运行当前，Alt+Shift+F10选择运行程序</td>
+</tr>
+<tr>
+<td>单步跳入</td>
+<td style="text-align:center">F5</td>
+<td style="text-align:right">F7</td>
+</tr>
+<tr>
+<td>单步执行</td>
+<td style="text-align:center">F6</td>
+<td style="text-align:right">F8</td>
+</tr>
+<tr>
+<td>单步返回</td>
+<td style="text-align:center">F7</td>
+<td style="text-align:right">Shift+F8</td>
+</tr>
+<tr>
+<td>继续</td>
+<td style="text-align:center">F8</td>
+<td style="text-align:right">F9</td>
+</tr>
+<tr>
+<td>查看变量</td>
+<td style="text-align:center">Shift+Ctrl+I</td>
+<td style="text-align:right">Alt+F10</td>
+</tr>
+<tr>
+<td>计算</td>
+<td style="text-align:center"></td>
+<td style="text-align:right">Alt+F8</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Stuido特殊">Stuido特殊</h2>
+<p>Ctrl+Q 快速的查看的 类，函数的 文档问信息描述<br>Ctrl+P 方法参数提示<br>Alt+ left/right 切换代码视图<br>Alt+ Up/Down 在方法间快速移动定位<br>Alt+1 最大化当前的Edit或View (再按则反之)<br>Ctrl+E或者Alt+Shift+C 最近更改的代码</p>
+<p>一些基本的快捷键，如果需要完整的快捷键，可以边学边深入。</p>
+<p>欢迎转载，转载请注明出处：<a href="http://dongyeblog.tk/2014/10/12/android-studio-shortcutkey/" target="_blank" rel="external">http://dongyeblog.tk/2014/10/12/android-studio-shortcutkey/</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Eclipse中快捷键与Studio中的差别还是比较大，通过对比两者，让记忆更深刻。</p>
+<h2 id="常用快捷键">常用快捷键</h2>
+<p>显示快捷键列表：Ctrl+Shift+L (Eclipse)</p>
+<table>
+<thead>
+<tr>
+<th>功]]>
+    </summary>
+    
+      <category term="android studio" scheme="http://dongyeforever.github.io/tags/android-studio/"/>
+    
+      <category term="android" scheme="http://dongyeforever.github.io/categories/android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Markdown入门]]></title>
+    <link href="http://dongyeforever.github.io/2014/10/11/markdown-intro/"/>
+    <id>http://dongyeforever.github.io/2014/10/11/markdown-intro/</id>
+    <published>2014-10-11T13:15:33.000Z</published>
+    <updated>2014-11-19T02:05:02.000Z</updated>
+    <content type="html"><![CDATA[<p>本文转载自一篇<a href="http://zipperary.com/2013/08/31/easy-markdown/" target="_blank" rel="external">轻松搞定Markdown</a>，简单实用，适合快速入门。</p>
+<h2 id="Markdown_免费编辑器">Markdown 免费编辑器</h2>
+<p>Windows 平台<br><a href="http://markdownpad.com/" target="_blank" rel="external">MarkdownPad</a><br><a href="http://code52.org/DownmarkerWPF/" target="_blank" rel="external">MarkPad</a></p>
+<p>Linux 平台<br><a href="http://sourceforge.net/p/retext/home/ReText/" target="_blank" rel="external">ReText</a></p>
+<p>Mac 平台<br><a href="http://mouapp.com/" target="_blank" rel="external">Mou</a></p>
+<p>在线编辑器<br><a href="https://zybuluo.com/mdeditor" target="_blank" rel="external">Cmd Markdown</a>(推荐)</p>
+<p>浏览器插件<br><a href="https://chrome.google.com/webstore/detail/oknndfeeopgpibecfjljjfanledpbkog" target="_blank" rel="external">MaDe</a> (Chrome)</p>
+<h2 id="以下是Markdown代码">以下是Markdown代码</h2>
+<pre><code><span class="header">#这里是一级标题</span>
+<span class="header">###这里是三级标题</span>
+<span class="header">######这里是六级标题</span>
+
+最大为六级，木有七级！
+段落前面没有缩进，看到了吧。
+
+要想使用缩进，在中文输入法中改成「全角」输入，再按两个空格
+
+行尾一个回车换行，显示效果依然是是一行。
+我说的对吧~
+
+想要分成两行，需要在行尾输入两个空格。  
+我说的对吧~
+
+想要开始一个新的段落，乖乖的按两下回车吧
+
+我说的对吧~
+
+<span class="strong">**两个星号包围的是粗体**</span>
+
+<span class="emphasis">*一个星号包围的是斜体*</span>
+
+<span class="blockquote">&gt; 引用内容，多行的话，用两个空格结尾吧  </span>
+是吧~
+
+<span class="code">`反引号包围的是行内代码`</span>，这个按键在「Tab」上边
+
+<span class="code">``嵌套的话，可以使用`</span>两个双引号<span class="code">`嵌套在外面`</span>`
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#三个反引号包围的是代码块。</span></div><div class="line"><span class="comment">#会显示行号。</span></div><div class="line"><span class="comment">#也有高亮显示</span></div><div class="line"><span class="comment">#我上面加了python，你也可以不加。如果不能高亮，那么还是加上吧。。另外，如果你的代码块包</span></div><div class="line"></div><div class="line">围的是html，那你应该写html而不是python</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.sep</div></pre></td></tr></table></figure>
+
+<pre><code>嵌套的话，可以使用六个反引号嵌套在外面。
+
+<span class="bullet">1. </span>有序列表1，注意点之后的空格。
+<span class="bullet">2. </span>有序列表2.
+<span class="bullet">1. </span>我这里写成1，在显示时还是3，厉害不。
+
+<span class="bullet">1. </span>有序列表1
+ 详细内容，注意前面有一个空格
+<span class="bullet">2. </span>有序列表2
+详细内容
+
+<span class="bullet">- </span>无序列表1
+<span class="bullet">- </span>无序列表2
+<span class="bullet">- </span>无序列表3
+ - 小1，注意前面有一个空格
+ - 小2
+
+超级链接：[<span class="link_label">我的博客</span>](<span class="link_url">http://dongyeforever.github.io/</span>)
+
+插入图片：![<span class="link_label">好看不</span>](<span class="link_url">http://ww2.sinaimg.cn/large/5e8cb366jw1e62o63tkv3j20dh078q5a.jpg</span>)
+
+另外，markdown完全兼容html，你可以用html插入这些东西，例如：
+
+<span class="xml"><span class="tag">&lt;<span class="title">iframe</span> <span class="attribute">height</span>=<span class="value">498</span> <span class="attribute">width</span>=<span class="value">510</span> <span class="attribute">src</span>=<span class="value">"http://v.youku.com/v_show/id_XNzU5Njk2MTk2.html"</span> <span class="attribute">frameborder</span>=<span class="value">0</span> <span class="attribute">allowfullscreen</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="title">iframe</span>&gt;</span></span>
+
+
+~~删除线~~
+
+
+分割线用<span class="code">`---`</span>，注意单独一样，上面必须是一个空行
+
+<span class="horizontal_rule">---</span>
+
+更多高级的格式，请果断插入html标签
+</code></pre><hr>
+<h2 id="以下是实现效果">以下是实现效果</h2>
+<h1 id="这里是一级标题">这里是一级标题</h1>
+<h3 id="这里是三级标题">这里是三级标题</h3>
+<h6 id="这里是六级标题">这里是六级标题</h6>
+<p>最大为六级，木有七级！<br>段落前面没有缩进，看到了吧。</p>
+<p>　　要想使用缩进，在中文输入法中改成「全角」输入，再按两个空格</p>
+<p>行尾一个回车换行，显示效果依然是是一行。<br>我说的对吧~</p>
+<p>想要分成两行，需要在行尾输入两个空格。<br>我说的对吧~</p>
+<p>想要开始一个新的段落，乖乖的按两下回车吧</p>
+<p>我说的对吧~</p>
+<p><strong>两个星号包围的是粗体</strong></p>
+<p><em>一个星号包围的是斜体</em></p>
+<blockquote>
+<p>引用内容，多行的话，用两个空格结尾吧<br>是吧~</p>
+</blockquote>
+<p><code>反引号包围的是行内代码</code>，这个按键在「Tab」上边</p>
+<p><code>嵌套的话，可以使用`两个双引号`嵌套在外面</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#三个反引号包围的是代码块。</span></div><div class="line"><span class="comment">#会显示行号。</span></div><div class="line"><span class="comment">#也有高亮显示</span></div><div class="line"><span class="comment">#我上面加了python，你也可以不加。如果不能高亮，那么还是加上吧。。另外，如果你的代码块包围的是html，那你应该写html而不是python</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">print</span> os.sep</div></pre></td></tr></table></figure>
+
+<p>嵌套的话，可以使用六个反引号嵌套在外面。</p>
+<ol>
+<li>有序列表1，注意点之后的空格。</li>
+<li>有序列表2.</li>
+<li><p>我这里写成1，在显示时还是3，厉害不。</p>
+</li>
+<li><p>有序列表1<br>详细内容，注意前面有一个空格</p>
+</li>
+<li>有序列表2<br>详细内容</li>
+</ol>
+<ul>
+<li>无序列表1</li>
+<li>无序列表2</li>
+<li>无序列表3<ul>
+<li>小1，注意前面有一个空格</li>
+<li>小2</li>
+</ul>
+</li>
+</ul>
+<p>超级链接：<a href="http://dongyeforever.github.io/" target="_blank" rel="external">我的博客</a></p>
+<p>插入图片：<img src="http://ww2.sinaimg.cn/large/5e8cb366jw1e62o63tkv3j20dh078q5a.jpg" alt="好看不"></p>
+<p>另外，markdown完全兼容html，你可以用html插入这些东西。</p>
+<p><del>删除线</del></p>
+<p>分割线用<code>---</code>，注意单独一样，上面必须是一个空行</p>
+<hr>
+<p>更多高级的格式，请果断插入html标签</p>
+<p>欢迎转载，转载请注明出处：<a href="http://dongyeblog.tk/2014/10/11/markdown-intro/" target="_blank" rel="external">http://dongyeblog.tk/2014/10/11/markdown-intro/</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>本文转载自一篇<a href="http://zipperary.com/2013/08/31/easy-markdown/" target="_blank" rel="external">轻松搞定Markdown</a>，简单实用，适合快速入门。</p>
+<h2 id="]]>
+    </summary>
+    
+      <category term="随笔" scheme="http://dongyeforever.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[世界，你好！]]></title>
+    <link href="http://dongyeforever.github.io/2014/10/10/hello-world/"/>
+    <id>http://dongyeforever.github.io/2014/10/10/hello-world/</id>
+    <published>2014-10-10T13:15:33.000Z</published>
+    <updated>2014-10-11T03:29:07.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>一盏灯， 一片昏黄； 一简书， 一杯淡茶。 守着那一份淡定， 品读属于自己的寂寞。 保持淡定， 才能欣赏到最美丽的风景！ 保持淡定， 人生从此不再寂寞。</p>
+</blockquote>
+<p><img src="http://dongyeforever.qiniudn.com/helloworld.jpg" alt=""></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>一盏灯， 一片昏黄； 一简书， 一杯淡茶。 守着那一份淡定， 品读属于自己的寂寞。 保持淡定， 才能欣赏到最美丽的风景！ 保持淡定， 人生从此不再寂寞。</p>
+</blockquote>
+<p><img src="http://dongyefor]]>
+    </summary>
+    
+      <category term="随笔" scheme="http://dongyeforever.github.io/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="随笔" scheme="http://dongyeforever.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+</feed>

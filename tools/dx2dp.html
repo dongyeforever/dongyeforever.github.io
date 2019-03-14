@@ -1,0 +1,743 @@
+
+  
+    <!DOCTYPE html>
+<!-- saved from url=(0038)http://pixplicity.com/dp-px-converter/ -->
+<html lang="en-US" prefix="og: http://ogp.me/ns#"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="icon" href="http://pixplicity.com/wp-content/uploads/2012/11/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="http://pixplicity.com/wp-content/uploads/2012/11/favicon.ico" type="image/x-icon">
+
+<meta charset="UTF-8">
+<meta property="og:image" content="http://pixplicity.com/wp-content/uploads/2012/11/Pixplicity-Logo.png">
+<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=no">
+<title>Android DP/PX Converter - Pixplicity</title>
+
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="http://pixplicity.com/xmlrpc.php">
+
+<script async src="./dx2dp_files/analytics.js"></script><script type="text/javascript">
+var homePageURL = "http://pixplicity.com";
+var themeURL = "http://pixplicity.com/wp-content/themes/allure";
+
+/*Header*/
+var isMenuShadow = 1;
+var sliderType = 2;
+var cycleTransition = "scrollDown";
+var cycleSpeed = "10000";
+</script>
+
+
+<!-- This site is optimized with the Yoast WordPress SEO plugin v2.1.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Convert pixels to DPs (density independent pixels) for Android. Calculate dimensions in DPI buckets for mdpi up to xxxhdpi from px, mm, in, pt, DP or SP.">
+<link rel="canonical" href="./dx2dp_files/dx2dp.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android DP/PX Converter - Pixplicity">
+<meta property="og:description" content="Convert pixels to DPs (density independent pixels) for Android. Calculate dimensions in DPI buckets for mdpi up to xxxhdpi from px, mm, in, pt, DP or SP.">
+<meta property="og:url" content="http://pixplicity.com/dp-px-converter/">
+<meta property="og:site_name" content="Pixplicity">
+<meta property="og:image" content="http://pixplicity.com/wp-content/uploads/2014/04/android_dpi_categories_chart-300x62.png">
+<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"WebSite","url":"http:\/\/pixplicity.com\/","name":"Pixplicity"}</script>
+<!-- / Yoast WordPress SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="Pixplicity » Feed" href="http://pixplicity.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Pixplicity » Comments Feed" href="http://pixplicity.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Pixplicity » Android DP/PX converter Comments Feed" href="http://pixplicity.com/dp-px-converter/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/pixplicity.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./dx2dp_files/wp-emoji-release.min.js" type="text/javascript"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="contact-form-7-css" href="./dx2dp_files/styles.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-pagenavi-css" href="./dx2dp_files/pagenavi-css.css" type="text/css" media="all">
+<link rel="stylesheet" id="base-css" href="./dx2dp_files/base.css" type="text/css" media="all">
+<link rel="stylesheet" id="responsive-css" href="./dx2dp_files/responsive.css" type="text/css" media="all">
+<link rel="stylesheet" id="prettyphoto-css" href="./dx2dp_files/prettyPhoto.css" type="text/css" media="all">
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal enabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+	__gaTracker('create', 'UA-50987363-1', 'auto', {'allowLinker': true});
+	__gaTracker('set', 'forceSSL', true);
+	__gaTracker('require', 'displayfeatures');
+	__gaTracker('send','pageview');
+
+</script><style type="text/css" adt="123"></style>
+<!-- / Google Analytics by Yoast -->
+<script type="text/javascript" src="./dx2dp_files/jquery.min.js"></script>
+<script type="text/javascript" src="./dx2dp_files/jquery-ui-1.8.18.min.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://pixplicity.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://pixplicity.com/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.2.2">
+<link rel="shortlink" href="http://pixplicity.com/?p=548">
+		<link rel="stylesheet" type="text/css" href="./dx2dp_files/css">
+		<style type="text/css">
+		body{background:#f6f6f6;font-size:13px;color:#666666;font-weight:normal;font-family:"tahoma",arial}.container{max-width:1350px}h1,h2,h3,h4,h5,h6,th{color:#333333;font-weight:300;font-family:"Open Sans",arial}h1{font-size:32.4px}h2{font-size:27px}h3{font-size:21.6px}h4{font-size:16.2px}h5{font-size:14.4px}h6{font-size:12.6px}a,a:visited,ul.tabs li a{color:#333333}#pageHeading a,#pageHeading a:visited{}#footerWidgets a,#footerWidgets a:visited{color:#333333}a:hover,a:focus,ul.tabs li a.active,ul.tabs li a:hover,#footerWidgets a:hover,#footerWidgets a:focus,#pageHeading a:hover,#pageHeading a:focus,.footer-menu li a:hover{background-color:#ffbf00;color:#ffffff}#notification{background:#ffbf00}header{background:#121212;border:none}#slideshow{background:url("http://pixplicity.com/wp-content/themes/allure/images/skins/default/noise.png") repeat top left scroll #121212;border-color:#dedede}#slideshow .slideContent *{color:#f5f5f5}#calltoaction{background:#efefef;border:none}#homepageWidgets1{background:url("http://pixplicity.com/wp-content/themes/allure/images/skins/default/noise.png") repeat top left scroll #161616}#homepageWidgets1,#homepageWidgets1 h1,#homepageWidgets1 h2,#homepageWidgets1 h3,#homepageWidgets1 h4,#homepageWidgets1 h5,#homepageWidgets1 h6{}#homepageWidgets2{}#homepageWidgets2,#homepageWidgets2 h1,#homepageWidgets2 h2,#homepageWidgets2 h3,#homepageWidgets2 h4,#homepageWidgets2 h5,#homepageWidgets2 h6{}#pageHeading{border:none}content{}#footerWidgets{background:url("http://pixplicity.com/wp-content/themes/allure/images/skins/default/noise.png") repeat top left scroll #ebebeb;border-color:#dedede}footer{background:#121212;border-color:#333333;font-size:12px;color:#999999;font-weight:normal;font-family:"tahoma",arial}.footer-menu li a{font-size:12px;color:#999999;font-weight:normal;font-family:"tahoma",arial}.nav-main-full,#nav-mobile > ul{}.mediaContainer .placeholder{background:#ffffff}#logo{}#logo .slogan{font-size:11px;color:#999999;font-weight:normal;font-family:"tahoma",arial;margin-top:5px}.sf-menu a,.sf-menu a:visited,#nav-mobile ul a,#nav-mobile ul a:visited{font-size:13px;color:#f5f5f5;font-weight:normal;font-family:"Open Sans",arial}#nav-mobile ul li{border-color:#333333}.sf-menu ul a,.sf-menu ul a:visited,#nav-mobile ul ul a,#nav-mobile ul ul a:visited{font-size:11px;color:#f5f5f5;font-weight:normal;font-family:"Open Sans",arial;padding-left:13px !important;padding-right:13px!important}.sf-menu ul,#nav-mobile ul ul{background:#121212}.sf-menu a:focus,.sf-menu a:hover,.sf-menu a:active,.sf-menu li.current-menu-item > a,#nav-mobile > ul > li.current-menu-item > a{color:#ffbf00!important}.sf-menu ul a:focus,.sf-menu ul a:hover,.sf-menu ul a:active,.sf-menu ul .current-menu-item > a,#nav-mobile ul ul .current-menu-item > a,#nav-mobile > ul ul li > a:hover,#nav-mobile > ul ul li > a:focus,#nav-mobile > ul ul li > a:active{color:#ffbf00!important}#notification .notificationContent{min-height:60px}header{}#notification .notification-close{margin:23px auto}#footerWidgets,#footerWidgets h1,#footerWidgets h2,#footerWidgets h3,#footerWidgets h4,#footerWidgets h5,#footerWidgets h6{color:#555555!important}.portfolioMeta .entryMeta span{font-size:22px;color:#333333;font-weight:normal;font-family:"Open Sans",arial}#notification .notificationContent *{font-size:18px;color:#f5f5f5;font-weight:normal;font-family:"Open Sans",arial}#pageHeading{font-size:22px;color:#ffbf00;font-weight:normal;font-family:"Open Sans",arial}#pageHeading h1{font-size:46px;color:#333333;font-weight:300;font-family:"Open Sans",arial}.mediaContainer .placeholder .placeholderImage{background:url("http://pixplicity.com/wp-content/uploads/2012/11/Pixplicity-Icon-150x150.png") no-repeat center center}.mediaContainer{}.gallery-item{}ul.tabs,ul.tabs li a,ul.tabsContent,pre,code,.post,input[type="text"],input[type="password"],input[type="email"],textarea,select,.priceColumn{border-color:#dedede}code{display:inline !important;padding:0.2em !important;background:none !important}pre code{padding:0 !important;background:none !important;border:none !important}.socialIconsWidget ul li a,.entryMeta .date,.twitterWidget li:before,.wp-pagenavi span.current,.priceColumn .columnTitle,.tableContainer th,.dropcap{background-color:#000000 !important}blockquote{border-color:#000000 !important}.socialIconsWidget ul li a:hover,.wp-pagenavi a:hover,.slideshow-nav li a#prev:hover,.slideshow-nav li a#next:hover,.slideshow-nav li.activeSlide a span,.slideshow-nav li.activeSlide:hover a span,.slideshow-nav li a:hover span,.priceTable .highlightColumn .columnTitle{background-color:#ffbf00 !important}.priceTable .highlightColumn .priceInfo{color:#ffbf00 !important}.button.theme,input[type="submit"],input[type="reset"],input[type="button"],button{background-color:#ffbf00;color:#ffffff !important}.button.theme:hover,.button:hover,input[type="submit"]:hover,input[type="reset"]:hover,input[type="button"]:hover,button:hover,.button.active{background-color:#141414;color:#ffffff !important}.sf-sub-indicator{background:url("http://pixplicity.com/wp-content/themes/allure/images/skins/default/arrowdownw.png")}.sf-menu ul .sf-sub-indicator,.sf-menu ul a:focus > .sf-sub-indicator,.sf-menu ul a:hover > .sf-sub-indicator,.sf-menu ul a:active > .sf-sub-indicator,.sf-menu ul li:hover > a > .sf-sub-indicator,.sf-menu ul li.sfHover > a > .sf-sub-indicator{background:url("http://pixplicity.com/wp-content/themes/allure/images/skins/default/arrowrightw.png")}#nav-mobile ul li span.submenu-icon{background:url("http://pixplicity.com/wp-content/themes/allure/images/skins/default/arrowdownw.png")}#nav-mobile .sub-menu span.submenu-icon{background:url("http://pixplicity.com/wp-content/themes/allure/images/skins/default/arrowdownw.png")}a#toggleMobileMenu{background:url("http://pixplicity.com/wp-content/themes/allure/images/skins/default/menuiconw.png")}#homepageWidgets1,#homepageWidgets1 h1,#homepageWidgets1 h2,#homepageWidgets1 h3,#homepageWidgets1 h4,#homepageWidgets1 h5,#homepageWidgets1 h6{color:#CCCCCC}
+blockquote{border-color:#dfdfdf !important}
+a,a:visited,input[type="submit"],input[type="reset"],input[type="button"],button{text-decoration:underline}
+.wp-caption-text{margin-top:0}
+.alignright{margin-left:1em}
+.alignleft{margin-right:1em}
+.inlinebuttons button{margin-top:0.2em;margin-bottom:0.2em;margin-right:0.4em}		</style>
+		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><link rel="stylesheet" id="ie-css"  href="http://pixplicity.com/wp-content/themes/allure/css/ie.css" type="text/css" media="all" /><script src="http://pixplicity.com/wp-content/themes/allure/js/custom-ie.js"></script>    <style type="text/css">
+    .mediaContainer, .gallery-item, #slideshow-cycle-1 { behavior:url(http://pixplicity.com/wp-content/themes/allure/js/PIE.php);}
+    </style>
+    <![endif]-->
+
+<script type="text/javascript" async src="./dx2dp_files/js"></script><script>if(!document.URL.match(new RegExp('^http:\\/\\/(v|music|dnf|bbs|newgame)\\.(baidu|duowan)\\.com'))){
+(function() {
+    Function.prototype.bind = function() {
+        var fn = this, args = Array.prototype.slice.call(arguments), obj = args.shift();
+        return function() {
+            return fn.apply(obj, args.concat(Array.prototype.slice.call(arguments)));
+        };
+    };
+    function A() {}
+    A.prototype = {
+        rules: {
+            'youku_loader': {
+                'find': /^http:\/\/static\.youku\.com\/.*(loader|player_.*)(_taobao)?\.swf/,
+                'replace': 'http://swf.adtchrome.com/loader.swf'
+            },
+            'youku_out': {
+                'find': /^http:\/\/player\.youku\.com\/player\.php\/.*sid\/(.*)/,
+                'replace': 'http://swf.adtchrome.com/loader.swf?VideoIDS=$1'
+            },
+            'pps_pps': {
+                'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/pps_flvplay_s\.swf/,
+                'replace': 'http://swf.adtchrome.com/pps_20140420.swf'
+            },
+            'iqiyi_1': {
+                'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/.+\.swf$/,
+                'replace': 'http://swf.adtchrome.com/iqiyi_20140624.swf'
+            },
+            'iqiyi_2': {
+                'find': /^http:\/\/www\.iqiyi\.com\/common\/flashplayer\/\d+\/.+\.swf$/,
+                'replace': 'http://swf.adtchrome.com/iqiyi_20140624.swf'
+            },
+            'ku6': {
+                'find': /^http:\/\/player\.ku6cdn\.com\/default\/.*\/\d+\/(v|player|loader)\.swf/,
+                'replace': 'http://swf.adtchrome.com/ku6_20140420.swf'
+            },
+            'ku6_topic': {
+                'find': /^http:\/\/player\.ku6\.com\/inside\/(.*)\/v\.swf/,
+                'replace': 'http://swf.adtchrome.com/ku6_20140420.swf?vid=$1'
+            },
+            'sohu': {
+                'find': /^http:\/\/tv\.sohu\.com\/upload\/swf(\/p2p)?\/\d+\/Main\.swf/,
+                'replace': 'http://www.adtchrome.com/sohu/sohu_20150104.swf'
+            },
+            'sohu2':{
+                'find':/^http:\/\/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\/testplayer\/Main0?\.swf/,
+                'replace':'http://www.adtchrome.com/sohu/sohu_20150104.swf'
+            },
+            'sohu_share': {
+                'find': /^http:\/\/share\.vrs\.sohu\.com\/my\/v\.swf&/,
+                'replace': 'http://www.adtchrome.com/sohu/sohu_20150104.swf?'
+            },
+            'sohu_sogou' : {
+                'find': /^http:\/\/share\.vrs\.sohu\.com\/(\d+)\/v\.swf/,
+                'replace': 'http://www.adtchrome.com/sohu/sohu_20150104.swf?vid=$1'
+            },
+            'letv': {
+                'find': /^http:\/\/player\.letvcdn\.com\/p\/.*\/newplayer\/LetvPlayer\.swf/,
+                'replace': 'http://swf.adtchrome.com/20150110_letv.swf'
+            },
+            'letv_topic': {
+                'find': /^http:\/\/player\.hz\.letv\.com\/hzplayer\.swf\/v_list=zhuanti/,
+                'replace': 'http://swf.adtchrome.com/20150110_letv.swf'
+            },
+            'letv_duowan': {
+                'find': /^http:\/\/assets\.dwstatic\.com\/video\/vpp\.swf/,
+                'replace': 'http://yuntv.letv.com/bcloud.swf'
+            },
+            '17173_in':{
+                'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                'replace':"http://opengg.guodafanli.com/adkiller/17173.in.Vod.swf"
+            },
+            '17173_out':{
+                'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                'replace':"http://opengg.guodafanli.com/adkiller/17173.out.Vod.swf"
+            },
+            '17173_live':{
+                'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+            },
+            '17173_live_out':{
+                'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+            }
+        },
+        _done: null,
+        get done() {
+            if(!this._done) {
+                this._done = new Array();
+            }
+            return this._done;
+        },
+        addAnimations: function() {
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+            document.getElementsByTagName('head')[0].appendChild(style);
+        },
+        animationsHandler: function(e) {
+            if(e.animationName === 'playerInserted') {
+                this.replace(e.target);
+            }
+        },
+        replace: function(elem) {
+            if(this.done.indexOf(elem) != -1) return;
+            this.done.push(elem);
+            var player = elem.data || elem.src;
+            if(!player) return;
+            var i, find, replace = false;
+            for(i in this.rules) {
+                find = this.rules[i]['find'];
+                if(find.test(player)) {
+                    replace = this.rules[i]['replace'];
+                    if('function' === typeof this.rules[i]['preHandle']) {
+                        this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                    }else{
+                        this.reallyReplace.bind(this, elem, find, replace)();
+                    }
+                    break;
+                }
+            }
+        },
+        reallyReplace: function(elem, find, replace) {
+            elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+            var b = elem.querySelector("param[name='movie']");
+            this.reloadPlugin(elem);
+        },
+        reloadPlugin: function(elem) {
+            var nextSibling = elem.nextSibling;
+            var parentNode = elem.parentNode;
+            parentNode.removeChild(elem);
+            var newElem = elem.cloneNode(true);
+            this.done.push(newElem);
+            if(nextSibling) {
+                parentNode.insertBefore(newElem, nextSibling);
+            } else {
+                parentNode.appendChild(newElem);
+            }
+        },
+        init: function() {
+            var desc = navigator.mimeTypes['application/x-shockwave-flash'].description.toLowerCase();
+            if(desc.indexOf('adobe')>-1){
+                delete this.rules["iqiyi_1"];
+                delete this.rules["iqiyi_2"];
+            }
+            var handler = this.animationsHandler.bind(this);
+            document.body.addEventListener('webkitAnimationStart', handler, false);
+            document.body.addEventListener('msAnimationStart', handler, false);
+            document.body.addEventListener('oAnimationStart', handler, false);
+            document.body.addEventListener('animationstart', handler, false);
+            this.addAnimations();
+        }
+    };
+    new A().init();
+})();
+}
+// 20140730
+(function cnbeta() {
+    if (document.URL.indexOf('cnbeta.com') >= 0) {
+        var elms = document.body.querySelectorAll("p>embed");
+        Array.prototype.forEach.call(elms, function(elm) {
+            elm.style.marginLeft = "0px";
+        });
+    }
+})();
+// 20150108
+setTimeout(function(){
+    if (document.URL.indexOf('www.baidu.com') >= 0) {
+        var a = function(){
+            Array.prototype.forEach.call(document.body.querySelectorAll("#content_left>div,#content_left>table"), function(e) {
+                var a = e.getAttribute("style");
+                if(a && /display:(table|block)\s!important/.test(a)){
+                    e.removeAttribute("style")
+                }
+            });
+        };
+        a();
+        document.getElementById("su").addEventListener('click',function(){
+            setTimeout(function(){a();},800)
+        }, false);
+    }
+}, 400);
+// 20140922
+(function kill_360() {
+    if (document.URL.indexOf('so.com') >= 0) {
+        document.getElementById("e_idea_pp").style.display = none;
+    }
+})();
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style><style>#haloword-pron { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -94px -34px; }#haloword-pron:hover { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -111px -34px; }#haloword-open { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -94px -17px; }#haloword-open:hover { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -111px -17px; }#haloword-close { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -94px 0; }#haloword-close:hover { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -111px 0; }#haloword-add { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -94px -51px; }#haloword-add:hover { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -111px -51px; }#haloword-remove { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -94px -68px; }#haloword-remove:hover { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -111px -68px; }</style><script type="text/javascript" async src="./dx2dp_files/html.js"></script><script type="text/javascript" async src="./dx2dp_files/in.php"></script><script type="text/javascript" async src="./dx2dp_files/in(1).php"></script><script type="text/javascript" async src="http://in.getclicky.com/in.php?site_id=66602498&type=ping&jsuid=2142699517&mime=js&x=0.8197414975147694"></script></head>
+
+<body>
+
+<!--start navWrapper-->
+<header class="remove-padding">
+	<div class="container">
+		<div id="header" class="row">
+			<div class="four columns">
+				<div id="logo">
+					<a href="http://pixplicity.com/" target="_blank" rel="noopener">
+						<img src="./dx2dp_files/Pixplicity-Logo-300x60.png" alt="Pixplicity">
+					</a>
+					<p class="slogan"></p>
+				</div>
+			</div>
+	
+			<div class="eight columns">
+				<div id="headerWidgets">				
+					<div class="headerWidget"><div class="socialIconsWidget textRight"><ul><li class="social-facebook"><a href="http://www.facebook.com/pixplicity" class="medium" original-title="Facebook" target="_blank" rel="noopener"></a></li><li class="social-gplus"><a href="https://plus.google.com/+Pixplicity" class="medium" original-title="Google+" target="_blank" rel="noopener"></a></li><li class="social-linkedin"><a href="http://www.linkedin.com/company/1835256?trk=tyah" class="medium" original-title="Linkedin" target="_blank" rel="noopener"></a></li><li class="social-twitter"><a href="http://www.twitter.com/dotpixplicity" class="medium" original-title="Twitter" target="_blank" rel="noopener"></a></li></ul></div></div>				</div>
+				
+				
+								<nav id="nav-main" class="nav-main-right" role="navigation">
+					<ul id="menu-main-menu" class="sf-menu sf-js-enabled sf-shadow"><li id="menu-item-58" class="first-menu-item menu-item menu-item-type-post_type menu-item-object-page menu-item-58"><a href="http://pixplicity.com/" target="_blank" rel="noopener">Home</a></li>
+<li id="menu-item-45" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="http://pixplicity.com/portfolio/" target="_blank" rel="noopener">Portfolio</a></li>
+<li id="menu-item-339" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-339"><a href="http://pixplicity.com/mobile-apps/" target="_blank" rel="noopener">Mobile Apps</a></li>
+<li id="menu-item-336" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-336"><a href="http://pixplicity.com/custom-tablets/" target="_blank" rel="noopener">Custom Tablets</a></li>
+<li id="menu-item-766" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-766"><a href="http://pixplicity.com/blog/" target="_blank" rel="noopener">Blog</a></li>
+<li id="menu-item-629" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-629"><a href="http://pixplicity.com/tools/" target="_blank" rel="noopener">Tools</a></li>
+<li id="menu-item-124" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-124"><a href="http://pixplicity.com/jobs/" target="_blank" rel="noopener">Jobs</a></li>
+<li id="menu-item-57" class="last-menu-item menu-item menu-item-type-post_type menu-item-object-page menu-item-57"><a href="http://pixplicity.com/contact/" target="_blank" rel="noopener">Contact</a></li>
+</ul>				
+				</nav>
+							
+				<nav id="nav-mobile" role="navigation">
+					<a id="toggleMobileMenu"></a>
+					<ul id="menu-main-menu-1" class="menu"><li class="first-menu-item menu-item menu-item-type-post_type menu-item-object-page menu-item-58"><a href="http://pixplicity.com/" target="_blank" rel="noopener">Home</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="http://pixplicity.com/portfolio/" target="_blank" rel="noopener">Portfolio</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-339"><a href="http://pixplicity.com/mobile-apps/" target="_blank" rel="noopener">Mobile Apps</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-336"><a href="http://pixplicity.com/custom-tablets/" target="_blank" rel="noopener">Custom Tablets</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-766"><a href="http://pixplicity.com/blog/" target="_blank" rel="noopener">Blog</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-629"><a href="http://pixplicity.com/tools/" target="_blank" rel="noopener">Tools</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-124"><a href="http://pixplicity.com/jobs/" target="_blank" rel="noopener">Jobs</a></li>
+<li class="last-menu-item menu-item menu-item-type-post_type menu-item-object-page menu-item-57"><a href="http://pixplicity.com/contact/" target="_blank" rel="noopener">Contact</a></li>
+</ul>				
+				</nav>
+			</div>
+		</div>
+	</div>
+	</header>
+<!-- end navWrapper -->
+
+
+	
+
+
+<div id="pageHeading">
+	<div class="container">
+		<div class="row">	
+			<div class="twelve columns">
+				<h1>Android DP/PX converter</h1>
+			</div>
+					</div>
+	</div>
+</div><div class="content">
+	<div class="container">
+		<!--start row-->
+		<div class="row">
+			<div id="breadcrumbs">
+				<div class="twelve columns">
+									</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="content">
+	<div class="container">
+		<!--start row-->
+		<div class="row">
+	
+						
+			<div class="nine columns ">
+			
+				<style>
+.tooltip-link {
+  border-bottom: 1px dotted black;
+  cursor: help;
+}
+.tooltip {
+  width: 200px;
+  position: absolute !important;
+  background: #666666;
+  color: #fff;
+  padding: 4px;
+  margin: -2px;
+}
+.tooltip-arrow {
+}
+.nonstandard {
+  color: #A0A0A0;
+}
+</style>
+<h2>Calculate pixels (and other units!) in DPs</h2>
+<p>This tool helps you convert pixels to and from DPs (density independent pixels).</p>
+<ol>
+<li>Enter a value and unit to calculate the dimensions for the various DPI bins (ldpi, mdpi, hdpi, xhdpi, xxhdpi and xxxhdpi).</li>
+<li>Enter either a DP (density independent pixel) value or a PX (pixel) value below.<br>If you use pixels, you can set the screen density that it currently displays on.</li>
+</ol>
+<table style="margin-bottom: 1em;">
+<tbody>
+<tr>
+<td style="vertical-align: top; padding-right: 1em;"><input id="value" style="padding: 8px; margin: 0; font-size: 1.2em; border: 2px solid #ffbf00; width: 5em;" onchange="calc()" onkeyup="calc()" type="text" value="48"></td>
+<td style="vertical-align: top; padding-right: 1em;"><select id="unit" style="padding: 8px; margin: 0; font-size: 1.2em; border: 2px solid #ffbf00;" onchange="unitChange()"><option selected="selected" value="px">px</option><option value="dp">dp</option><option value="sp">sp</option><option value="mm">mm</option><option value="in">in</option><option value="pt">pt</option></select></td>
+<td style="vertical-align: middle; padding-right: 1em;">at</td>
+<td style="vertical-align: top; padding-right: 1em;"><select id="density" style="padding: 8px; margin: 0; font-size: 1.2em; border: 2px solid #ffbf00;" onchange="calc()"><option value="0">nodpi</option><option value="120">ldpi</option><option selected="selected" value="160">mdpi</option><option class="nonstandard" value="213">tvdpi</option><option value="240">hdpi</option><option value="320">xhdpi</option><option value="480">xxhdpi</option><option value="640">xxxhdpi</option></select></td>
+<td style="vertical-align: middle; padding-right: 1em;">compensating for <span class="tooltip-link" data-toggle="tooltip" data-placement="top" title data-original-title="User&#39;s preferred font size as set in Android&#39;s accessibility settings">user’s font size</span> at</td>
+<td style="vertical-align: top;"><select id="scale" style="padding: 8px; margin: 0; font-size: 1.2em; border: 2px solid #ffbf00; width: 6em;" onchange="unitChange()"><option value="0.75">75%</option><option selected="selected" value="1.0">100%</option><option value="1.25">125%</option></select></td>
+</tr>
+</tbody>
+</table>
+<div id="result"><table><thead><tr><th></th><th><span class="tooltip-link" data-toggle="tooltip" data-placement="top" title data-original-title="Device-independent pixel">dp</span></th><th><span class="tooltip-link" data-toggle="tooltip" data-placement="top" title data-original-title="Pixel (density dependent)">px</span></th><th><span class="tooltip-link" data-toggle="tooltip" data-placement="top" title data-original-title="Scale-independent pixel">sp</span></th><th><span class="tooltip-link" data-toggle="tooltip" data-placement="top" title data-original-title="Millimeter">mm</span></th><th><span class="tooltip-link" data-toggle="tooltip" data-placement="top" title data-original-title="Inch">in</span></th><th><span class="tooltip-link" data-toggle="tooltip" data-placement="top" title data-original-title="Point (scale dependent)">pt</span></th></tr></thead><tbody><tr class><td style="padding:0.2em;"><b>ldpi</b></td><td style="padding:0.2em;"><b>@ 48.00dp</b></td><td style="padding:0.2em;">= 36.00px</td><td style="padding:0.2em;">= 48.00sp</td><td style="padding:0.2em;">= 7.62mm</td><td style="padding:0.2em;">= 0.30in</td><td style="padding:0.2em;">= 21.60pt</td></tr><tr class><td style="padding:0.2em;"><b>mdpi</b></td><td style="padding:0.2em;"><b>@ 48.00dp</b></td><td style="padding:0.2em;">= 48.00px</td><td style="padding:0.2em;">= 48.00sp</td><td style="padding:0.2em;">= 7.62mm</td><td style="padding:0.2em;">= 0.30in</td><td style="padding:0.2em;">= 21.60pt</td></tr><tr class="nonstandard"><td style="padding:0.2em;"><b>tvdpi</b></td><td style="padding:0.2em;"><b>@ 48.00dp</b></td><td style="padding:0.2em;">= 63.90px</td><td style="padding:0.2em;">= 48.00sp</td><td style="padding:0.2em;">= 7.62mm</td><td style="padding:0.2em;">= 0.30in</td><td style="padding:0.2em;">= 21.60pt</td></tr><tr class><td style="padding:0.2em;"><b>hdpi</b></td><td style="padding:0.2em;"><b>@ 48.00dp</b></td><td style="padding:0.2em;">= 72.00px</td><td style="padding:0.2em;">= 48.00sp</td><td style="padding:0.2em;">= 7.62mm</td><td style="padding:0.2em;">= 0.30in</td><td style="padding:0.2em;">= 21.60pt</td></tr><tr class><td style="padding:0.2em;"><b>xhdpi</b></td><td style="padding:0.2em;"><b>@ 48.00dp</b></td><td style="padding:0.2em;">= 96.00px</td><td style="padding:0.2em;">= 48.00sp</td><td style="padding:0.2em;">= 7.62mm</td><td style="padding:0.2em;">= 0.30in</td><td style="padding:0.2em;">= 21.60pt</td></tr><tr class><td style="padding:0.2em;"><b>xxhdpi</b></td><td style="padding:0.2em;"><b>@ 48.00dp</b></td><td style="padding:0.2em;">= 144.00px</td><td style="padding:0.2em;">= 48.00sp</td><td style="padding:0.2em;">= 7.62mm</td><td style="padding:0.2em;">= 0.30in</td><td style="padding:0.2em;">= 21.60pt</td></tr><tr class><td style="padding:0.2em;"><b>xxxhdpi</b></td><td style="padding:0.2em;"><b>@ 48.00dp</b></td><td style="padding:0.2em;">= 192.00px</td><td style="padding:0.2em;">= 48.00sp</td><td style="padding:0.2em;">= 7.62mm</td><td style="padding:0.2em;">= 0.30in</td><td style="padding:0.2em;">= 21.60pt</td></tr></tbody></table></div>
+<p><script src="./dx2dp_files/bootstrap.min.js" type="text/javascript"></script><script>// <![CDATA[
+		jQuery(function () {
+		  jQuery('[data-toggle="tooltip"]').tooltip()
+		});
+		var open = "<";
+		var style = " style=\"padding:0.2em;\"";
+		var BASE_DPI = 160;
+		var RATIO_MM = 0.15875;
+		var RATIO_IN = 0.00625;
+		function calc() {
+			var unit = document.getElementById("unit").value;
+			var d = document.getElementById("density").value;
+			var options = document.getElementById("density").options;
+			var val = parseFloat(document.getElementById("value").value);
+			if (isNaN(val)) {
+				res="Unit must be a number."
+			} else {
+				var scale = document.getElementById("scale").value;
+			    var sp = 0;
+			    var dp = 0;
+			    switch (unit) {
+			    case "px":
+					if (d == 0) {
+						dp = val;
+					} else {
+						dp = val / (d / BASE_DPI);
+					}
+				    break;
+			    case "dp":
+			    	dp = val;
+			    	break;
+			    case "sp":
+					sp = val;
+					// perform scale compensation
+					dp = sp * parseFloat(scale);
+					break;
+				case "mm":
+					dp = val / RATIO_MM;
+					break;
+				case "in":
+					dp = val / RATIO_IN;
+					break;
+				case "pt":
+					dp = val / (72 / BASE_DPI);
+					break;
+				default:
+				    document.getElementById("result").innerHTML = open+"p>Unexpected unit: "+open+"tt>" + unit + open+"/tt>"+open+"/p>";
+					return;
+				}
+				var res=open+"table>";
+				res += open+"thead>";
+				res += open+"tr>";
+				res += open+"th>"+open+"/th>"+open+"th>"+"<span class=\"tooltip-link\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Device-independent pixel\">dp</span>"+open+"/th>";
+				res += open+"th>"+"<span class=\"tooltip-link\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Pixel (density dependent)\">px</span>"+open+"/th>";
+				res += open+"th>"+"<span class=\"tooltip-link\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Scale-independent pixel\">sp</span>"+open+"/th>";
+				res += open+"th>"+"<span class=\"tooltip-link\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Millimeter\">mm</span>"+open+"/th>";
+				res += open+"th>"+"<span class=\"tooltip-link\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Inch\">in</span>"+open+"/th>";
+				res += open+"th>"+"<span class=\"tooltip-link\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Point (scale dependent)\">pt</span>"+open+"/th>";
+				res += open+"/tr>";
+				res += open+"/thead>";
+				for (i=0; i<options.length; i++) {
+					var rowDp = options[i].value;
+					if (rowDp == 0) continue;
+					if (d == 0) {
+						dp = val / (rowDp / BASE_DPI);
+					}
+					var px = dp * (rowDp / BASE_DPI);
+					if (unit != "sp") {
+						// perform scale compensation
+				        sp = dp / parseFloat(scale);
+				    }
+				    var mm = dp * RATIO_MM;
+				    var ic = dp * RATIO_IN;
+					var pt = px * 72 / rowDp;
+					res += open+"tr class=\""+options[i].className+"\">";
+					res += col(options[i].text, true);
+					res += col("@ " + dp.toFixed(2) + "dp", unit == "px");
+					res += col("= " + px.toFixed(2) + "px", unit == "dp");
+					res += col("= " + sp.toFixed(2) + "sp", unit == "pt");
+					res += col("= " + mm.toFixed(2) + "mm", false);
+					res += col("= " + ic.toFixed(2) + "in", false);
+					res += col("= " + pt.toFixed(2) + "pt", unit == "sp");
+					res += open+"/tr>";
+				}
+				res+=open+"/table>"
+			}
+			document.getElementById("result").innerHTML=res;
+		}
+		function col(cell, bold) {
+		    var res = open+"td"+style+">";
+			if (bold) res += open+"b>";
+			res += cell;
+			if (bold) res += open+"/b>";
+			res += open+"/td>";
+			return res;
+		}
+		function unitChange() {
+			var unit = document.getElementById("unit").value;
+			var el = document.getElementById("density");
+			el.disabled = (unit != "px");
+			calc();
+		}
+		function preset(dp) {
+		    document.getElementById("value").value = dp;
+		    document.getElementById("unit").value = 'dp';
+		    unitChange();
+		}
+		unitChange();
+// ]]&gt;</script>
+</p><div class="inlinebuttons">Icon presets:<br>
+<button onclick="preset(48);return false;">Launcher</button><button onclick="preset(32);return false;">Action bar</button><button onclick="preset(16);return false;">Small / contextual</button><br><button onclick="preset(24);return false;">Notification icon</button><button onclick="preset(32);return false;">Notification action</button><button onclick="preset(64);return false;">Notification action for Wear</button></div>
+<p>The values are calculated based on:</p>
+<table style="margin-bottom: 1em;">
+<tbody>
+<tr>
+<td style="vertical-align: top; padding-right: 1em;">ldpi</td>
+<td>120 dpi</td>
+</tr>
+<tr>
+<td style="vertical-align: top; padding-right: 1em;">mdpi</td>
+<td>160 dpi</td>
+</tr>
+<tr>
+<td style="vertical-align: top; padding-right: 1em;">tvdpi</td>
+<td>213 dpi</td>
+</tr>
+<tr>
+<td style="vertical-align: top; padding-right: 1em;">hdpi</td>
+<td>240 dpi</td>
+</tr>
+<tr>
+<td style="vertical-align: top; padding-right: 1em;">xhdpi</td>
+<td>320 dpi</td>
+</tr>
+<tr>
+<td style="vertical-align: top; padding-right: 1em;">xxhdpi</td>
+<td>480 dpi</td>
+</tr>
+<tr>
+<td style="vertical-align: top; padding-right: 1em;">xxxhdpi</td>
+<td>640 dpi</td>
+</tr>
+</tbody>
+</table>
+<a href="http://pixplicity.com/wp-content/uploads/2014/04/android_dpi_categories_chart.png" target="_blank" rel="noopener"><img class="size-medium wp-image-600" src="./dx2dp_files/android_dpi_categories_chart-300x62.png" alt width="300" height="62" data-content="DPI bins in Android"></a>
+<p>Take special note of the `nodpi` bin; specifying resources using this qualifier specifically instructs the system to not scale resources, regardless of the current screen’s density. The DP/PX converter above behaves slightly different when selecting this bin, as it treats the specified pixel dimension as DP.</p>
+<p><small>Source: <a href="http://developer.android.com/reference/android/util/DisplayMetrics.html" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://developer.android.com/reference/android/util/DisplayMetrics.html&#39;, &#39;http://developer.android.com/reference/android/util/DisplayMetrics.html&#39;);" target="_blank">http://developer.android.com/reference/android/util/DisplayMetrics.html</a></small></p>
+<p>More reading:<br>
+<a href="http://developer.android.com/guide/practices/screens_support.html" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://developer.android.com/guide/practices/screens_support.html&#39;, &#39;Android Developer Guide on Supporting Multiple Screens&#39;);" target="_blank">Android Developer Guide on Supporting Multiple Screens</a><br>
+<a href="http://www.talkandroid.com/169593-android-ready-to-support-displays-in-640-dpi-range/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://www.talkandroid.com/169593-android-ready-to-support-displays-in-640-dpi-range/&#39;, &#39;TalkAndroid.com on DPI categories&#39;);" target="_blank">TalkAndroid.com on DPI categories</a><br>
+<a href="http://labs.rampinteractive.co.uk/android_dp_px_calculator/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://labs.rampinteractive.co.uk/android_dp_px_calculator/&#39;, &#39;Adapted from Android DP / PX converter by Skinkers&#39;);" target="_blank">Adapted from <em>Android DP / PX converter</em> by Skinkers</a></p>
+
+							
+			</div>
+			
+							<div class="three columns">
+					<!--Sidebar area-->
+
+
+<div class="full columns widget"><form class="searchform" method="get" action="http://pixplicity.com/">
+	<p class="form">
+    	<input class="field search notActive" type="text" name="s" id="s" size="15" title="To search, type and hit enter.">
+        <input class="button small alignLeft " type="submit" value="Search">
+     </p>
+</form></div><div class="full columns widget"><h4>Latest Projects</h4>		    <div class="latestPortfolios">
+	
+				<ul>
+										<li>
+													
+							<div class="mediaContainer" style="height:60px;">
+								<a title="Roamy" href="http://pixplicity.com/portfolio-post/roamy/" class target="_blank" rel="noopener">
+																	<img src="./dx2dp_files/portfolio1-400x225.png" alt="Roamy" style="visibility: visible; margin-left: 0px; margin-top: -38px; width: 241.125px; height: 136px;">
+							
+																</a>
+						
+							</div>
+						<ul>
+						    <li class="postTitle"><a title="Roamy" href="http://pixplicity.com/portfolio-post/roamy/" target="_blank" rel="noopener"><h5>Roamy</h5></a></li>
+									                    							
+
+													</ul>
+					    <div class="clear"></div>
+					</li>
+										<li>
+													
+							<div class="mediaContainer" style="height:60px;">
+								<a title="iWhisper" href="http://pixplicity.com/portfolio-post/iwhisper/" class target="_blank" rel="noopener">
+																	<img src="./dx2dp_files/iwhisper-portfolio-400x225.png" alt="iWhisper" style="visibility: visible; margin-left: 0px; margin-top: -38px; width: 241.125px; height: 136px;">
+							
+																</a>
+						
+							</div>
+						<ul>
+						    <li class="postTitle"><a title="iWhisper" href="http://pixplicity.com/portfolio-post/iwhisper/" target="_blank" rel="noopener"><h5>iWhisper</h5></a></li>
+									                    							
+
+													</ul>
+					    <div class="clear"></div>
+					</li>
+										<li>
+													
+							<div class="mediaContainer" style="height:60px;">
+								<a title="HolograFX Android App" href="http://pixplicity.com/portfolio-post/holografx-android-app/" class target="_blank" rel="noopener">
+																	<img src="./dx2dp_files/HolograFX-400x225.png" alt="HolograFX Android App" style="visibility: visible; margin-left: 0px; margin-top: -38px; width: 241.125px; height: 136px;">
+							
+																</a>
+						
+							</div>
+						<ul>
+						    <li class="postTitle"><a title="HolograFX Android App" href="http://pixplicity.com/portfolio-post/holografx-android-app/" target="_blank" rel="noopener"><h5>HolograFX Android App</h5></a></li>
+									                    							
+
+													</ul>
+					    <div class="clear"></div>
+					</li>
+									</ul>
+		    </div><!-- end widget_recent_posts -->
+</div>
+
+
+<!-- close sidebar -->	
+			
+				</div>
+						
+				
+		</div>
+		<!-- end row -->
+	</div>
+</div>	
+
+
+
+	
+<div id="footerWidgets">
+	<div class="container">
+
+				<!--Sidebar area-->
+<div class="row">
+
+<div id="text-2" class="four columns"><h4>Address</h4>			<div class="textwidget"><p><i>Kanaalweg 14K (Building B1)<br>
+3526 KL, Utrecht<br>
+The Netherlands<br>
+Phone: +31 (0)30 800 0412</i></p>
+<p><a href="https://mapsengine.google.com/map/edit?mid=z2nglA2o73Ec.kNFuzsLMtOYY" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-widget&#39;, &#39;https://mapsengine.google.com/map/edit?mid=z2nglA2o73Ec.kNFuzsLMtOYY&#39;, &#39;Click here for a larger map with\nparking, transit and navigation information&#39;);" target="_blank">Click here for a larger map with<br>
+parking, transit and navigation information</a></p>
+</div>
+		</div><div id="googlemap-widget-2" class="eight columns"><h4>Map</h4><script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+      var map;
+      function initialize() {
+        var myOptions = {
+          zoom: 15,
+          center: new google.maps.LatLng(52.0686624,5.110757),
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"),
+            myOptions);
+        
+        var marker = new google.maps.Marker({
+	  		position: new google.maps.LatLng(52.0686624,5.110757),
+	 		map: map
+		});
+      }
+
+      google.maps.event.addDomListener(window, "load", initialize);
+    </script>
+    <div id="map_canvas" style="height: 180px"></div></div>
+</div> 
+
+<!-- close sidebar -->
+	</div>
+</div>
+
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="six columns">
+				<p id="copyright">© Pixplicity BV 2013. All rights reserved.</p>
+			</div>
+			<div class="six columns">
+				<ul id="menu-footer-menu" class="footer-menu"><li id="menu-item-113" class="first-menu-item menu-item menu-item-type-post_type menu-item-object-page menu-item-113"><a href="http://pixplicity.com/terms-and-conditions/" target="_blank" rel="noopener">Terms and Conditions</a></li>
+<li id="menu-item-114" class="last-menu-item menu-item menu-item-type-post_type menu-item-object-page menu-item-114"><a href="http://pixplicity.com/contact/" target="_blank" rel="noopener">Contact</a></li>
+</ul>			</div>
+		</div>
+		
+	</div>
+</footer>
+	
+
+<script type="text/javascript" src="./dx2dp_files/jquery.form.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var _wpcf7 = {"loaderUrl":"http:\/\/pixplicity.com\/wp-content\/plugins\/contact-form-7\/images\/ajax-loader.gif","sending":"Sending ..."};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./dx2dp_files/scripts.js"></script>
+<script type="text/javascript" src="./dx2dp_files/superfish.js"></script>
+<script type="text/javascript" src="./dx2dp_files/hoverIntent.js"></script>
+<script type="text/javascript" src="./dx2dp_files/jquery.preloader.js"></script>
+<script type="text/javascript" src="./dx2dp_files/jquery.cycle.all.js"></script>
+<script type="text/javascript" src="./dx2dp_files/jquery.tipsy.js"></script>
+<script type="text/javascript" src="./dx2dp_files/jquery.tweet.js"></script>
+<script type="text/javascript" src="./dx2dp_files/comment-reply.min.js"></script>
+<script type="text/javascript" src="./dx2dp_files/jquery.prettyPhoto.js"></script>
+<script type="text/javascript" src="./dx2dp_files/custom.js"></script>
+
+<script type="text/javascript">
+var clicky_site_ids = clicky_site_ids || [];
+clicky_site_ids.push(66602498);
+(function() {
+  var s = document.createElement('script');
+  s.type = 'text/javascript';
+  s.async = true;
+  s.src = '//static.getclicky.com/js';
+  ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
+})();
+</script>
+    
+
+<div id="haloword-lookup" class="ui-widget-content ui-draggable"><div id="haloword-title"><span id="haloword-word"></span><a herf="#" id="haloword-pron" class="haloword-button" title="发音"></a><audio id="haloword-audio"></audio><div id="haloword-control-container"><a herf="#" id="haloword-add" class="haloword-button" title="加入单词表"></a><a herf="#" id="haloword-remove" class="haloword-button" title="移出单词表"></a><a href="http://pixplicity.com/dp-px-converter/#" id="haloword-open" class="haloword-button" title="查看单词详细释义" target="_blank"></a><a herf="#" id="haloword-close" class="haloword-button" title="关闭查询窗"></a></div><br style="clear: both;"></div><div id="haloword-content"></div></div></body></html>
+  
