@@ -1,0 +1,408 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>Dart入门一 | dongye&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="dongye">
+    
+    <meta name="description" content="1.变量可以通过显式声明指定类型的方式，创建一个变量并进行初始化。1String name = &#39;Bob&#39;;
+dart中变量支持类型推导，用var创建一个变量并进行初始化:1var name = &#39;Bob&#39;;
+name 变量的类型被推断为 String。 var的错误用法：12var name = ">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="dongye&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="dongye&#39;s blog" title="dongye&#39;s blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="dongye&#39;s blog">dongye&#39;s blog</a></h1>
+				<h2 class="blog-motto">Read the Fucking Source Code</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">存档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:dongyeforever.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/12/12/learn-dart01/" title="Dart入门一" itemprop="url">Dart入门一</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://dongyeforever.github.io" title="dongye">dongye</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-12-12T09:17:16.000Z" itemprop="datePublished">2019-12-12</time>
+    更新日期:<time datetime="2019-12-12T09:37:05.571Z" itemprop="dateModified">2019-12-12</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-变量"><span class="toc-number">1.</span> <span class="toc-text">1.变量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#默认值"><span class="toc-number">1.0.1.</span> <span class="toc-text">默认值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Final-和-Const"><span class="toc-number">1.0.2.</span> <span class="toc-text">Final 和 Const</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#2-内建类型"><span class="toc-number">2.</span> <span class="toc-text">2.内建类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Number"><span class="toc-number">2.0.1.</span> <span class="toc-text">Number</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#集合的常见操作："><span class="toc-number">2.0.2.</span> <span class="toc-text">集合的常见操作：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Map的常见操作"><span class="toc-number">2.0.3.</span> <span class="toc-text">Map的常见操作</span></a></li></ol></li>
+		</div>
+		
+		<h3 id="1-变量"><a href="#1-变量" class="headerlink" title="1.变量"></a>1.变量</h3><p>可以通过显式声明指定类型的方式，创建一个变量并进行初始化。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> name = <span class="string">'Bob'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>dart中变量支持类型推导，用var创建一个变量并进行初始化:<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'Bob'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>name 变量的类型被推断为 String。 var的错误用法：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'Bob'</span>;</span><br><span class="line">name = <span class="number">18</span>; <span class="comment">// error 不可以将int赋值给一个String类型</span></span><br></pre></td></tr></table></figure></p>
+<p>如果对象不限定为单个类型，可以指定为 <code>对象类型</code> 或 <code>动态类型</code>。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dynamic</span> name = <span class="string">'Bob'</span>;</span><br><span class="line"><span class="built_in">print</span>(name.runtimeType); <span class="comment">// String</span></span><br><span class="line">name = <span class="number">18</span>;</span><br><span class="line"><span class="built_in">print</span>(name.runtimeType); <span class="comment">// int</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>提示： 本页局部变量遵守 <code>风格建议指南</code> 使用 var。 没有使用指定类型的方式。</p>
+</blockquote>
+<h5 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h5><p>未初始化的变量默认值是 <code>null</code>。即使变量是数字 类型默认值也是 null，因为在 Dart 中一切都是对象，数字类型 也不例外。</p>
+<h5 id="Final-和-Const"><a href="#Final-和-Const" class="headerlink" title="Final 和 Const"></a>Final 和 Const</h5><p>使用过程中从来不会被修改的变量， 可以使用 final 或 const, 而不是 var 或者其他类型， Final 变量的值只能被设置一次； const 变量在编译时就已经固定或类变量在第一次使用时被初始化。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> name = <span class="string">'Bob'</span>; <span class="comment">// Without a type annotation</span></span><br><span class="line"><span class="keyword">final</span> <span class="built_in">String</span> nickname = <span class="string">'Bobby'</span>;</span><br><span class="line">name = <span class="string">'Alice'</span>; <span class="comment">// error: 一个 final 变量只能被设置一次。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> bar = <span class="number">1000000</span>; <span class="comment">// 压力单位 (dynes/cm2)</span></span><br><span class="line"><span class="keyword">const</span> <span class="built_in">double</span> atm = <span class="number">1.01325</span> * bar; <span class="comment">// 标准气压</span></span><br><span class="line"><span class="keyword">const</span> baz = [];</span><br><span class="line">baz[<span class="number">0</span>] = <span class="number">1</span>; <span class="comment">// error: Cannot modify an unmodifiable list</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>const在赋值时，赋值的内容必须是在编译期间就确定下来的。<code>const是不可以赋值为DateTime.now()</code></li>
+<li>final在赋值时，可以动态获取，比如赋值一个函数。<code>final一旦被赋值后就有确定的结果，不会再次赋值.</code></li>
+</ul>
+<h3 id="2-内建类型"><a href="#2-内建类型" class="headerlink" title="2.内建类型"></a>2.内建类型</h3><p>Dart 语言支持以下内建类型：</p>
+<p>Number<br>String<br>Boolean<br>List (也被称为 Array)<br>Map<br>Set<br>Rune (用于在字符串中表示 Unicode 字符)<br>Symbol</p>
+<h5 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h5><p><code>int</code><br>整数值不大于64位， 具体取决于平台。 在 Dart VM 上， 值的范围从 -2^63 到 2^63 - 1. Dart 被编译为 JavaScript 时，使用 JavaScript numbers, 值的范围从 -2^53 到 2^53 - 1.</p>
+<p><code>double</code><br>64位（双精度）浮点数，依据 IEEE 754 标准。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> hex = <span class="number">0xDEADBEEF</span>; <span class="comment">// 支持16进制格式</span></span><br></pre></td></tr></table></figure></p>
+<p><code>String</code><br>Dart 字符串是一组 UTF-16 单元序列。 字符串通过单引号或者双引号创建。</p>
+<blockquote>
+<p>提示： == 运算符用来测试两个对象是否相等。可以使用 + 运算符来把多个字符串连接为一个。</p>
+</blockquote>
+<p>类似 <code>python</code> 中使用连续三个单引号或者三个双引号实现多行字符串对象的创建，使用 <code>r</code> 前缀，可以创建 “原始 raw” 字符串：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s1 = <span class="string">'''</span></span><br><span class="line"><span class="string">You can create</span></span><br><span class="line"><span class="string">multi-line strings like this one.</span></span><br><span class="line"><span class="string">'''</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> s2 = <span class="string">"""This is also a</span></span><br><span class="line"><span class="string">multi-line string."""</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> s = <span class="string">r"In a raw string, even \n isn't special."</span>;</span><br></pre></td></tr></table></figure></p>
+<p><code>Boolean</code><br>Dart 使用 <code>bool</code> 类型表示布尔值。 Dart 只有字面量 <code>true</code> and <code>false</code> 是布尔类型， 这两个对象都是编译时常量。</p>
+<p>Dart 的类型安全意味着不能使用 if (nonbooleanValue) 或者 assert (nonbooleanValue)。 而是应该像下面这样，明确的进行值检查：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 检查空字符串。</span></span><br><span class="line"><span class="keyword">var</span> fullName = <span class="string">''</span>;</span><br><span class="line"><span class="keyword">assert</span>(fullName.isEmpty);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查 0 值。</span></span><br><span class="line"><span class="keyword">var</span> hitPoints = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">assert</span>(hitPoints &lt;= <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查 null 值。</span></span><br><span class="line"><span class="keyword">var</span> unicorn;</span><br><span class="line"><span class="keyword">assert</span>(unicorn == <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查 NaN 。</span></span><br><span class="line"><span class="keyword">var</span> iMeantToDoThis = <span class="number">0</span> / <span class="number">0</span>;</span><br><span class="line"><span class="keyword">assert</span>(iMeantToDoThis.isNaN);</span><br></pre></td></tr></table></figure></p>
+<p><code>List</code><br>Dart 中的 List 字面量非常像 JavaScript 中的 array 字面量。 下面是一个 Dart List 的示例：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>提示：Dart 推断 list 的类型为 List<int> 。 如果尝试将非整数对象添加到此 List 中， 则分析器或运行时会引发错误。</int></p>
+</blockquote>
+<p>在 List 字面量之前添加 const 关键字，可以定义 List 类型的编译时常量：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> constantList = <span class="keyword">const</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="comment">// constantList[1] = 1; // 取消注释会引起错误。</span></span><br></pre></td></tr></table></figure></p>
+<p><code>Set</code><br>下面是通过字面量创建 Set 的一个简单示例：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> halogens = &#123;<span class="string">'fluorine'</span>, <span class="string">'chlorine'</span>, <span class="string">'bromine'</span>, <span class="string">'iodine'</span>, <span class="string">'astatine'</span>&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>要创建一个空集，使用前面带有类型参数的 {} ，或者将 {} 赋值给 Set 类型的变量：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> names = &lt;<span class="built_in">String</span>&gt;&#123;&#125;;</span><br><span class="line"><span class="comment">// Set&lt;String&gt; names = &#123;&#125;; // 这样也是可以的。</span></span><br><span class="line"><span class="comment">// var names = &#123;&#125;; // 这样会创建一个 Map ，而不是 Set 。</span></span><br></pre></td></tr></table></figure></p>
+<p><code>Map</code><br>通常来说， Map 是用来关联 keys 和 values 的对象。 keys 和 values 可以是任何类型的对象。在一个 Map 对象中一个 key 只能出现一次。 但是 value 可以出现多次。Map 对象也可以使用 Map 构造函数创建：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gifts = &#123;</span><br><span class="line">  <span class="comment">// Key:    Value</span></span><br><span class="line">  <span class="string">'first'</span>: <span class="string">'partridge'</span>,</span><br><span class="line">  <span class="string">'second'</span>: <span class="string">'turtledoves'</span>,</span><br><span class="line">  <span class="string">'fifth'</span>: <span class="string">'golden rings'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> gifts = <span class="built_in">Map</span>();</span><br><span class="line">gifts[<span class="string">'first'</span>] = <span class="string">'partridge'</span>;</span><br><span class="line">gifts[<span class="string">'second'</span>] = <span class="string">'turtledoves'</span>;</span><br><span class="line">gifts[<span class="string">'fifth'</span>] = <span class="string">'golden rings'</span>;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>提示: 这里为什么只有 Map() ，而不是使用 new Map()。 因为在 Dart 2 中，new 关键字是可选的。</p>
+</blockquote>
+<p>类似 JavaScript ，添加 key-value 对到已有的 Map 中：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gifts = &#123;<span class="string">'first'</span>: <span class="string">'partridge'</span>&#125;;</span><br><span class="line">gifts[<span class="string">'fourth'</span>] = <span class="string">'calling birds'</span>; <span class="comment">// Add a key-value pair</span></span><br></pre></td></tr></table></figure></p>
+<p>类似 JavaScript ，从一个 Map 中获取一个 value：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gifts = &#123;<span class="string">'first'</span>: <span class="string">'partridge'</span>&#125;;</span><br><span class="line"><span class="keyword">assert</span>(gifts[<span class="string">'first'</span>] == <span class="string">'partridge'</span>);</span><br></pre></td></tr></table></figure></p>
+<h5 id="集合的常见操作："><a href="#集合的常见操作：" class="headerlink" title="集合的常见操作："></a>集合的常见操作：</h5><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取集合的长度</span></span><br><span class="line"><span class="built_in">print</span>(list.length);</span><br><span class="line"><span class="built_in">print</span>(<span class="keyword">set</span>.length);</span><br><span class="line"><span class="built_in">print</span>(map.length);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加/删除/包含元素</span></span><br><span class="line">list.add(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">set</span>.add(<span class="number">5</span>);</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$list</span> <span class="subst">$set</span>'</span>);</span><br><span class="line"></span><br><span class="line">list.remove(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">set</span>.remove(<span class="number">1</span>);</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$list</span> <span class="subst">$set</span>'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(list.contains(<span class="number">2</span>));</span><br><span class="line"><span class="built_in">print</span>(<span class="keyword">set</span>.contains(<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// List根据index删除元素</span></span><br><span class="line">list.removeAt(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$list</span>'</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="Map的常见操作"><a href="#Map的常见操作" class="headerlink" title="Map的常见操作"></a>Map的常见操作</h5><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Map的操作</span></span><br><span class="line"><span class="comment">// 1.根据key获取value</span></span><br><span class="line"><span class="built_in">print</span>(map[<span class="string">'name'</span>]); <span class="comment">// Bob</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.获取所有的entries</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$&#123;map.entries&#125;</span> <span class="subst">$&#123;map.entries.runtimeType&#125;</span>'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.获取所有的keys</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$&#123;map.keys&#125;</span> <span class="subst">$&#123;map.keys.runtimeType&#125;</span>'</span>); <span class="comment">// (name, age) _CompactIterable&lt;String&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4.获取所有的values</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$&#123;map.values&#125;</span> <span class="subst">$&#123;map.values.runtimeType&#125;</span>'</span>); <span class="comment">// (Bob, 18) _CompactIterable&lt;Object&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5.判断是否包含某个key或者value</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$&#123;map.containsKey(<span class="string">'age'</span>)&#125;</span> <span class="subst">$&#123;map.containsValue(<span class="number">18</span>)&#125;</span>'</span>); <span class="comment">// true true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 6.根据key删除元素</span></span><br><span class="line">map.remove(<span class="string">'age'</span>);</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$&#123;map&#125;</span>'</span>); <span class="comment">// &#123;name: Bob&#125;</span></span><br></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Dart/">Dart</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Dart/">Dart</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://dongyeforever.github.io/2019/12/12/learn-dart01/" data-title="Dart入门一 | dongye&#39;s blog" data-tsina class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2019/12/10/chrome-extension/" title="chrome扩展开发">
+ <strong>NEXT:</strong><br> 
+ <span>chrome扩展开发
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-变量"><span class="toc-number">1.</span> <span class="toc-text">1.变量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#默认值"><span class="toc-number">1.0.1.</span> <span class="toc-text">默认值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Final-和-Const"><span class="toc-number">1.0.2.</span> <span class="toc-text">Final 和 Const</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#2-内建类型"><span class="toc-number">2.</span> <span class="toc-text">2.内建类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Number"><span class="toc-number">2.0.1.</span> <span class="toc-text">Number</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#集合的常见操作："><span class="toc-number">2.0.2.</span> <span class="toc-text">集合的常见操作：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Map的常见操作"><span class="toc-number">2.0.3.</span> <span class="toc-text">Map的常见操作</span></a></li></ol></li>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Android/" title="Android">Android<sup>15</sup></a></li>
+		
+			<li><a href="/categories/Dart/" title="Dart">Dart<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Web/" title="Web">Web<sup>2</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>1</sup></a></li>
+		
+			<li><a href="/categories/小程序/" title="小程序">小程序<sup>1</sup></a></li>
+		
+			<li><a href="/categories/随笔/" title="随笔">随笔<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Dart/" title="Dart">Dart<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Retrofit/" title="Retrofit">Retrofit<sup>2</sup></a></li>
+		
+			<li><a href="/tags/android-studio/" title="android studio">android studio<sup>4</sup></a></li>
+		
+			<li><a href="/tags/cache/" title="cache">cache<sup>2</sup></a></li>
+		
+			<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+		
+			<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+		
+			<li><a href="/tags/stetho/" title="stetho">stetho<sup>1</sup></a></li>
+		
+			<li><a href="/tags/小程序/" title="小程序">小程序<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2019 
+		
+		<a href="http://dongyeforever.github.io" target="_blank" title="dongye">dongye</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"dongye"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-76853415-1', 'dongye.tk');  
+ga('send', 'pageview');
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:5em;right:50px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png"></a>
+</div>
+<script src="/js/totop.js"></script>
+
+
+  </body>
+</html>

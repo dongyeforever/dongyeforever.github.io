@@ -889,7 +889,7 @@ article .article-content h3 >code,
 article .article-content h4 >code,
 article .article-content h5 >code,
 article .article-content h6 >code {
-  color: #a3a3a3;
+  color: #e2361c;
 }
 article .article-content hr {
   border: 1px solid #dbdbdb;
@@ -952,7 +952,7 @@ article .article-content strong code,
 article .article-content em code {
   font-family: Monaco, Menlo, Consolas, Courier New, monospace;
   background: #eee;
-  color: #4b4b4b;
+  color: #e74e37;
   border: 1px solid #d6d6d6;
   padding: 0 5px;
   margin: 0 2px;
