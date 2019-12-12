@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
 <html lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
   
     <title>Dart入门一 | dongye&#39;s blog</title>
@@ -33,7 +33,7 @@ name 变量的类型被推断为 String。 var的错误用法：12var name = ">
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.svg" alt="dongye&#39;s blog" title="dongye&#39;s blog"></a>
+				<a href="/"><img src="/img/logo.svg" alt="dongye&#39;s blog" title="dongye&#39;s blog"/></a>
 			</div>
 			
 			<div id="textlogo">
@@ -55,8 +55,8 @@ name 变量的类型被推断为 String。 var的错误用法：12var name = ">
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
-						<input type="hidden" name="q" value="site:dongyeforever.github.io">
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:blog.lovek.vip">
 					</form>
 					
 					</li>
@@ -71,15 +71,15 @@ name 变量的类型被推断为 String。 var的错误用法：12var name = ">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/12/12/learn-dart01/" title="Dart入门一" itemprop="url">Dart入门一</a>
+      <a href="/2019/12/01/dart-learn01/" title="Dart入门一" itemprop="url">Dart入门一</a>
   </h1>
   <p class="article-author">By
     
-      <a href="http://dongyeforever.github.io" title="dongye">dongye</a>
+      <a href="http://blog.lovek.vip" title="dongye">dongye</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-12-12T09:17:16.000Z" itemprop="datePublished">2019-12-12</time>
-    更新日期:<time datetime="2019-12-12T09:37:05.571Z" itemprop="dateModified">2019-12-12</time>
+    <time datetime="2019-12-01T09:17:16.000Z" itemprop="datePublished">2019-12-01</time>
+    更新日期:<time datetime="2019-12-12T15:27:13.789Z" itemprop="dateModified">2019-12-12</time>
     
   </p>
 </header>
@@ -88,7 +88,7 @@ name 变量的类型被推断为 String。 var的错误用法：12var name = ">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-变量"><span class="toc-number">1.</span> <span class="toc-text">1.变量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#默认值"><span class="toc-number">1.0.1.</span> <span class="toc-text">默认值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Final-和-Const"><span class="toc-number">1.0.2.</span> <span class="toc-text">Final 和 Const</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#2-内建类型"><span class="toc-number">2.</span> <span class="toc-text">2.内建类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Number"><span class="toc-number">2.0.1.</span> <span class="toc-text">Number</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#集合的常见操作："><span class="toc-number">2.0.2.</span> <span class="toc-text">集合的常见操作：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Map的常见操作"><span class="toc-number">2.0.3.</span> <span class="toc-text">Map的常见操作</span></a></li></ol></li>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-变量"><span class="toc-number">1.</span> <span class="toc-text">1.变量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#默认值"><span class="toc-number">1.0.1.</span> <span class="toc-text">默认值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Final-和-Const"><span class="toc-number">1.0.2.</span> <span class="toc-text">Final 和 Const</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-内建类型"><span class="toc-number">2.</span> <span class="toc-text">2.内建类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Number"><span class="toc-number">2.0.1.</span> <span class="toc-text">Number</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#集合的常见操作："><span class="toc-number">2.0.2.</span> <span class="toc-text">集合的常见操作：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Map的常见操作"><span class="toc-number">2.0.3.</span> <span class="toc-text">Map的常见操作</span></a></li></ol></li></ol></li></ol>
 		</div>
 		
 		<h3 id="1-变量"><a href="#1-变量" class="headerlink" title="1.变量"></a>1.变量</h3><p>可以通过显式声明指定类型的方式，创建一个变量并进行初始化。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> name = <span class="string">'Bob'</span>;</span><br></pre></td></tr></table></figure></p>
@@ -130,6 +130,7 @@ name 变量的类型被推断为 String。 var的错误用法：12var name = ">
 <p>类似 JavaScript ，从一个 Map 中获取一个 value：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gifts = &#123;<span class="string">'first'</span>: <span class="string">'partridge'</span>&#125;;</span><br><span class="line"><span class="keyword">assert</span>(gifts[<span class="string">'first'</span>] == <span class="string">'partridge'</span>);</span><br></pre></td></tr></table></figure></p>
 <h5 id="集合的常见操作："><a href="#集合的常见操作：" class="headerlink" title="集合的常见操作："></a>集合的常见操作：</h5><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取集合的长度</span></span><br><span class="line"><span class="built_in">print</span>(list.length);</span><br><span class="line"><span class="built_in">print</span>(<span class="keyword">set</span>.length);</span><br><span class="line"><span class="built_in">print</span>(map.length);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加/删除/包含元素</span></span><br><span class="line">list.add(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">set</span>.add(<span class="number">5</span>);</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$list</span> <span class="subst">$set</span>'</span>);</span><br><span class="line"></span><br><span class="line">list.remove(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">set</span>.remove(<span class="number">1</span>);</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$list</span> <span class="subst">$set</span>'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(list.contains(<span class="number">2</span>));</span><br><span class="line"><span class="built_in">print</span>(<span class="keyword">set</span>.contains(<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// List根据index删除元素</span></span><br><span class="line">list.removeAt(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$list</span>'</span>);</span><br></pre></td></tr></table></figure>
 <h5 id="Map的常见操作"><a href="#Map的常见操作" class="headerlink" title="Map的常见操作"></a>Map的常见操作</h5><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Map的操作</span></span><br><span class="line"><span class="comment">// 1.根据key获取value</span></span><br><span class="line"><span class="built_in">print</span>(map[<span class="string">'name'</span>]); <span class="comment">// Bob</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.获取所有的entries</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$&#123;map.entries&#125;</span> <span class="subst">$&#123;map.entries.runtimeType&#125;</span>'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.获取所有的keys</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$&#123;map.keys&#125;</span> <span class="subst">$&#123;map.keys.runtimeType&#125;</span>'</span>); <span class="comment">// (name, age) _CompactIterable&lt;String&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4.获取所有的values</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$&#123;map.values&#125;</span> <span class="subst">$&#123;map.values.runtimeType&#125;</span>'</span>); <span class="comment">// (Bob, 18) _CompactIterable&lt;Object&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5.判断是否包含某个key或者value</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$&#123;map.containsKey(<span class="string">'age'</span>)&#125;</span> <span class="subst">$&#123;map.containsValue(<span class="number">18</span>)&#125;</span>'</span>); <span class="comment">// true true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 6.根据key删除元素</span></span><br><span class="line">map.remove(<span class="string">'age'</span>);</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'<span class="subst">$&#123;map&#125;</span>'</span>); <span class="comment">// &#123;name: Bob&#125;</span></span><br></pre></td></tr></table></figure>
+<p>实现了 Iterable 的类（比如， List 和 Set）同样也支持使用 for-in 进行迭代操作 iteration ：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> collection = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> x in collection) &#123;</span><br><span class="line">  print(x); <span class="comment">// 0 1 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -149,7 +150,7 @@ name 变量的类型被推断为 String。 var的错误用法：12var name = ">
 
 <div class="article-share" id="share">
 
-  <div data-url="http://dongyeforever.github.io/2019/12/12/learn-dart01/" data-title="Dart入门一 | dongye&#39;s blog" data-tsina class="share clearfix">
+  <div data-url="http://blog.lovek.vip/2019/12/01/dart-learn01/" data-title="Dart入门一 | dongye&#39;s blog" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -158,10 +159,18 @@ name 变量的类型被推断为 String。 var的错误用法：12var name = ">
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2019/12/08/dart-learn02/" title="Dart入门二">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Dart入门二</span>
+</a>
+</div>
+
 
 <div class="next">
-<a href="/2019/12/10/chrome-extension/" title="chrome扩展开发">
- <strong>NEXT:</strong><br> 
+<a href="/2019/11/23/chrome-extension/"  title="chrome扩展开发">
+ <strong>NEXT:</strong><br/> 
  <span>chrome扩展开发
 </span>
 </a>
@@ -179,7 +188,7 @@ name 变量的类型被推断为 String。 var的错误用法：12var name = ">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-变量"><span class="toc-number">1.</span> <span class="toc-text">1.变量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#默认值"><span class="toc-number">1.0.1.</span> <span class="toc-text">默认值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Final-和-Const"><span class="toc-number">1.0.2.</span> <span class="toc-text">Final 和 Const</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#2-内建类型"><span class="toc-number">2.</span> <span class="toc-text">2.内建类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Number"><span class="toc-number">2.0.1.</span> <span class="toc-text">Number</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#集合的常见操作："><span class="toc-number">2.0.2.</span> <span class="toc-text">集合的常见操作：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Map的常见操作"><span class="toc-number">2.0.3.</span> <span class="toc-text">Map的常见操作</span></a></li></ol></li>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-变量"><span class="toc-number">1.</span> <span class="toc-text">1.变量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#默认值"><span class="toc-number">1.0.1.</span> <span class="toc-text">默认值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Final-和-Const"><span class="toc-number">1.0.2.</span> <span class="toc-text">Final 和 Const</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-内建类型"><span class="toc-number">2.</span> <span class="toc-text">2.内建类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Number"><span class="toc-number">2.0.1.</span> <span class="toc-text">Number</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#集合的常见操作："><span class="toc-number">2.0.2.</span> <span class="toc-text">集合的常见操作：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Map的常见操作"><span class="toc-number">2.0.3.</span> <span class="toc-text">Map的常见操作</span></a></li></ol></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
@@ -193,7 +202,7 @@ name 变量的类型被推断为 String。 var的错误用法：12var name = ">
 		
 			<li><a href="/categories/Android/" title="Android">Android<sup>15</sup></a></li>
 		
-			<li><a href="/categories/Dart/" title="Dart">Dart<sup>1</sup></a></li>
+			<li><a href="/categories/Dart/" title="Dart">Dart<sup>2</sup></a></li>
 		
 			<li><a href="/categories/Web/" title="Web">Web<sup>2</sup></a></li>
 		
@@ -214,7 +223,7 @@ name 变量的类型被推断为 String。 var的错误用法：12var name = ">
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/Dart/" title="Dart">Dart<sup>1</sup></a></li>
+			<li><a href="/tags/Dart/" title="Dart">Dart<sup>2</sup></a></li>
 		
 			<li><a href="/tags/Retrofit/" title="Retrofit">Retrofit<sup>2</sup></a></li>
 		
@@ -241,7 +250,7 @@ name 变量的类型被推断为 String。 var的错误用法：12var name = ">
 </aside>
 </div>
     </div>
-    <footer><div id="footer">
+    <footer><div id="footer" >
 	
 	<div class="line">
 		<span></span>
@@ -258,7 +267,7 @@ name 变量的类型被推断为 String。 var的错误用法：12var name = ">
 	</div>
 		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2019 
 		
-		<a href="http://dongyeforever.github.io" target="_blank" title="dongye">dongye</a>
+		<a href="http://blog.lovek.vip" target="_blank" title="dongye">dongye</a>
 		
 		</p>
 </div>
@@ -399,7 +408,7 @@ ga('send', 'pageview');
 
 
 <div id="totop" style="position:fixed;bottom:5em;right:50px;cursor: pointer;">
-<a title="返回顶部"><img src="/img/scrollup.png"></a>
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 </div>
 <script src="/js/totop.js"></script>
 

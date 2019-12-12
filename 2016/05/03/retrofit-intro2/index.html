@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
 <html lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
   
     <title>Retrofit分析 | dongye&#39;s blog</title>
@@ -32,7 +32,7 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.svg" alt="dongye&#39;s blog" title="dongye&#39;s blog"></a>
+				<a href="/"><img src="/img/logo.svg" alt="dongye&#39;s blog" title="dongye&#39;s blog"/></a>
 			</div>
 			
 			<div id="textlogo">
@@ -54,8 +54,8 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
-						<input type="hidden" name="q" value="site:dongyeforever.github.io">
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:blog.lovek.vip">
 					</form>
 					
 					</li>
@@ -74,7 +74,7 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
   </h1>
   <p class="article-author">By
     
-      <a href="http://dongyeforever.github.io" title="dongye">dongye</a>
+      <a href="http://blog.lovek.vip" title="dongye">dongye</a>
     </p>
   <p class="article-time">
     <time datetime="2016-05-03T13:19:16.000Z" itemprop="datePublished">2016-05-03</time>
@@ -87,10 +87,10 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrofit创建"><span class="toc-number">1.</span> <span class="toc-text">Retrofit创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrofit请求的创建"><span class="toc-number">2.</span> <span class="toc-text">Retrofit请求的创建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考"><span class="toc-number">2.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrofit创建"><span class="toc-number">1.</span> <span class="toc-text">Retrofit创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrofit请求的创建"><span class="toc-number">2.</span> <span class="toc-text">Retrofit请求的创建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考"><span class="toc-number">2.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li></ol>
 		</div>
 		
-		<p>上篇<a href="https://blog.lovek.vip/2016/04/20/retrofit-intro/" target="_blank" rel="noopener">Retrofit初探</a>中已初步使用了Retrofit，简单介绍了Retrofit的使用步骤。本篇继续深入分析一下Retrofit流程。</p>
+		<p>上篇<a href="https://blog.lovek.vip/2016/04/20/retrofit-intro/">Retrofit初探</a>中已初步使用了Retrofit，简单介绍了Retrofit的使用步骤。本篇继续深入分析一下Retrofit流程。</p>
 <h3 id="Retrofit创建"><a href="#Retrofit创建" class="headerlink" title="Retrofit创建"></a>Retrofit创建</h3><p>先看一下Retrofit的创建<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">    .baseUrl(URL)</span><br><span class="line">    <span class="comment">//手动指定Fastjson解析方式,可指定不同Convert来使用如Gson，Jackson，XML等解析方式</span></span><br><span class="line">    .addConverterFactory(FastjsonConverterFactory.create())</span><br><span class="line">    <span class="comment">//返回数据为RxJava形式</span></span><br><span class="line">    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure></p>
 <p>可以看出Retrofit对象是通过Builder来创建，构建器很方便我们设置Retrofit需要的属性。通过build()方法就创建了一个Retrofit对象。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Retrofit <span class="title">build</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  okhttp3.Call.Factory callFactory = <span class="keyword">this</span>.callFactory;</span><br><span class="line">  <span class="keyword">if</span> (callFactory == <span class="keyword">null</span>) &#123;</span><br><span class="line">    callFactory = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  Executor callbackExecutor = <span class="keyword">this</span>.callbackExecutor;</span><br><span class="line">  <span class="keyword">if</span> (callbackExecutor == <span class="keyword">null</span>) &#123;</span><br><span class="line">    callbackExecutor = platform.defaultCallbackExecutor();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Make a defensive copy of the adapters and add the default Call adapter.</span></span><br><span class="line">  List&lt;CallAdapter.Factory&gt; adapterFactories = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="keyword">this</span>.adapterFactories);</span><br><span class="line">  adapterFactories.add(platform.defaultCallAdapterFactory(callbackExecutor));</span><br><span class="line">  <span class="comment">// Make a defensive copy of the converters.</span></span><br><span class="line">  List&lt;Converter.Factory&gt; converterFactories = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="keyword">this</span>.converterFactories);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Retrofit(callFactory, baseUrl, converterFactories, adapterFactories,</span><br><span class="line">      callbackExecutor, validateEagerly);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>如果我们没有指定一个client或者callFactory，Retrofit2中默认生成一个OkHttpClient。然后通过platform.defaultCallbackExecutor()实例化一个Executor的对象callbackExecutor。Converter是数据转换器，该接口将Http请求返回的数据解析成Java对象，<br>addConverterFactory(FastjsonConverterFactory.create())添加一个FastjsonConverter来使用Fastjson来将我们的结果转化成Model类。CallAdapter是Call的适配器，负责将Call对象转化成另一个对象，同样在创建Retrofit实例时调用addCallAdapterFactory(Factory)来添加。<br>这样一个Retrofit的实例就创建完成了。其中platform是Builder进行初始化的时候调用了Platform.get()<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Platform PLATFORM = findPlatform();</span><br><span class="line"><span class="function"><span class="keyword">static</span> Platform <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> PLATFORM;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Platform <span class="title">findPlatform</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    Class.forName(<span class="string">"android.os.Build"</span>);</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT != <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Android();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (ClassNotFoundException ignored) &#123;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//...省略部分代码...</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Platform();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -108,7 +108,7 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
 <p>至此，就把一个接口方法转换成ExecutorCallbackCall对象，ExecutorCallbackCall中execute()和enqueue()分别是同步和异步请求。在异步请求中通过callbackExecutor实现了线程切换，把请求结果发送到主线程。</p>
 <p>本篇通过一个请求实例，浅显的了解了Retrofit中一步步代码执行顺序，尽管没有对Retrofit各个类和方法深入探究，但通过此次分析，相信对Retrofit基本步骤已经有了更深刻的了解。文中如有错误希望大家指出～下面一张福利是Stay大神画的Retrofit流程图：<br><img src="/images/2016050301.png" alt="Retrofit流程图"></p>
 <h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://www.ibm.com/developerworks/cn/java/j-lo-proxy1/" target="_blank" rel="noopener">Java 动态代理机制分析及扩展</a><br><a href="http://www.jianshu.com/p/45cb536be2f4" target="_blank" rel="noopener">Retrofit分析-漂亮的解耦套路</a></p>
-<p>转载请注明出处：<a href="https://blog.lovek.vip/2016/05/03/retrofit-intro2/" target="_blank" rel="noopener">https://blog.lovek.vip/2016/05/03/retrofit-intro2</a></p>
+<p>转载请注明出处：<a href="https://blog.lovek.vip/2016/05/03/retrofit-intro2/">https://blog.lovek.vip/2016/05/03/retrofit-intro2</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -128,7 +128,7 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
 
 <div class="article-share" id="share">
 
-  <div data-url="http://dongyeforever.github.io/2016/05/03/retrofit-intro2/" data-title="Retrofit分析 | dongye&#39;s blog" data-tsina class="share clearfix">
+  <div data-url="http://blog.lovek.vip/2016/05/03/retrofit-intro2/" data-title="Retrofit分析 | dongye&#39;s blog" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -137,9 +137,9 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
 	
 <nav class="article-nav clearfix">
  
- <div class="prev">
+ <div class="prev" >
  <a href="/2016/10/11/android-source/" title="android studio查看源码">
-  <strong>PREVIOUS:</strong><br>
+  <strong>PREVIOUS:</strong><br/>
   <span>
   android studio查看源码</span>
 </a>
@@ -147,8 +147,8 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
 
 
 <div class="next">
-<a href="/2016/04/20/retrofit-intro/" title="Retrofit初探">
- <strong>NEXT:</strong><br> 
+<a href="/2016/04/20/retrofit-intro/"  title="Retrofit初探">
+ <strong>NEXT:</strong><br/> 
  <span>Retrofit初探
 </span>
 </a>
@@ -166,7 +166,7 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrofit创建"><span class="toc-number">1.</span> <span class="toc-text">Retrofit创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrofit请求的创建"><span class="toc-number">2.</span> <span class="toc-text">Retrofit请求的创建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考"><span class="toc-number">2.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrofit创建"><span class="toc-number">1.</span> <span class="toc-text">Retrofit创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrofit请求的创建"><span class="toc-number">2.</span> <span class="toc-text">Retrofit请求的创建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考"><span class="toc-number">2.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
@@ -180,7 +180,7 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
 		
 			<li><a href="/categories/Android/" title="Android">Android<sup>15</sup></a></li>
 		
-			<li><a href="/categories/Dart/" title="Dart">Dart<sup>1</sup></a></li>
+			<li><a href="/categories/Dart/" title="Dart">Dart<sup>2</sup></a></li>
 		
 			<li><a href="/categories/Web/" title="Web">Web<sup>2</sup></a></li>
 		
@@ -201,7 +201,7 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/Dart/" title="Dart">Dart<sup>1</sup></a></li>
+			<li><a href="/tags/Dart/" title="Dart">Dart<sup>2</sup></a></li>
 		
 			<li><a href="/tags/Retrofit/" title="Retrofit">Retrofit<sup>2</sup></a></li>
 		
@@ -228,7 +228,7 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
 </aside>
 </div>
     </div>
-    <footer><div id="footer">
+    <footer><div id="footer" >
 	
 	<div class="line">
 		<span></span>
@@ -245,7 +245,7 @@ Retrofit创建先看一下Retrofit的创建1234567Retrofit retrofit = new Retrof
 	</div>
 		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2019 
 		
-		<a href="http://dongyeforever.github.io" target="_blank" title="dongye">dongye</a>
+		<a href="http://blog.lovek.vip" target="_blank" title="dongye">dongye</a>
 		
 		</p>
 </div>
@@ -386,7 +386,7 @@ ga('send', 'pageview');
 
 
 <div id="totop" style="position:fixed;bottom:5em;right:50px;cursor: pointer;">
-<a title="返回顶部"><img src="/img/scrollup.png"></a>
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 </div>
 <script src="/js/totop.js"></script>
 

@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
 <html lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
   
     <title>chrome扩展开发 | dongye&#39;s blog</title>
@@ -31,7 +31,7 @@
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.svg" alt="dongye&#39;s blog" title="dongye&#39;s blog"></a>
+				<a href="/"><img src="/img/logo.svg" alt="dongye&#39;s blog" title="dongye&#39;s blog"/></a>
 			</div>
 			
 			<div id="textlogo">
@@ -53,8 +53,8 @@
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
-						<input type="hidden" name="q" value="site:dongyeforever.github.io">
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:blog.lovek.vip">
 					</form>
 					
 					</li>
@@ -69,15 +69,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/12/10/chrome-extension/" title="chrome扩展开发" itemprop="url">chrome扩展开发</a>
+      <a href="/2019/11/23/chrome-extension/" title="chrome扩展开发" itemprop="url">chrome扩展开发</a>
   </h1>
   <p class="article-author">By
     
-      <a href="http://dongyeforever.github.io" title="dongye">dongye</a>
+      <a href="http://blog.lovek.vip" title="dongye">dongye</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-12-10T01:58:32.000Z" itemprop="datePublished">2019-12-10</time>
-    更新日期:<time datetime="2019-12-10T05:27:39.554Z" itemprop="dateModified">2019-12-10</time>
+    <time datetime="2019-11-23T01:58:32.000Z" itemprop="datePublished">2019-11-23</time>
+    更新日期:<time datetime="2019-12-12T14:23:26.478Z" itemprop="dateModified">2019-12-12</time>
     
   </p>
 </header>
@@ -110,7 +110,7 @@
 <h3 id="5-插件清单manifest-json"><a href="#5-插件清单manifest-json" class="headerlink" title="5. 插件清单manifest.json"></a>5. 插件清单manifest.json</h3><p>manifest.json是一个Chrome插件最重要也是必不可少的文件，用来配置所有和插件相关的配置，必须放在根目录。</p>
 <p>下面给出的是一些常见的配置项：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> //必选</span><br><span class="line"> /*</span><br><span class="line">   指定您的应用包要求的清单文件格式的版本。从 Chrome 18 开始，开发人员应该指定 2</span><br><span class="line"> */</span><br><span class="line"> "manifest_version": 2,</span><br><span class="line"> "name":"我的应用名称",</span><br><span class="line"> "version":"我的应用版本",</span><br><span class="line"></span><br><span class="line"> //推荐</span><br><span class="line"> /*</span><br><span class="line">   清单文件-默认语言 指定_locales中的子目录，包含该应用默认字符串。</span><br><span class="line">   对于含有 _locales 目录的应用来说这一属性是必需的，</span><br><span class="line">   在没有 _locales 目录的应用中该属性不能存在</span><br><span class="line"> */</span><br><span class="line"> "default_locale":"en", </span><br><span class="line"></span><br><span class="line"> /*</span><br><span class="line">   这个描述在安装应用之后可以看见</span><br><span class="line"> */</span><br><span class="line"> "description":"关于应用的描述", </span><br><span class="line"></span><br><span class="line"> /*一个或多个代表应用、应用或主题背景的图标*/</span><br><span class="line"> "icons":&#123;</span><br><span class="line">   "16":"icon16.png",</span><br><span class="line">   "48":"icon48.png"</span><br><span class="line"> &#125;,</span><br><span class="line"></span><br><span class="line"> /*</span><br><span class="line">  选择某一个（或者无）</span><br><span class="line">  browser_action（浏览器按钮）</span><br><span class="line">  page_action（页面按钮）</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line"> // 如果有 browser_action, 即在 chrome toolbar 的右边添加了一个 icon</span><br><span class="line"> "browser_action": &#123;</span><br><span class="line">   "default_icon": "logo.jpg",</span><br><span class="line">   "default_title": "Google Mail",      // tooltip, 光标停留在 icon 上时显示</span><br><span class="line">   "default_popup": "popup.html"  // 如果有 popup 的页面, 则用户点击图标就会渲染此 HTML 页面</span><br><span class="line"> &#125;,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> // 如果并不是对每个网站页面都需要使用插件, 可以使用 page_action(页面按钮） 而不是 browser_action（浏览器按钮）</span><br><span class="line"> // browser_action 应用更加广泛</span><br><span class="line"> // 如果 page_action 并不应用在当前页面, 会显示灰色</span><br><span class="line"></span><br><span class="line"> "page_action":&#123;</span><br><span class="line">   "default_icon": &#123;                    // 可选</span><br><span class="line">     "19": "images/icon19.png",           // 可选</span><br><span class="line">     "38": "images/icon38.png"            // 可选</span><br><span class="line">   &#125;,</span><br><span class="line">   "default_title": "Google Mail",      // 可选，在工具提示中显示</span><br><span class="line">   "default_popup": "popup.html"        // 可选</span><br><span class="line"> &#125;,</span><br><span class="line"></span><br><span class="line"> //可选</span><br><span class="line"> "author":"开发者",</span><br><span class="line"> "automation":"",</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> /*</span><br><span class="line"> 后台网页</span><br><span class="line"> 1.应用通常需要有一个长时间运行的脚本来管理一些任务或状态，而后台网页就是为这一目的而设立。</span><br><span class="line"> 通常情况下，后台页面不需要任何 HTML 标记，这种情况下后台页面可以单独使用 JavaScript文件实现。</span><br><span class="line"> 后台页面将由应用系统生成，包含 scripts 属性中列出的每一个文件。</span><br><span class="line"></span><br><span class="line"> 2.page：如果您需要在您的后台页面中指定 HTML，您可以改用 page 属性：</span><br><span class="line"></span><br><span class="line"> 3.persistent：应用和应用通常需要长时间运行的脚本来管理某些任务或状态，这就是事件页面的作用。</span><br><span class="line"> 事件页面只在需要时加载，当事件页面不活动时就会卸载，以便释放内存和其他系统资源。</span><br><span class="line"> 如何得到事件页面 就是设置一个"persistent"键，如果没有设置，你将得到一个普通的后台页面。</span><br><span class="line"> */</span><br><span class="line"> "background":&#123;</span><br><span class="line">   "scripts":["background.js"],</span><br><span class="line">   "page": "background.html",</span><br><span class="line">   "persistent":false</span><br><span class="line"> &#125;,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> /*</span><br><span class="line">   内容脚本:其实就是向你想要的网页中插入一个脚本代码，执行你想要做的事情</span><br><span class="line">   内容脚本是在网页的上下文中运行的 JavaScript 文件，</span><br><span class="line">   它们可以通过标准的文档对象模型（DOM）来获取浏览器访问的网页详情，或者作出更改。</span><br><span class="line">   </span><br><span class="line">   1.run_at 可选。</span><br><span class="line">   控制 js 中的 JavaScript 文件何时插入，</span><br><span class="line">   可以为 "document_start"、</span><br><span class="line">   "document_end" 或 "document_idle"，默认为 "document_idle"。 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   1.1如果是 "document_start"，这些文件将在 css 中指定的文件之后，但是在所有其他 DOM 构造或脚本运行之前插入。 </span><br><span class="line"></span><br><span class="line">   1.2.如果是 "document_end"，文件将在 DOM 完成之后立即插入，但是在加载子资源（如图像与框架）之前插入。 </span><br><span class="line"></span><br><span class="line">   1.3.如果是 "document_idle"，浏览器将在 "document_end" 和刚发生 window.onload 事件这两个时刻之间选择合适的时候插入，</span><br><span class="line">   具体的插入时间取决于文档的复杂程度以及加载文档所花的时间，并且浏览器会尽可能地为加快页面加载速度而优化。 </span><br><span class="line"> </span><br><span class="line">   2.all_frames 可选。</span><br><span class="line">   控制内容脚本运行在匹配页面的所有框架中还是仅在顶层框架中。 默认为 false，意味着仅在顶层框架中运行</span><br><span class="line">   </span><br><span class="line">   content_scripts还有一些其他不是很常用的属性</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line"> "content_scripts": [&#123;</span><br><span class="line">   "matches": ["https://*.lovek.vip/*"], //匹配的地址网页</span><br><span class="line">   "exclude_matches":[],</span><br><span class="line">   "js": ["jquery.js","ideacome.js"], //插入的js</span><br><span class="line">   "css": ["mystyles.css"], //css改变样式</span><br><span class="line">   "run_at":"document_idle",</span><br><span class="line">   "all_frames": true //该匹配下面的所有窗口</span><br><span class="line"> &#125;,&#123;</span><br><span class="line">   "matches": ["*://*/*.png", "*://*/*.jpg", "*://*/*.gif", "*://*/*.bmp"],</span><br><span class="line">   "js": ["js/show-image-content-size.js"] //可以针对不同的规则插入不同的内容</span><br><span class="line"> &#125;],</span><br><span class="line"></span><br><span class="line">// 普通页面能够直接访问的插件资源列表，如果不设置是无法直接访问的</span><br><span class="line">"web_accessible_resources": [</span><br><span class="line">   "images/*.png",</span><br><span class="line">   "style/double-rainbow.css",</span><br><span class="line">   "script/double-rainbow.js",</span><br><span class="line">   "script/main.js",</span><br><span class="line">   <span class="string">"templates/*"</span></span><br><span class="line"> ],</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">  如果不是通过 chrome web store 自动更新插件</span><br><span class="line"></span><br><span class="line">   我们希望扩展能自动升级，理由和让chrome自动升级一样：修改程序bug和安全漏洞 ，增加新功能，提升性能，改善体验。</span><br><span class="line">   一个扩展的manifest文件里面必须指定一个"update_url"来执行升级检测。</span><br><span class="line"></span><br><span class="line">   扩展可以托管在Chrome Web Store，也可以发布到极速浏览器应用开放平台上。</span><br><span class="line">   如果托管在Chrome Web Store则update_url应该是：http://clients2.google.com/service/update2/crx    </span><br><span class="line"> **/</span><br><span class="line"> "update_url": "https://clients2.google.com/service/update2/crx",</span><br><span class="line"></span><br><span class="line">// 插件主页，这个很重要，不要浪费了这个免费广告位</span><br><span class="line">"homepage_url": "https://www.lovek.vip",</span><br><span class="line"></span><br><span class="line">/*  </span><br><span class="line">   扩展或app将使用的一组权限。每个权限是一列已知字符串列表中的一个，</span><br><span class="line">   如geolocatioin或者一个匹配模式，来指定可以访问的一个或者多个主机。</span><br><span class="line">   权限可以帮助限定危险，如果你的扩展或者app被攻击。</span><br><span class="line">   一些权限在安装之前，会告知用户</span><br><span class="line"> */</span><br><span class="line"> "permissions":[</span><br><span class="line">   "tabs", //Required if the extension uses the chrome.tabs or chrome.windows module.</span><br><span class="line">   "bookmarks", //使用chrome.bookmarks模块来创建、组织和管理书签</span><br><span class="line">   "http://www.lovek.vip/",    </span><br><span class="line">   "http://*.google.com/",    </span><br><span class="line">   "unlimitedStorage", //提供了一个无限的HTML5配额来存储客户端数据,如数据库和本地存储文件。没有这个权限,扩展仅限于5 MB的本地存储</span><br><span class="line">   "history" //历史记录的使用权限  chrome.history </span><br><span class="line">   "notifications",//提示</span><br><span class="line">   "cookies",//Required if the extension uses the chrome.cookies module.</span><br><span class="line"> ],</span><br><span class="line"></span><br><span class="line">/**开发时为扩展指定的唯一标识值。</span><br><span class="line">注意：通常您并不需要直接使用这个值，而是在您的代码中使用相对路径或者chrome.extension.getURL()得到的绝对路径。</span><br><span class="line">这个值并不是开发时显式指定的，而是Chrome在安装.crx时辅助生成的。(开发时可以通过上传扩展或者手工打包生成crx文件)。 安装完crx，在Chrome的用户数据目录下的Default/Extensions/&lt;extensionId&gt;/&lt;versionString&gt;/manifest.json文件中，您可以看到这个扩展的key。**/</span><br><span class="line"></span><br><span class="line">key:'',</span><br><span class="line"></span><br><span class="line">"commands": &#123;</span><br><span class="line">     // commands API 用来添加快捷键</span><br><span class="line">     // 需要在 background page 上添加监听器绑定 handler</span><br><span class="line">   "toggle-feature-foo": &#123;</span><br><span class="line">     "suggested_key": &#123;</span><br><span class="line">       "default": "Ctrl+Shift+Y",</span><br><span class="line">       "mac": "Command+Shift+Y"</span><br><span class="line">     &#125;,</span><br><span class="line">     "description": "Toggle feature foo",</span><br><span class="line">     "global": true</span><br><span class="line">       // 当 chrome 没有 focus 时也可以生效的快捷键</span><br><span class="line">       // 仅限 Ctrl+Shift+[0..9]</span><br><span class="line">   &#125;,</span><br><span class="line">   "_execute_browser_action": &#123;</span><br><span class="line">     "suggested_key": &#123;</span><br><span class="line">       "windows": "Ctrl+Shift+Y",</span><br><span class="line">       "mac": "Command+Shift+Y",</span><br><span class="line">       "chromeos": "Ctrl+Shift+U",</span><br><span class="line">       "linux": "Ctrl+Shift+J"</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;,</span><br><span class="line">   "_execute_page_action": &#123;</span><br><span class="line">     "suggested_key": &#123;</span><br><span class="line">       "default": "Ctrl+Shift+E",</span><br><span class="line">       "windows": "Alt+Shift+P",</span><br><span class="line">       "mac": "Alt+Shift+P"</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;,</span><br><span class="line">   ...</span><br><span class="line"> &#125;,</span><br><span class="line"> "content_capabilities": ...,</span><br><span class="line"> "optional_permissions": ["tabs"], // 其他需要的 permission, 在使用 chrome.permissions API 时用到, 并非安装插件时需要</span><br><span class="line"></span><br><span class="line"> "short_name": "Short Name", // 插件名字简写</span><br><span class="line"></span><br><span class="line">"storage": &#123;</span><br><span class="line">   "managed_schema": "schema.json"</span><br><span class="line"> &#125;, //  使用 storage.managed api 的话, 需要一个 schema 文件指定存储字段类型等, 类似定义数据库表的 column</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line">//还有很多其他的配置</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>转载请注明出处：<a href="https://blog.lovek.vip/2019/12/10/chrome-extension/" target="_blank" rel="noopener">https://blog.lovek.vip/2019/12/10/chrome-extension/</a></p>
+<p>转载请注明出处：<a href="https://blog.lovek.vip/2019/12/10/chrome-extension/">https://blog.lovek.vip/2019/12/10/chrome-extension/</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -125,7 +125,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://dongyeforever.github.io/2019/12/10/chrome-extension/" data-title="chrome扩展开发 | dongye&#39;s blog" data-tsina class="share clearfix">
+  <div data-url="http://blog.lovek.vip/2019/11/23/chrome-extension/" data-title="chrome扩展开发 | dongye&#39;s blog" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -134,9 +134,9 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev">
- <a href="/2019/12/12/learn-dart01/" title="Dart入门一">
-  <strong>PREVIOUS:</strong><br>
+ <div class="prev" >
+ <a href="/2019/12/01/dart-learn01/" title="Dart入门一">
+  <strong>PREVIOUS:</strong><br/>
   <span>
   Dart入门一</span>
 </a>
@@ -144,8 +144,8 @@
 
 
 <div class="next">
-<a href="/2019/03/14/bus-miniprogram-intro/" title="北京巴士操作指南">
- <strong>NEXT:</strong><br> 
+<a href="/2019/03/14/bus-miniprogram-intro/"  title="北京巴士操作指南">
+ <strong>NEXT:</strong><br/> 
  <span>北京巴士操作指南
 </span>
 </a>
@@ -177,7 +177,7 @@
 		
 			<li><a href="/categories/Android/" title="Android">Android<sup>15</sup></a></li>
 		
-			<li><a href="/categories/Dart/" title="Dart">Dart<sup>1</sup></a></li>
+			<li><a href="/categories/Dart/" title="Dart">Dart<sup>2</sup></a></li>
 		
 			<li><a href="/categories/Web/" title="Web">Web<sup>2</sup></a></li>
 		
@@ -198,7 +198,7 @@
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/Dart/" title="Dart">Dart<sup>1</sup></a></li>
+			<li><a href="/tags/Dart/" title="Dart">Dart<sup>2</sup></a></li>
 		
 			<li><a href="/tags/Retrofit/" title="Retrofit">Retrofit<sup>2</sup></a></li>
 		
@@ -225,7 +225,7 @@
 </aside>
 </div>
     </div>
-    <footer><div id="footer">
+    <footer><div id="footer" >
 	
 	<div class="line">
 		<span></span>
@@ -242,7 +242,7 @@
 	</div>
 		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2019 
 		
-		<a href="http://dongyeforever.github.io" target="_blank" title="dongye">dongye</a>
+		<a href="http://blog.lovek.vip" target="_blank" title="dongye">dongye</a>
 		
 		</p>
 </div>
@@ -383,7 +383,7 @@ ga('send', 'pageview');
 
 
 <div id="totop" style="position:fixed;bottom:5em;right:50px;cursor: pointer;">
-<a title="返回顶部"><img src="/img/scrollup.png"></a>
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 </div>
 <script src="/js/totop.js"></script>
 
