@@ -36,7 +36,7 @@
 			
 			<div id="textlogo">
 				<h1 class="site-name"><a href="/" title="dongye&#39;s blog">dongye&#39;s blog</a></h1>
-				<h2 class="blog-motto">Read the Fucking Source Code</h2>
+				<h2 class="blog-motto">以我为准</h2>
 			</div>
 			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
@@ -197,9 +197,22 @@
 </nav>
 
 	
-<section class="comment">
-	<div class="ds-thread"></div>
-</section>
+	<!-- gitment评论框 start -->
+	<div id="gitment" class="ds-thread"></div>
+	<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+	<script>
+		var gitment = new Gitment({
+			id: 'lWed Nov 05 2014 10:03:51 GMT+0800', // 可选。建议为Wed Nov 05 2014 10:03:51 GMT+0800
+			owner: 'dongyeforever', // 可以是你的GitHub用户名，也可以是github id
+			repo: 'dongyeforever.github.io', //可以是你的任意一个repo，推荐使用githubpage所在的repo
+			oauth: {
+			  client_id: '075768b5cc6d617a818d',//填入上一步骤复制的Client ID
+			  client_secret: '241315e01ddfcb437dc933485c8607cc005ec648',//填入上一步骤复制的Client Secret
+			},
+		  })
+		gitment.render('gitment')
+	</script>
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
@@ -218,9 +231,9 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/Android/" title="Android">Android<sup>15</sup></a></li>
+			<li><a href="/categories/Android/" title="Android">Android<sup>14</sup></a></li>
 		
-			<li><a href="/categories/Dart/" title="Dart">Dart<sup>2</sup></a></li>
+			<li><a href="/categories/Dart/" title="Dart">Dart<sup>3</sup></a></li>
 		
 			<li><a href="/categories/Web/" title="Web">Web<sup>2</sup></a></li>
 		
@@ -228,7 +241,7 @@
 		
 			<li><a href="/categories/python/" title="python">python<sup>1</sup></a></li>
 		
-			<li><a href="/categories/小程序/" title="小程序">小程序<sup>1</sup></a></li>
+			<li><a href="/categories/小程序/" title="小程序">小程序<sup>2</sup></a></li>
 		
 			<li><a href="/categories/随笔/" title="随笔">随笔<sup>1</sup></a></li>
 		
@@ -241,11 +254,11 @@
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/Dart/" title="Dart">Dart<sup>2</sup></a></li>
+			<li><a href="/tags/Dart/" title="Dart">Dart<sup>3</sup></a></li>
 		
 			<li><a href="/tags/Retrofit/" title="Retrofit">Retrofit<sup>2</sup></a></li>
 		
-			<li><a href="/tags/android-studio/" title="android studio">android studio<sup>4</sup></a></li>
+			<li><a href="/tags/android-studio/" title="android studio">android studio<sup>3</sup></a></li>
 		
 			<li><a href="/tags/cache/" title="cache">cache<sup>2</sup></a></li>
 		
@@ -255,7 +268,7 @@
 		
 			<li><a href="/tags/stetho/" title="stetho">stetho<sup>1</sup></a></li>
 		
-			<li><a href="/tags/小程序/" title="小程序">小程序<sup>1</sup></a></li>
+			<li><a href="/tags/小程序/" title="小程序">小程序<sup>2</sup></a></li>
 		
 		</ul>
 </div>
