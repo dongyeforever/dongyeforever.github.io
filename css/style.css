@@ -2046,6 +2046,14 @@ pre .xml .cdata {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: alpha(opacity=50);
 }
+.ds-thread {
+  padding: 0 4%;
+}
+.gitment-footer-container {
+  height: 0 !important;
+  font-size: 0 !important;
+  margin: 0 !important;
+}
 .article-gallery {
   background: #fafafa;
   position: relative;
