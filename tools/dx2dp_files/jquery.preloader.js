@@ -40,7 +40,55 @@ $.fn.preloader = function(options){
 			return;
 			}
 		
-			for(i=0;i<images.length;i++) { if(images[i].complete="=true)" if(checkflag[i]="=false)" checkflag[i]="true;" options.oneachload(images[i]); counter++; delaysum="delaySum" + options.delay; } if(options.loadall="=" false) $(images[i]).css("visibility","visible").delay(delaysum).animate({opacity:1},options.fadein, function(){ if(options.container ! ) $(options.container).removeclass("preloader"); else $(this).parent().removeclass("preloader"); $(this).css('opacity', ''); }); },options.check_timer) ; images.each(function(){ $(options.container).addclass("preloader"); $(this).parent().addclass("preloader"); checkflag[i++]="false;" images="$.makeArray(images);" var icon="jQuery("<img">",{
+			for(i=0;i<images.length;i++)
+			{
+				if(images[i].complete==true)
+				{
+					if(checkFlag[i]==false)
+					{
+						checkFlag[i] = true;
+						options.oneachload(images[i]);
+						counter++;
+						
+						delaySum = delaySum + options.delay;
+					}
+					
+					if(options.loadall == false) {
+						$(images[i]).css("visibility","visible").delay(delaySum).animate({opacity:1},options.fadein,
+						function(){ 
+							if(options.container != "")
+								$(options.container).removeClass("preloader");
+							else
+							$(this).parent().removeClass("preloader");   
+							
+							$(this).css('opacity', '');
+							
+						});
+					}
+					
+				}
+			}
+		
+			},options.check_timer) 
+		 
+		 
+		 } ;
+	
+	images.each(function(){
+		
+		if(options.container != "")
+			$(options.container).addClass("preloader");
+		else
+		$(this).parent().addClass("preloader");
+		
+		checkFlag[i++] = false;
+		
+		
+		}); 
+	images = $.makeArray(images); 
+	
+	
+	var icon = jQuery("<img />",{
 		
 		id : 'loadingicon' ,
 		src : themeURL + '/images/preloader.gif'
@@ -64,4 +112,4 @@ $.fn.preloader = function(options){
 	}
 
 })(jQuery);	
-	</images.length;i++)>
+	

@@ -189,7 +189,7 @@
     .clearfix {
       zoom: 1; }
 
-    /* You can also use a <br class="clear"> to clear columns */
+    /* You can also use a <br class="clear" /> to clear columns */
     .clear {
       clear: both;
       display: block;
@@ -199,4 +199,4 @@
       height: 0;
     }
 
- </div>
+ 

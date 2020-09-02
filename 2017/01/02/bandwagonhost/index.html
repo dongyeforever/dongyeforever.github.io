@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
 <html lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="UTF-8">
   
     <title>搬瓦工shadowsocks安装配置 | dongye&#39;s blog</title>
@@ -25,9 +25,11 @@
     <link rel="apple-touch-icon" href="/img/pacman.jpg">
     <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
     
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-</html>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
   <body>
     <header>
       <div>
@@ -92,14 +94,11 @@
 		</div>
 		
 		<h3 id="一键安装："><a href="#一键安装：" class="headerlink" title="一键安装："></a>一键安装：</h3><p>虽然最新搬瓦工控制面板里去掉了一键安装选项，但是可以通过以下链接一键安装：<br><a href="https://kiwivm.64clouds.com/main-exec.php?mode=extras_shadowsocks" target="_blank" rel="noopener">shadowsocks</a><br><a href="https://kiwivm.64clouds.com/main-exec.php?mode=extras_shadowsocksr" target="_blank" rel="noopener">shadowsocksr</a></p>
-<h3 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h3><h4 id="1-登录服务器"><a href="#1-登录服务器" class="headerlink" title="1.登录服务器"></a>1.登录服务器</h4><p>ssh -p 21 <a href="mailto:root@104.224.132.44" target="_blank" rel="noopener">root@104.224.132.44</a></p>
-<h4 id="2-安装shadowsocks"><a href="#2-安装shadowsocks" class="headerlink" title="2.安装shadowsocks"></a>2.安装shadowsocks</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">yum update</span><br><span class="line">yum install gcc</span><br><span class="line">yum install wget</span><br><span class="line"></span><br><span class="line">wget http://python.org/ftp/python/2.7.3/Python-2.7.3.tar.bz2</span><br><span class="line">tar -jxvf Python-2.7.3.tar.bz2 </span><br><span class="line">cd Python-2.7.3</span><br><span class="line">./configure</span><br><span class="line">make all</span><br><span class="line">make install</span><br><span class="line">mv /usr/bin/python /usr/bin/python2.6.6</span><br><span class="line">ln -s /usr/local/bin/python2.7 /usr/bin/python</span><br></pre></td></tr></table></figure>
-<p>yum不支持Python 2.7，所以，按下面的操作，指定yum的python版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/bin/yum</span><br></pre></td></tr></table></figure></p>
-<p>将文件头部的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python</span><br></pre></td></tr></table></figure></p>
-<p>改成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python2.6.6</span><br><span class="line"></span><br><span class="line">wget https://pypi.python.org/packages/source/p/pip/pip-6.0.8.tar.gz#md5=2332e6f97e75ded3bddde0ced01dbda3  --no-check-certificate</span><br><span class="line">easy_install pip-6.0.8.tar.gz</span><br></pre></td></tr></table></figure></p>
-<h4 id="3-配置shadowsocks"><a href="#3-配置shadowsocks" class="headerlink" title="3.配置shadowsocks"></a>3.配置shadowsocks</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/shadowsocks.json</span><br><span class="line"></span><br><span class="line">&#123; </span><br><span class="line">&quot;server&quot;:&quot;104.224.132.44&quot;, </span><br><span class="line">&quot;server_port&quot;:110, </span><br><span class="line">&quot;local_address&quot;: &quot;127.0.0.1&quot;, </span><br><span class="line">&quot;local_port&quot;:1080, </span><br><span class="line">&quot;password&quot;:&quot;password&quot;, </span><br><span class="line">&quot;timeout&quot;:600, </span><br><span class="line">&quot;method&quot;:&quot;rc4-md5&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="配置开机自动启动"><a href="#配置开机自动启动" class="headerlink" title="配置开机自动启动"></a>配置开机自动启动</h4><p>打开rc.local文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/rc.local</span><br></pre></td></tr></table></figure></p>
-<p>输入下面的代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br><span class="line">shadowsocks服务相关命令</span><br><span class="line">启动shadowsocks服务</span><br><span class="line"></span><br><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br><span class="line">关闭shadowsocks服务</span><br><span class="line"></span><br><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br><span class="line">重启shadowsocks服务</span><br><span class="line"></span><br><span class="line">ssserver -c /etc/shadowsocks.json -d restart</span><br></pre></td></tr></table></figure></p>
+<h3 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h3><h4 id="1-登录服务器"><a href="#1-登录服务器" class="headerlink" title="1.登录服务器"></a>1.登录服务器</h4><p>ssh -p 21 <a href="mailto:root@104.224.132.44">root@104.224.132.44</a></p>
+<h4 id="2-安装shadowsocks"><a href="#2-安装shadowsocks" class="headerlink" title="2.安装shadowsocks"></a>2.安装shadowsocks</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">yum update</span><br><span class="line">yum install gcc</span><br><span class="line">yum install wget</span><br><span class="line"></span><br><span class="line">wget http:&#x2F;&#x2F;python.org&#x2F;ftp&#x2F;python&#x2F;2.7.3&#x2F;Python-2.7.3.tar.bz2</span><br><span class="line">tar -jxvf Python-2.7.3.tar.bz2 </span><br><span class="line">cd Python-2.7.3</span><br><span class="line">.&#x2F;configure</span><br><span class="line">make all</span><br><span class="line">make install</span><br><span class="line">mv &#x2F;usr&#x2F;bin&#x2F;python &#x2F;usr&#x2F;bin&#x2F;python2.6.6</span><br><span class="line">ln -s &#x2F;usr&#x2F;local&#x2F;bin&#x2F;python2.7 &#x2F;usr&#x2F;bin&#x2F;python</span><br></pre></td></tr></table></figure>
+<p>yum不支持Python 2.7，所以，按下面的操作，指定yum的python版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;usr&#x2F;bin&#x2F;yum</span><br></pre></td></tr></table></figure><br>将文件头部的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;python</span><br></pre></td></tr></table></figure><br>改成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;python2.6.6</span><br><span class="line"></span><br><span class="line">wget https:&#x2F;&#x2F;pypi.python.org&#x2F;packages&#x2F;source&#x2F;p&#x2F;pip&#x2F;pip-6.0.8.tar.gz#md5&#x3D;2332e6f97e75ded3bddde0ced01dbda3  --no-check-certificate</span><br><span class="line">easy_install pip-6.0.8.tar.gz</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-配置shadowsocks"><a href="#3-配置shadowsocks" class="headerlink" title="3.配置shadowsocks"></a>3.配置shadowsocks</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;shadowsocks.json</span><br><span class="line"></span><br><span class="line">&#123; </span><br><span class="line">&quot;server&quot;:&quot;104.224.132.44&quot;, </span><br><span class="line">&quot;server_port&quot;:110, </span><br><span class="line">&quot;local_address&quot;: &quot;127.0.0.1&quot;, </span><br><span class="line">&quot;local_port&quot;:1080, </span><br><span class="line">&quot;password&quot;:&quot;password&quot;, </span><br><span class="line">&quot;timeout&quot;:600, </span><br><span class="line">&quot;method&quot;:&quot;rc4-md5&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="配置开机自动启动"><a href="#配置开机自动启动" class="headerlink" title="配置开机自动启动"></a>配置开机自动启动</h4><p>打开rc.local文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;rc.local</span><br></pre></td></tr></table></figure><br>输入下面的代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c &#x2F;etc&#x2F;shadowsocks.json -d start</span><br><span class="line">shadowsocks服务相关命令</span><br><span class="line">启动shadowsocks服务</span><br><span class="line"></span><br><span class="line">ssserver -c &#x2F;etc&#x2F;shadowsocks.json -d start</span><br><span class="line">关闭shadowsocks服务</span><br><span class="line"></span><br><span class="line">ssserver -c &#x2F;etc&#x2F;shadowsocks.json -d stop</span><br><span class="line">重启shadowsocks服务</span><br><span class="line"></span><br><span class="line">ssserver -c &#x2F;etc&#x2F;shadowsocks.json -d restart</span><br></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -182,7 +181,7 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/Android/" title="Android">Android<sup>14</sup></a></li>
+			<li><a href="/categories/Android/" title="Android">Android<sup>16</sup></a></li>
 		
 			<li><a href="/categories/Dart/" title="Dart">Dart<sup>4</sup></a></li>
 		
@@ -210,6 +209,10 @@
 			<li><a href="/tags/Retrofit/" title="Retrofit">Retrofit<sup>2</sup></a></li>
 		
 			<li><a href="/tags/android-studio/" title="android studio">android studio<sup>3</sup></a></li>
+		
+			<li><a href="/tags/annotation/" title="annotation">annotation<sup>1</sup></a></li>
+		
+			<li><a href="/tags/annotation-kotlin/" title="annotation kotlin">annotation kotlin<sup>1</sup></a></li>
 		
 			<li><a href="/tags/cache/" title="cache">cache<sup>2</sup></a></li>
 		

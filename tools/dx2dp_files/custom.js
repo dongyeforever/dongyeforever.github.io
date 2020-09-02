@@ -52,7 +52,138 @@ $.fn.imagefit = function(width, height, mWidth, mHeight) {
 	this.each(function(){
 			var container = this;
 		
-			if(( mWidth != 1 || mHeight != 1)  && $(window).width() <= 1 767) { contw="$(container).width()" * mwidth + 1; conth="$(container).height()" mheight; } else width height; store list of contained images (excluding those in tables) imgs="$('img'," container); initial dimensions on each image fit.all(imgs); re-adjust when window is changed $(window).resize(function(){ if(( !="1" || mheight && $(window).width() <="767)" }); return this; }; function hashchange () var hash="window.location.hash" , el="$('ul.tabs" [href*="' + hash + '" ]') content="$(hash)" if (el.length !el.hasclass('active') content.length) el.closest('.tabs').find('.active').removeclass('active'); el.addclass('active'); content.fadein(500).addclass('active').siblings().hide().removeclass('active'); listen event and fire right away $(window).on('hashchange.tabs', hashchange); hashchange(); $(hashchange); $(document).ready( function($) $(".searchform .search").focus(function() ($(this).val()="=" $(this)[0].title) $(this).removeclass("notactive"); $(this).val(""); .search").blur(function() "") $(this).addclass("notactive"); $(this).val($(this)[0].title); .search").blur(); $('.searchform').submit(function(){ ($('.search',this).val() ) true; $('.search',this).blur(); false; if(jquery().tipsy) $('.socialiconswidget a').tipsy({ gravity: 's', fade: true}); $("#notification .close").click(function() $("#notification").slideup(400, "easeoutcubic"); setcookie( 'notificationstate', 'closed' ); $('header').addclass('remove-padding'); cookieval="getCookie(" 'notificationstate' get cookie value if( null '' ){ 'open' name, set date="new" date(); date.setdate( date.getdate() expdate="date.toGMTString();" document.cookie="name" "=" + value +" ;expires=" + expDate + " ; path="/";" getcookie( name read nameeq="name" #nav-main ul.sf-menu").superfish( autoarrows: true, dropshadows: !!ismenushadow this hides all the sub menus page load $('#nav-mobile ul.sub-menu').hide(); *if($('#nav-mobile').is(':visible')) makes sure that are open applicable li.current-menu-item').children().show(); keeps nav to item you navigating to. li.current-menu-item').parents().show(); }* $("#togglemobilemenu").on("click", function(){ $("#nav-mobile> ul").slideToggle();
+			if(( mWidth != 1 || mHeight != 1)  && $(window).width() <= 767) {
+				contW = $(container).width() * mWidth + 1;
+				contH = $(container).height() * mHeight;
+			} else {
+				contW = $(container).width() * width + 1;
+				contH = $(container).height() * height;
+			}
+			
+			// store list of contained images (excluding those in tables)
+			imgs = $('img', container);
+			// store initial dimensions on each image 
+			fit.all(imgs);
+		
+			// Re-adjust when window width is changed
+			$(window).resize(function(){
+				imgs = $('img', container);
+				
+				if(( mWidth != 1 || mHeight != 1)  && $(window).width() <= 767) {
+					contW = $(container).width() * mWidth + 1;
+					contH = $(container).height() * mHeight;
+				} else {
+					contW = $(container).width() * width + 1;
+					contH = $(container).height() * height;
+				}
+				
+				fit.all(imgs);
+			});
+		});
+	
+	return this;
+};
+
+function hashchange () {
+    var hash = window.location.hash
+      , el = $('ul.tabs [href*="' + hash + '"]')
+      , content = $(hash)
+	   	
+    if (el.length && !el.hasClass('active') && content.length) {
+      el.closest('.tabs').find('.active').removeClass('active');
+      el.addClass('active');
+      content.fadeIn(500).addClass('active').siblings().hide().removeClass('active');
+    } 
+}
+
+// listen on event and fire right away
+$(window).on('hashchange.tabs', hashchange);
+hashchange();
+$(hashchange);
+  	
+$(document).ready( function($) {
+	
+	$(".searchform .search").focus(function()
+    {
+        if ($(this).val() == $(this)[0].title)
+        {
+            $(this).removeClass("notActive");
+            $(this).val("");
+        }
+    });
+    
+    $(".searchform .search").blur(function()
+    {
+        if ($(this).val() == "")
+        {
+            $(this).addClass("notActive");
+            $(this).val($(this)[0].title);
+        }
+    });
+    
+    $(".searchform .search").blur();
+    
+    $('.searchform').submit(function(){
+    	if ($('.search',this).val() != "") {
+        	return true;
+      	}
+      $('.search',this).blur();
+      return false;
+    });
+    
+	if(jQuery().tipsy) {
+		$('.socialIconsWidget a').tipsy({ gravity: 's', fade: true});
+	}
+	
+	$("#notification .close").click(function() {
+		$("#notification").slideUp(400, "easeOutCubic");
+		setCookie( 'NotificationState', 'closed' );
+		$('header').addClass('remove-padding');
+	});
+	
+
+    var cookieVal = getCookie( 'NotificationState' ); // get cookie value
+    if( cookieVal == null || cookieVal == '' ){ // if cookie value is null
+        setCookie( 'NotificationState', 'open' );
+    } 
+    
+	function setCookie( name, value ){ // set cookie
+        var date = new Date();
+        date.setDate( date.getDate() + 1 );
+        expDate = date.toGMTString();
+        document.cookie = name + "=" + value +";expires=" + expDate + "; path=/";    
+    }
+ 
+    function getCookie( name ) { // read cookie value
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for( var i=0;i < ca.length;i++ ) {
+            var c = ca[i];
+            while ( c.charAt( 0 ) == ' ' ) c = c.substring( 1, c.length );
+            if ( c.indexOf( nameEQ ) == 0 ) return c.substring( nameEQ.length, c.length );
+        }
+        return null;
+    }
+        
+	$("#nav-main ul.sf-menu").superfish( {
+		autoArrows: true,
+		dropShadows: !!isMenuShadow
+	}); 
+	
+	// This hides all the sub menus on page load
+	
+	$('#nav-mobile ul.sub-menu').hide();
+	
+	/*if($('#nav-mobile').is(':visible')) {
+		// This makes sure that all the sub menus are open when applicable
+		$('#nav-mobile li.current-menu-item').children().show();
+		// This keeps the nav open to the item that you are navigating to.
+		$('#nav-mobile li.current-menu-item').parents().show();
+	
+	}*/
+  
+ 	$("#toggleMobileMenu").on("click", function(){
+		$("#nav-mobile > ul").slideToggle();
 		$(this).toggleClass("active");
 	});
 	$('#nav-mobile > ul').find('.sub-menu').each(function() {
@@ -250,4 +381,4 @@ if(jQuery().isotope) {
 	
 
 
-})(jQuery);</=>
+})(jQuery);

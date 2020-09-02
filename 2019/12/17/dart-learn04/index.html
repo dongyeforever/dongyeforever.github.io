@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
 <html lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="UTF-8">
   
     <title>Dart入门四 | dongye&#39;s blog</title>
@@ -23,9 +23,11 @@
     <link rel="apple-touch-icon" href="/img/pacman.jpg">
     <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
     
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-</html>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
   <body>
     <header>
       <div>
@@ -111,9 +113,7 @@
 <p>在一个库上你可以多次调用 <code>loadLibrary()</code> 函数。但是该库只是载入一次。<br>Dart 隐含的把 loadLibrary() 函数导入到使用 deferred as 的命名空间 中。 loadLibrary() 方法返回一个 Future。</p>
 </blockquote>
 <h4 id="实现库"><a href="#实现库" class="headerlink" title="实现库"></a>实现库</h4><p>组织库的源文件y有<code>export</code> 命令和<code>part</code> 命令两种方式，官方不推荐使用<code>part关键字</code>。<br><code>export关键字</code><br>将每一个dart文件作为库文件，使用export关键字在某个库文件中单独导入。</p>
-<p><code>mathUtils.dart</code>文件<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> sum(<span class="built_in">int</span> num1, <span class="built_in">int</span> num2) &#123;</span><br><span class="line">  <span class="keyword">return</span> num1 + num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code>dateUtils.dart</code>文件<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> dateFormat(<span class="built_in">DateTime</span> date) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"2019-12-17"</span>;</span><br><span class="line">&#125;</span><br><span class="line">`utils.dart`文件</span><br><span class="line">```dart</span><br><span class="line"><span class="keyword">library</span> utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="string">"mathUtils.dart"</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="string">"dateUtils.dart"</span>;</span><br></pre></td></tr></table></figure></p>
-<p><code>test_libary.dart</code>文件<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"lib/utils.dart"</span>;</span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) &#123;</span><br><span class="line">  <span class="built_in">print</span>(sum(<span class="number">10</span>, <span class="number">20</span>));</span><br><span class="line">  <span class="built_in">print</span>(dateFormat(<span class="built_in">DateTime</span>.now()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>mathUtils.dart</code>文件<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> sum(<span class="built_in">int</span> num1, <span class="built_in">int</span> num2) &#123;</span><br><span class="line">  <span class="keyword">return</span> num1 + num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><code>dateUtils.dart</code>文件<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> dateFormat(<span class="built_in">DateTime</span> date) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"2019-12-17"</span>;</span><br><span class="line">&#125;</span><br><span class="line">`utils.dart`文件</span><br><span class="line">```dart</span><br><span class="line"><span class="keyword">library</span> utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="string">"mathUtils.dart"</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="string">"dateUtils.dart"</span>;</span><br></pre></td></tr></table></figure><br><code>test_libary.dart</code>文件<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"lib/utils.dart"</span>;</span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) &#123;</span><br><span class="line">  <span class="built_in">print</span>(sum(<span class="number">10</span>, <span class="number">20</span>));</span><br><span class="line">  <span class="built_in">print</span>(dateFormat(<span class="built_in">DateTime</span>.now()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="Dart异步模型"><a href="#Dart异步模型" class="headerlink" title="Dart异步模型"></a>Dart异步模型</h3><p>Dart是单线程的，在开发中，我们经常会遇到一些耗时的操作需要完成，比如网络请求、文件读取等等。处理耗时操作一般有两种方式：</p>
 <ul>
 <li>处理方式一： 多线程，比如Java、我们普遍的做法是开启一个新的线程（Thread），在新的线程中完成这些异步的操作，再通过线程间通信的方式，将拿到的数据传递给主线程。</li>
@@ -128,8 +128,7 @@
 <h4 id="Feature"><a href="#Feature" class="headerlink" title="Feature"></a>Feature</h4><blockquote>
 <p>可以将 Future 理解成 ES6 中的 <code>Promise</code>。</p>
 </blockquote>
-<p>在 Dart 库中随处可见 Future 对象，通常异步函数返回的对象就是一个 Future。 当一个 future <em>完成执行后</em>，future 中的值就已经可以使用了。当 future 执行完成后，then() 中的代码会被执行。例如， HttpRequest.getString() 返回一个 future 对象，因为 HTTP 请求可能需要一段时间。 当 Future 完成并且保证字符串值有效后，使用 then() 来执行你需要的代码：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HttpRequest.getString(url).then((<span class="built_in">String</span> result) &#123;</span><br><span class="line">            <span class="built_in">print</span>(result);</span><br><span class="line">  &#125;).catchError((e) &#123;</span><br><span class="line">  <span class="comment">// Handle or ignore the error.</span></span><br><span class="line">  <span class="built_in">print</span>(e);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>使用 <code>catchError()</code> 来处理一些 Future 对象可能抛出的错误或者异常。<code>then().catchError()</code> 组合是 <code>try-catch</code> 的异步版本。</p>
+<p>在 Dart 库中随处可见 Future 对象，通常异步函数返回的对象就是一个 Future。 当一个 future <em>完成执行后</em>，future 中的值就已经可以使用了。当 future 执行完成后，then() 中的代码会被执行。例如， HttpRequest.getString() 返回一个 future 对象，因为 HTTP 请求可能需要一段时间。 当 Future 完成并且保证字符串值有效后，使用 then() 来执行你需要的代码：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HttpRequest.getString(url).then((<span class="built_in">String</span> result) &#123;</span><br><span class="line">            <span class="built_in">print</span>(result);</span><br><span class="line">  &#125;).catchError((e) &#123;</span><br><span class="line">  <span class="comment">// Handle or ignore the error.</span></span><br><span class="line">  <span class="built_in">print</span>(e);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>使用 <code>catchError()</code> 来处理一些 Future 对象可能抛出的错误或者异常。<code>then().catchError()</code> 组合是 <code>try-catch</code> 的异步版本。</p>
 <blockquote>
 <p>重要： 确保调用 catchError() 方式在 then() 的结果上，而不是在原来的 Future 对象上调用。 否则的话，catchError() 就只能处理原来 Future 对象抛出的异常， 而无法处理 then() 代码里面的异常。</p>
 </blockquote>
@@ -137,20 +136,16 @@
 <h4 id="async、await"><a href="#async、await" class="headerlink" title="async、await"></a>async、await</h4><blockquote>
 <p>可以将 async、await 理解成 ES6 中的  async、await<br>使用 <code>async、await</code> 关键字的代码是异步的，虽然看起来有点像同步代码。</p>
 </blockquote>
-<p><code>async</code><br>函数体被 <code>async</code> 标示符标记的函数，即是一个<em>异步函数</em>。 将 async 关键字添加到函数使其返回Future。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 同步函数，它返回一个 String</span></span><br><span class="line"><span class="built_in">String</span> lookUpVersion() =&gt; <span class="string">'1.0.0'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 例如，将来的实现将非常耗时，将其更改为异步函数，返回值是 Future 。</span></span><br><span class="line">Future&lt;<span class="built_in">String</span>&gt; lookUpVersion() <span class="keyword">async</span> =&gt; <span class="string">'1.0.0'</span>;</span><br></pre></td></tr></table></figure></p>
-<p><code>await</code><br>使用 <code>await 表达式</code> 会阻塞代码的执行，直到需要的对象返回为止。在 <code>await 表达式</code> 中， 表达式 的值通常是一个 Future 对象； 如果不是，这是表达式的值会被自动包装成一个 Future 对象。 Future 对象指明返回一个对象的承诺（promise）。 <code>await 表达式</code> 执行的结果为这个返回的对象。 要使用 <code>await</code> ， 代码必须在 异步函数（使用 <code>async</code> 标记的函数）中：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Future checkVersion() <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> version = <span class="keyword">await</span> lookUpVersion();</span><br><span class="line">  <span class="comment">// Do something with version</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>注意，函数体不需要使用Future API。 如有必要， Dart 会创建 Future 对象。<br>如果函数没有返回有效值， 需要设置其返回类型为 <code>Future&lt;void&gt;</code> 。</p>
+<p><code>async</code><br>函数体被 <code>async</code> 标示符标记的函数，即是一个<em>异步函数</em>。 将 async 关键字添加到函数使其返回Future。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 同步函数，它返回一个 String</span></span><br><span class="line"><span class="built_in">String</span> lookUpVersion() =&gt; <span class="string">'1.0.0'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 例如，将来的实现将非常耗时，将其更改为异步函数，返回值是 Future 。</span></span><br><span class="line">Future&lt;<span class="built_in">String</span>&gt; lookUpVersion() <span class="keyword">async</span> =&gt; <span class="string">'1.0.0'</span>;</span><br></pre></td></tr></table></figure><br><code>await</code><br>使用 <code>await 表达式</code> 会阻塞代码的执行，直到需要的对象返回为止。在 <code>await 表达式</code> 中， 表达式 的值通常是一个 Future 对象； 如果不是，这是表达式的值会被自动包装成一个 Future 对象。 Future 对象指明返回一个对象的承诺（promise）。 <code>await 表达式</code> 执行的结果为这个返回的对象。 要使用 <code>await</code> ， 代码必须在 异步函数（使用 <code>async</code> 标记的函数）中：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Future checkVersion() <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> version = <span class="keyword">await</span> lookUpVersion();</span><br><span class="line">  <span class="comment">// Do something with version</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>注意，函数体不需要使用Future API。 如有必要， Dart 会创建 Future 对象。<br>如果函数没有返回有效值， 需要设置其返回类型为 <code>Future&lt;void&gt;</code> 。</p>
 <p>在一个异步函数中可以多次使用 await 。 例如，下面代码中等待了三次函数结果：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> entrypoint = <span class="keyword">await</span> findEntrypoint();</span><br><span class="line"><span class="keyword">var</span> exitCode = <span class="keyword">await</span> runExecutable(entrypoint, args);</span><br><span class="line"><span class="keyword">await</span> flushThenExit(exitCode);</span><br></pre></td></tr></table></figure></p>
 <p>使用 <code>try</code>， <code>catch</code>， 和 <code>finally</code> 来处理代码中使用 <code>await</code> 导致的错误。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  version = <span class="keyword">await</span> deleteLotsOfFiles();</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="comment">// React to inability to look up the version</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h5 id="Feture和async、awiit区别"><a href="#Feture和async、awiit区别" class="headerlink" title="Feture和async、awiit区别"></a>Feture和async、awiit区别</h5><p>在直接使用 <code>Future API</code> 前，首先应该考虑 <code>await</code> 来替代。 代码中使用 <code>await</code> 表达式会比直接使用 Future API 更容易理解。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Future result = costlyQuery(url);</span><br><span class="line">result</span><br><span class="line">    .then((value) =&gt; expensiveWork(value))</span><br><span class="line">    .then((_) =&gt; lengthyComputation())</span><br><span class="line">    .then((_) =&gt; <span class="built_in">print</span>(<span class="string">'Done!'</span>))</span><br><span class="line">    .catchError((exception) &#123;</span><br><span class="line">  <span class="comment">/* Handle exception... */</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>在上面的示例中，方法按下面顺序执行：</p>
+<h5 id="Feture和async、awiit区别"><a href="#Feture和async、awiit区别" class="headerlink" title="Feture和async、awiit区别"></a>Feture和async、awiit区别</h5><p>在直接使用 <code>Future API</code> 前，首先应该考虑 <code>await</code> 来替代。 代码中使用 <code>await</code> 表达式会比直接使用 Future API 更容易理解。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Future result = costlyQuery(url);</span><br><span class="line">result</span><br><span class="line">    .then((value) =&gt; expensiveWork(value))</span><br><span class="line">    .then((_) =&gt; lengthyComputation())</span><br><span class="line">    .then((_) =&gt; <span class="built_in">print</span>(<span class="string">'Done!'</span>))</span><br><span class="line">    .catchError((exception) &#123;</span><br><span class="line">  <span class="comment">/* Handle exception... */</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>在上面的示例中，方法按下面顺序执行：</p>
 <ol>
 <li>costlyQuery()</li>
 <li>expensiveWork()</li>
 <li>lengthyComputation()</li>
 </ol>
-<p>下面是使用 await 编写的等效代码：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">final</span> value = <span class="keyword">await</span> costlyQuery(url);</span><br><span class="line">  <span class="keyword">await</span> expensiveWork(value);</span><br><span class="line">  <span class="keyword">await</span> lengthyComputation();</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'Done!'</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="comment">/* Handle exception... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用async、awiit的方式，可以用类似同步代码的写法实现异步操作，推荐使用 <code>async</code> 和 <code>await</code> 关键字实现异步编程。</p>
+<p>下面是使用 await 编写的等效代码：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">final</span> value = <span class="keyword">await</span> costlyQuery(url);</span><br><span class="line">  <span class="keyword">await</span> expensiveWork(value);</span><br><span class="line">  <span class="keyword">await</span> lengthyComputation();</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">'Done!'</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="comment">/* Handle exception... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>使用async、awiit的方式，可以用类似同步代码的写法实现异步操作，推荐使用 <code>async</code> 和 <code>await</code> 关键字实现异步编程。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -179,6 +174,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2020/08/30/annotation/" title="注解annotation">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  注解annotation</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2019/12/13/dart-learn03/"  title="Dart入门三">
@@ -225,7 +228,7 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/Android/" title="Android">Android<sup>14</sup></a></li>
+			<li><a href="/categories/Android/" title="Android">Android<sup>16</sup></a></li>
 		
 			<li><a href="/categories/Dart/" title="Dart">Dart<sup>4</sup></a></li>
 		
@@ -253,6 +256,10 @@
 			<li><a href="/tags/Retrofit/" title="Retrofit">Retrofit<sup>2</sup></a></li>
 		
 			<li><a href="/tags/android-studio/" title="android studio">android studio<sup>3</sup></a></li>
+		
+			<li><a href="/tags/annotation/" title="annotation">annotation<sup>1</sup></a></li>
+		
+			<li><a href="/tags/annotation-kotlin/" title="annotation kotlin">annotation kotlin<sup>1</sup></a></li>
 		
 			<li><a href="/tags/cache/" title="cache">cache<sup>2</sup></a></li>
 		

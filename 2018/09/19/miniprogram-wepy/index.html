@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
 <html lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="UTF-8">
   
     <title>WePY - 小程序敏捷开发实践（演讲内容整理） | dongye&#39;s blog</title>
@@ -25,9 +25,11 @@
     <link rel="apple-touch-icon" href="/img/pacman.jpg">
     <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
     
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-</html>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
   <body>
     <header>
       <div>
@@ -94,12 +96,12 @@
 		<blockquote>
 <p>龚澄，常用ID: Gcaufy，小程序开源框架 WePY 作者，热爱技术，热爱开源。于2015年加入腾讯，负责腾讯手机充值相关业务的开发。2018年加入微信支付，负责微信支付商户侧业务小程序的开发。  </p>
 </blockquote>
-<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>本主题虽然在其它地方讲了很多次，但还是有非常多新内容。因为很多东西正在做或者想要做。本次分享主要分为以下几个部分：<br><img src="http://user-gold-cdn.xitu.io/2018/9/18/165eb7bc3d412f8d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
-<h3 id="WePY-的介绍"><a href="#WePY-的介绍" class="headerlink" title="WePY 的介绍"></a>WePY 的介绍</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebcab769b9a68?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
-<h3 id="WePY-的用户"><a href="#WePY-的用户" class="headerlink" title="WePY 的用户"></a>WePY 的用户</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165eb7ea3b0d0d3c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>上面展示的 WePY 用户不是全部的数据。因为没有办法让 WePY 用户主动上报自己在使用 WePY，所以我只列了我知道的在使用 WePY 的公司，数据比较有限。<br>就我所知道的，最近有一个刷爆朋友圈的小程序 —— 腾讯疫苗，前端采用的 WePY，后端用了腾讯开源的 TARS 项目。微信支付内部也有大量小程序在使用 WePY 框架。<br>右边贴的聊天记录是我在 WePY 交流群收集到的用户反馈，就反馈的内容来看，有很多感谢的话，说明 WePY 这个框架确实能帮助开发者提高自己的开发效率。嘿嘿，我没有贴 WePY 的负面反馈，因为我担心一页 PPT 不够贴 👀。</p>
-<h3 id="WePY-的数据"><a href="#WePY-的数据" class="headerlink" title="WePY 的数据"></a>WePY 的数据</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165eb883544e7d08?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>WePY 项目在 Github 上现在有13900多个 Star。拿其它前端框架对比，Vue、React 等 Star 数可能达到了 10W+，但是它们都是国际的项目。WePY 这个项目由于微信小程序的原因，算是一个国内项目，能有13000多个 Star 还是相当不错的。Star 数多不一定代表 WePY 这个框架好，但是能表明小程序这块流量很大，开发小程序也非常有前景。 开发者们需要 WePY 这样的框架来提供帮助。这也是为什么后来出现了 Taro、mpvue 等类似的非常优秀的框架。<br>issues 目前有1300多个。这意味着我每天起床都有超过10条 to-do list 需要处理。加上每天还有公司的其它事情需要处理，比较头大。<br>pull requests 目前有320多条。相比其它开源项目，这个 PR 数量相当不错，非常感谢为 WePY 作贡献的开发者们。<br>用户数有4000多。这个数据的来源我是统计的我建立的 WePY 交流群，目前这个交流群里有 4000 多人。</p>
-<h3 id="WePY-是什么"><a href="#WePY-是什么" class="headerlink" title="WePY 是什么"></a>WePY 是什么</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165eb94203b4af67?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>将 Web App 和小程序进行对比。Web App 和小程序在功能上类似， Web App 在开发的时候，可能使用 Vue.js 作为其核心库，用 Webpack 进行打包。在微信小程序中，大家可以简单的将 WePY 理解为 Web App 里的 Vue.js + Webpack 的合体。</p>
-<h3 id="WePY-的特点"><a href="#WePY-的特点" class="headerlink" title="WePY 的特点"></a>WePY 的特点</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165eb9d4ede41709?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>WePY 在开发中到底帮助开发者做了什么事情呢？WePY 又有哪些特点呢？</p>
+<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>本主题虽然在其它地方讲了很多次，但还是有非常多新内容。因为很多东西正在做或者想要做。本次分享主要分为以下几个部分：<br><img src="http://user-gold-cdn.xitu.io/2018/9/18/165eb7bc3d412f8d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<h3 id="WePY-的介绍"><a href="#WePY-的介绍" class="headerlink" title="WePY 的介绍"></a>WePY 的介绍</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebcab769b9a68?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<h3 id="WePY-的用户"><a href="#WePY-的用户" class="headerlink" title="WePY 的用户"></a>WePY 的用户</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165eb7ea3b0d0d3c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>上面展示的 WePY 用户不是全部的数据。因为没有办法让 WePY 用户主动上报自己在使用 WePY，所以我只列了我知道的在使用 WePY 的公司，数据比较有限。<br>就我所知道的，最近有一个刷爆朋友圈的小程序 —— 腾讯疫苗，前端采用的 WePY，后端用了腾讯开源的 TARS 项目。微信支付内部也有大量小程序在使用 WePY 框架。<br>右边贴的聊天记录是我在 WePY 交流群收集到的用户反馈，就反馈的内容来看，有很多感谢的话，说明 WePY 这个框架确实能帮助开发者提高自己的开发效率。嘿嘿，我没有贴 WePY 的负面反馈，因为我担心一页 PPT 不够贴 👀。</p>
+<h3 id="WePY-的数据"><a href="#WePY-的数据" class="headerlink" title="WePY 的数据"></a>WePY 的数据</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165eb883544e7d08?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>WePY 项目在 Github 上现在有13900多个 Star。拿其它前端框架对比，Vue、React 等 Star 数可能达到了 10W+，但是它们都是国际的项目。WePY 这个项目由于微信小程序的原因，算是一个国内项目，能有13000多个 Star 还是相当不错的。Star 数多不一定代表 WePY 这个框架好，但是能表明小程序这块流量很大，开发小程序也非常有前景。 开发者们需要 WePY 这样的框架来提供帮助。这也是为什么后来出现了 Taro、mpvue 等类似的非常优秀的框架。<br>issues 目前有1300多个。这意味着我每天起床都有超过10条 to-do list 需要处理。加上每天还有公司的其它事情需要处理，比较头大。<br>pull requests 目前有320多条。相比其它开源项目，这个 PR 数量相当不错，非常感谢为 WePY 作贡献的开发者们。<br>用户数有4000多。这个数据的来源我是统计的我建立的 WePY 交流群，目前这个交流群里有 4000 多人。</p>
+<h3 id="WePY-是什么"><a href="#WePY-是什么" class="headerlink" title="WePY 是什么"></a>WePY 是什么</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165eb94203b4af67?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>将 Web App 和小程序进行对比。Web App 和小程序在功能上类似， Web App 在开发的时候，可能使用 Vue.js 作为其核心库，用 Webpack 进行打包。在微信小程序中，大家可以简单的将 WePY 理解为 Web App 里的 Vue.js + Webpack 的合体。</p>
+<h3 id="WePY-的特点"><a href="#WePY-的特点" class="headerlink" title="WePY 的特点"></a>WePY 的特点</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165eb9d4ede41709?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>WePY 在开发中到底帮助开发者做了什么事情呢？WePY 又有哪些特点呢？</p>
 <ol>
 <li>脚手架：它提供了一个相当于 vue-cli 的脚手架，一行命令生成简单的 demo 项目。用户可以基于这个 demo 进行开发，省去了启动项目前繁琐的配置。</li>
 <li>编译打包：原生开发小程序缺失了许多能力，比如 LESS、SASS。很多用户面对这个问题都是做一个简单的 Gulp 编译。WePY 自带了编译打包能力，想用 LESS、SASS、NPM 等可以直接使用 WePY 的打包工具输出小程序可以运行的代码。</li>
@@ -108,14 +110,14 @@
 <li>复用与扩展：复用方面，原生小程序使用 npm 资源需要将相对应的资源下载并放到代码目录中，利用 WePY 可以直接安装 npm 包并使用。扩展方面，在编译过程中，可以随意添加和扩展编译手段，比如 LESS、SASS、编译插件等。</li>
 <li>多端：利用 WePY 可以将一份代码运行在小程序、H5 等端。</li>
 </ol>
-<h3 id="WePY-的规划"><a href="#WePY-的规划" class="headerlink" title="WePY 的规划"></a>WePY 的规划</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebbd3f85a471f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>16年8月参加小程序内测，10月份开始着手代码转换相关的工作。在不停的迭代中，我发现还有很多事情可以做。比如可以将相关的工作抽象出来提供给其它开发者。于是在11月我对代码进行了重构，将 Gulp 编译部分抛弃重写并于 Github 开源1.1版本。<br>开源之后有很多人关注到这个项目，说明还是有不少人遇到了相应的问题。因此我做了更加具体的优化，在1.1版本上又一次重构，把编译流程抽象，提出了编译器和插件两个概念，方便用户进行扩展。<br>17年1月份发布1.4版本，对整个开发流程和开发者使用框架时的体验进行了更多优化，包括性能优化等。<br>1.6 版本开始考虑多端问题：小程序一套代码多端复用。<br>17年11月左右，小程序推出了原生组件。WePY 本身就是为了解决小程序组件的问题，原生组件发布之后，WePY 的使用场景就没有以前那么强了，所以我开始思考， WePY 需要做一个完全重构的版本。<br>18年2月份启动了该重构版本，这个版本主要是为了解决小程序原生组件相关的问题，是一个全新的重构版本。但由于各种原因，这个版本还没有正式公布。敬请期待！</p>
-<h3 id="WePY-的实现原理"><a href="#WePY-的实现原理" class="headerlink" title="WePY 的实现原理"></a>WePY 的实现原理</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebca1e3b7517d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>接下来我会讲一下 WePY 在技术上的实现原理。</p>
-<h3 id="WePY-解决的问题"><a href="#WePY-解决的问题" class="headerlink" title="WePY 解决的问题"></a>WePY 解决的问题</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebcbd118e0bcd?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>任何一个项目都是发现问题，解决问题的过程，WePY 要解决的问题就是：</p>
+<h3 id="WePY-的规划"><a href="#WePY-的规划" class="headerlink" title="WePY 的规划"></a>WePY 的规划</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebbd3f85a471f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>16年8月参加小程序内测，10月份开始着手代码转换相关的工作。在不停的迭代中，我发现还有很多事情可以做。比如可以将相关的工作抽象出来提供给其它开发者。于是在11月我对代码进行了重构，将 Gulp 编译部分抛弃重写并于 Github 开源1.1版本。<br>开源之后有很多人关注到这个项目，说明还是有不少人遇到了相应的问题。因此我做了更加具体的优化，在1.1版本上又一次重构，把编译流程抽象，提出了编译器和插件两个概念，方便用户进行扩展。<br>17年1月份发布1.4版本，对整个开发流程和开发者使用框架时的体验进行了更多优化，包括性能优化等。<br>1.6 版本开始考虑多端问题：小程序一套代码多端复用。<br>17年11月左右，小程序推出了原生组件。WePY 本身就是为了解决小程序组件的问题，原生组件发布之后，WePY 的使用场景就没有以前那么强了，所以我开始思考， WePY 需要做一个完全重构的版本。<br>18年2月份启动了该重构版本，这个版本主要是为了解决小程序原生组件相关的问题，是一个全新的重构版本。但由于各种原因，这个版本还没有正式公布。敬请期待！</p>
+<h3 id="WePY-的实现原理"><a href="#WePY-的实现原理" class="headerlink" title="WePY 的实现原理"></a>WePY 的实现原理</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebca1e3b7517d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>接下来我会讲一下 WePY 在技术上的实现原理。</p>
+<h3 id="WePY-解决的问题"><a href="#WePY-解决的问题" class="headerlink" title="WePY 解决的问题"></a>WePY 解决的问题</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebcbd118e0bcd?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>任何一个项目都是发现问题，解决问题的过程，WePY 要解决的问题就是：</p>
 <p>组件化开发：小程序原生组件出现之前，小程序没有很好的组件化开发模式。比如我自己实现了一套 dialog，别人想使用的时候可能要把我的代码拷贝一份。实现了组件化之后，我只要把这个组件给他就好了。<br>npm 资源：Web 发展至今，npm 库上有非常庞大的资源。但是原生小程序没有使用 npm 资源的能力，WePY 提供了这个功能。<br>前端工程化：前面提及的打包构建部分<br>性能优化<br>友好的开发体验：体验优化<br>跨平台支持：多端这部分</p>
 <p>总的来说，WePY 解决的问题就是开发中遇到的痛点问题。</p>
-<h3 id="WePY-的架构"><a href="#WePY-的架构" class="headerlink" title="WePY 的架构"></a>WePY 的架构</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebd69f1111861?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>上面是我写的两个核心的部分：CLI 以及 Core。Core 通过 CLI 编译，生成小程序端运行的代码。CLI 部分又分为 wepy、wepy-web ，分别负责 wepy 的编译和 wepy-web 的编译。其上又分为编译器和插件两部分，编译器涉及到目前主流的预处理器，类似 Webpack 的 loader 。插件是在编译之后要做的事情，类似于 Webpack 的 plugin。Core 部分分为 wepy 核心库、小程序核心库和 wepy-web 核心库。wepy-web 核心库比小程序多了 wepy components 和 wepy API 。小程序本身的一些内置组件，比如弹窗组件，想要多端运行都需要封装起来放在 wepy components 。小程序原生 API 需要通过 wepy API 封装。<br>web 本身还分很多平台种类，比如 browser、微信 h5、QQ h5，这些都需要分别适配，所以 wepy-web 之上是一个适配层。<br>整个 Core 之上，是用户封装的一些组件，比如上报、异步。还有一些功能组件，比如用户做的弹窗、toast、imageloader 等。<br>纵观整个 WePY，我的代码会通过 CLI 基于 Core 输出小程序端运行的代码。</p>
-<h3 id="WePY-的编译过程"><a href="#WePY-的编译过程" class="headerlink" title="WePY 的编译过程"></a>WePY 的编译过程</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebe8aba423dbf?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>WePY 本身定义了一个文件后缀 .wpy 。编译时将该文件解析并拆分为 Style、Template、Script。拆分时，会解析并记录组件关系，包括事件、引用等。每个节点的信息都会被记录，在注入时生成到 JS 中，在 JS 中就可以知道组件关系并进行调用。生成完之后进入到 plugin，plugin 是用户自定义的，需要进行图片压缩、JS 混淆、wxml 压缩等处理。依次做完这些处理之后才会得到可以在小程序中运行的代码。<br>以上就是 WePY 的整个编译过程。</p>
-<h3 id="多端的实现"><a href="#多端的实现" class="headerlink" title="多端的实现"></a>多端的实现</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebf90fc9413cb?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>在实现多端方面，面临着以下问题：</p>
+<h3 id="WePY-的架构"><a href="#WePY-的架构" class="headerlink" title="WePY 的架构"></a>WePY 的架构</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebd69f1111861?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>上面是我写的两个核心的部分：CLI 以及 Core。Core 通过 CLI 编译，生成小程序端运行的代码。CLI 部分又分为 wepy、wepy-web ，分别负责 wepy 的编译和 wepy-web 的编译。其上又分为编译器和插件两部分，编译器涉及到目前主流的预处理器，类似 Webpack 的 loader 。插件是在编译之后要做的事情，类似于 Webpack 的 plugin。Core 部分分为 wepy 核心库、小程序核心库和 wepy-web 核心库。wepy-web 核心库比小程序多了 wepy components 和 wepy API 。小程序本身的一些内置组件，比如弹窗组件，想要多端运行都需要封装起来放在 wepy components 。小程序原生 API 需要通过 wepy API 封装。<br>web 本身还分很多平台种类，比如 browser、微信 h5、QQ h5，这些都需要分别适配，所以 wepy-web 之上是一个适配层。<br>整个 Core 之上，是用户封装的一些组件，比如上报、异步。还有一些功能组件，比如用户做的弹窗、toast、imageloader 等。<br>纵观整个 WePY，我的代码会通过 CLI 基于 Core 输出小程序端运行的代码。</p>
+<h3 id="WePY-的编译过程"><a href="#WePY-的编译过程" class="headerlink" title="WePY 的编译过程"></a>WePY 的编译过程</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebe8aba423dbf?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>WePY 本身定义了一个文件后缀 .wpy 。编译时将该文件解析并拆分为 Style、Template、Script。拆分时，会解析并记录组件关系，包括事件、引用等。每个节点的信息都会被记录，在注入时生成到 JS 中，在 JS 中就可以知道组件关系并进行调用。生成完之后进入到 plugin，plugin 是用户自定义的，需要进行图片压缩、JS 混淆、wxml 压缩等处理。依次做完这些处理之后才会得到可以在小程序中运行的代码。<br>以上就是 WePY 的整个编译过程。</p>
+<h3 id="多端的实现"><a href="#多端的实现" class="headerlink" title="多端的实现"></a>多端的实现</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ebf90fc9413cb?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>在实现多端方面，面临着以下问题：</p>
 <ul>
 <li><p>开发模式<br>小程序开发模式自成一派，与现有开发模式都不相同。好在使用 WePY 开发时，WePY 使用的是类 Vue 的开发语法，跟 Vue 开发模式很贴近，所以开发模式问题借助 WePY 非常好解决。</p>
 </li>
@@ -129,9 +131,9 @@
 </li>
 </ul>
 <p>因此，多端实现完全可行。我们的一些项目完全利用 WePY 实现多端。</p>
-<h3 id="生态"><a href="#生态" class="headerlink" title="生态"></a>生态</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec0d8bc897efa?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>左边是在 Github 上看到的一些 UI 库，大家在使用 WePY 开发的时候可以直接利用这些 UI 库进行二次开发。右边是网上收集到的开发资源，包括开发组件、第三方模块等。Github 上 WePY 关键字搜索结果有900多页。从用户反馈来看，用户选择 WePY 的一个原因也是 WePY 诞生的时间长，生态比较完善。</p>
-<h2 id="WePY-的规划-1"><a href="#WePY-的规划-1" class="headerlink" title="WePY 的规划"></a>WePY 的规划</h2><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec119bd2a171f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
-<h3 id="现有问题"><a href="#现有问题" class="headerlink" title="现有问题"></a>现有问题</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec121d63c5b79?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>WePY 目前存在的核心问题是</p>
+<h3 id="生态"><a href="#生态" class="headerlink" title="生态"></a>生态</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec0d8bc897efa?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>左边是在 Github 上看到的一些 UI 库，大家在使用 WePY 开发的时候可以直接利用这些 UI 库进行二次开发。右边是网上收集到的开发资源，包括开发组件、第三方模块等。Github 上 WePY 关键字搜索结果有900多页。从用户反馈来看，用户选择 WePY 的一个原因也是 WePY 诞生的时间长，生态比较完善。</p>
+<h2 id="WePY-的规划-1"><a href="#WePY-的规划-1" class="headerlink" title="WePY 的规划"></a>WePY 的规划</h2><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec119bd2a171f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<h3 id="现有问题"><a href="#现有问题" class="headerlink" title="现有问题"></a>现有问题</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec121d63c5b79?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>WePY 目前存在的核心问题是</p>
 <ul>
 <li><p>静态组件编译<br>WePY 项目做的比较仓促，花了大概一个多月就上线了。最开始只是为了解决组件化的问题。因此它采用了静态组件编译这套方案，在编译组件时，直接将我写的组件进行静态替换，将我写的组件注入到页面中，做了一些隔离相关的事情。这导致动态 repeat 时会出现比较严重的 BUG。这是设计上的缺陷，也是急需解决的问题。</p>
 </li>
@@ -146,15 +148,15 @@
 <li><p>测试用例覆盖度<br>WePY 目前只有核心库被测试用例覆盖。CLI 部分很复杂没有做测试用例覆盖。这导致目前大部分问题都和 CLI 相关。在下一个版本要全部被测试用例覆盖。</p>
 </li>
 </ul>
-<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p><img src alt><br>上图是2.0版本编译部分的对比。左边是 1.0 的编译，右边是2.0正在做的事。前面有讲到1.0的编译是把.wpy 文件放到 CLI 中进行编译。CLI 本身涉及编译器和插件。在2.0中，将文件编译修改为了入口编译，从 App 入口，通过 CLI 自动解析依赖，CLI 中也只有插件，所有的核心功能都将通过插件实现。最后生成的除了小程序文件，还有 Vendor 文件（Vendor 文件是指所有的 npm 包都会打包到这个文件内）、资源文件以及自己引用的模块的文件。</p>
-<h3 id="插件化"><a href="#插件化" class="headerlink" title="插件化"></a>插件化</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec2dfca815f22?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>编译的核心部分是参考 Webpack 做的插件化编译。插件化的概念参考我上面做的图：固定一块板子，板子上有固定数量的挂钩，每个挂钩都可以挂不同的东西。每个挂钩放什么不清楚，但是每个挂钩都可以实现不同的功能。我只需要规定编译的流程，通过在挂钩中写不同的内容实现整个编译流程。所以整个编译过程变为：配置初始化➡️核心编译➡️输出文件。<br>插件化可以提供更高的扩展性和可复用性。所有的核心功能都依赖插件进行。用户觉得某个功能不合适的时候，完全可以自己写一个插件替换掉核心功能。用户可以对编译的任何一个环节进行修改。</p>
-<h3 id="数据绑定v1"><a href="#数据绑定v1" class="headerlink" title="数据绑定v1"></a>数据绑定v1</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec34a84cbc20a?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>v1 的数据绑定：在初始化的时候对数据进行深拷贝做数据备份。每个流程都会预置 apply 动作，比如有一个点击事件，点击事件对数据进行修改后进入到 apply 流程，在 apply 流程中进行深比较得到脏数据，脏数据最终进入到 setDate 中。<br>右边是比较简单易懂的图：小明对文件 B 进行修改得到 B+,老师将 B+ 和 B 进行对比，得到修改的数据。这是一个同步流程。当小明叫小红修改 C 文件时，如果老师不再，需要小红主动叫老师对 C 文件进行对比。即手动调用 apply 流程。</p>
-<h3 id="数据绑定v2"><a href="#数据绑定v2" class="headerlink" title="数据绑定v2"></a>数据绑定v2</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec3a637663c78?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>2.0 使用了 Vue 的数据绑定机制。在初始化时生成 Render Watcher，每个数据初始化时都会添加 observer。修改数据时记录修改的 key-path 并加入队列中，所有的修改动作都会触发 Watcher。在一个 nextTick 时间内会清空队列，并在 Render Watcher 中进行 setDate。setDate 环节根据记录的 key-path 进行 setDate。<br>相比小明和老师的故事：小明在修改文件时会主动记录修改的内容并发起通知，小红的操作方式与小明一致。当老师收到通知时，根据小明、小红的修改记录对修改的内容进行 setDate 的处理。<br>这种优化方式不需要手动调用 apply,也不需要关心异步流程。</p>
-<h3 id="质量"><a href="#质量" class="headerlink" title="质量"></a>质量</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec4205c039f7c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>第二个版本会先在内部项目运用，内部实践之后没有问题再开源。另外2.0版本测试用例覆盖度要完全覆盖。</p>
-<h2 id="开源经验分享"><a href="#开源经验分享" class="headerlink" title="开源经验分享"></a>开源经验分享</h2><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec4447bcb5d69?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
-<h3 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec44c87bc3b6e?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>如何保证开源项目的质量？<br>第一是文档规范。Readme 部分要言简意赅的讲明这个项目能做什么，一个简单的示例说明如何启动项目。Readme 要简洁，大家一眼能看到他想要的东西。<br>第二是 CI。将对应的状态放在 Readme，让开发者可以更安心的使用这个项目。<br>第三是 license。<br>还有 contributer 文档，代码规范、Git 规范等。<br><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec5669b9a174c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>测试使用了 Mocha 和 Istanbul，集成使用了 TravisCI，部署使用了 npm 和 lerna。</p>
-<h3 id="推广运营"><a href="#推广运营" class="headerlink" title="推广运营"></a>推广运营</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec58b1c74debd?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>推广运营方面主要靠自己发文章，做外链。另外我在公众号和微信群推了自己的文章。微信群做了一个机器人放入群码。<br>还做了文档监控，官方文档修改之后，我可以第一时间知道官方文档都修改了什么。以及监控报告，每天都会给我的微信推送今天项目有多少 star 、多少 issue 。</p>
-<h3 id="后期维护"><a href="#后期维护" class="headerlink" title="后期维护"></a>后期维护</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec5dbbe12e88f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt><br>后期维护主要是文档、issue、pr 和新的计划维护。右边的图，灰色部分是我没打标签的 issue。下面闭合的是我在相应时间点处理完的 issue，没有闭合表明这个 issue 还在处理中。</p>
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p><img src="" alt=""><br>上图是2.0版本编译部分的对比。左边是 1.0 的编译，右边是2.0正在做的事。前面有讲到1.0的编译是把.wpy 文件放到 CLI 中进行编译。CLI 本身涉及编译器和插件。在2.0中，将文件编译修改为了入口编译，从 App 入口，通过 CLI 自动解析依赖，CLI 中也只有插件，所有的核心功能都将通过插件实现。最后生成的除了小程序文件，还有 Vendor 文件（Vendor 文件是指所有的 npm 包都会打包到这个文件内）、资源文件以及自己引用的模块的文件。</p>
+<h3 id="插件化"><a href="#插件化" class="headerlink" title="插件化"></a>插件化</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec2dfca815f22?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>编译的核心部分是参考 Webpack 做的插件化编译。插件化的概念参考我上面做的图：固定一块板子，板子上有固定数量的挂钩，每个挂钩都可以挂不同的东西。每个挂钩放什么不清楚，但是每个挂钩都可以实现不同的功能。我只需要规定编译的流程，通过在挂钩中写不同的内容实现整个编译流程。所以整个编译过程变为：配置初始化➡️核心编译➡️输出文件。<br>插件化可以提供更高的扩展性和可复用性。所有的核心功能都依赖插件进行。用户觉得某个功能不合适的时候，完全可以自己写一个插件替换掉核心功能。用户可以对编译的任何一个环节进行修改。</p>
+<h3 id="数据绑定v1"><a href="#数据绑定v1" class="headerlink" title="数据绑定v1"></a>数据绑定v1</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec34a84cbc20a?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>v1 的数据绑定：在初始化的时候对数据进行深拷贝做数据备份。每个流程都会预置 apply 动作，比如有一个点击事件，点击事件对数据进行修改后进入到 apply 流程，在 apply 流程中进行深比较得到脏数据，脏数据最终进入到 setDate 中。<br>右边是比较简单易懂的图：小明对文件 B 进行修改得到 B+,老师将 B+ 和 B 进行对比，得到修改的数据。这是一个同步流程。当小明叫小红修改 C 文件时，如果老师不再，需要小红主动叫老师对 C 文件进行对比。即手动调用 apply 流程。</p>
+<h3 id="数据绑定v2"><a href="#数据绑定v2" class="headerlink" title="数据绑定v2"></a>数据绑定v2</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec3a637663c78?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>2.0 使用了 Vue 的数据绑定机制。在初始化时生成 Render Watcher，每个数据初始化时都会添加 observer。修改数据时记录修改的 key-path 并加入队列中，所有的修改动作都会触发 Watcher。在一个 nextTick 时间内会清空队列，并在 Render Watcher 中进行 setDate。setDate 环节根据记录的 key-path 进行 setDate。<br>相比小明和老师的故事：小明在修改文件时会主动记录修改的内容并发起通知，小红的操作方式与小明一致。当老师收到通知时，根据小明、小红的修改记录对修改的内容进行 setDate 的处理。<br>这种优化方式不需要手动调用 apply,也不需要关心异步流程。</p>
+<h3 id="质量"><a href="#质量" class="headerlink" title="质量"></a>质量</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec4205c039f7c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>第二个版本会先在内部项目运用，内部实践之后没有问题再开源。另外2.0版本测试用例覆盖度要完全覆盖。</p>
+<h2 id="开源经验分享"><a href="#开源经验分享" class="headerlink" title="开源经验分享"></a>开源经验分享</h2><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec4447bcb5d69?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<h3 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec44c87bc3b6e?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>如何保证开源项目的质量？<br>第一是文档规范。Readme 部分要言简意赅的讲明这个项目能做什么，一个简单的示例说明如何启动项目。Readme 要简洁，大家一眼能看到他想要的东西。<br>第二是 CI。将对应的状态放在 Readme，让开发者可以更安心的使用这个项目。<br>第三是 license。<br>还有 contributer 文档，代码规范、Git 规范等。<br><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec5669b9a174c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>测试使用了 Mocha 和 Istanbul，集成使用了 TravisCI，部署使用了 npm 和 lerna。</p>
+<h3 id="推广运营"><a href="#推广运营" class="headerlink" title="推广运营"></a>推广运营</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec58b1c74debd?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>推广运营方面主要靠自己发文章，做外链。另外我在公众号和微信群推了自己的文章。微信群做了一个机器人放入群码。<br>还做了文档监控，官方文档修改之后，我可以第一时间知道官方文档都修改了什么。以及监控报告，每天都会给我的微信推送今天项目有多少 star 、多少 issue 。</p>
+<h3 id="后期维护"><a href="#后期维护" class="headerlink" title="后期维护"></a>后期维护</h3><p><img src="http://user-gold-cdn.xitu.io/2018/9/18/165ec5dbbe12e88f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>后期维护主要是文档、issue、pr 和新的计划维护。右边的图，灰色部分是我没打标签的 issue。下面闭合的是我在相应时间点处理完的 issue，没有闭合表明这个 issue 还在处理中。</p>
 <p>WePY 2.0 目前处于内测阶段，10月底会发布公测版本。</p>
 <p>链接：<a href="http://juejin.im/post/5ba09fbc5188255c880ab4b0" target="_blank" rel="noopener">http://juejin.im/post/5ba09fbc5188255c880ab4b0</a><br>来源：掘金<br>著作权归作者所有。</p>
   
@@ -169,7 +171,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/小程序/">小程序</a>
+  <a class="article-category-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a>
 </div>
 
 
@@ -239,7 +241,7 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/Android/" title="Android">Android<sup>14</sup></a></li>
+			<li><a href="/categories/Android/" title="Android">Android<sup>16</sup></a></li>
 		
 			<li><a href="/categories/Dart/" title="Dart">Dart<sup>4</sup></a></li>
 		
@@ -267,6 +269,10 @@
 			<li><a href="/tags/Retrofit/" title="Retrofit">Retrofit<sup>2</sup></a></li>
 		
 			<li><a href="/tags/android-studio/" title="android studio">android studio<sup>3</sup></a></li>
+		
+			<li><a href="/tags/annotation/" title="annotation">annotation<sup>1</sup></a></li>
+		
+			<li><a href="/tags/annotation-kotlin/" title="annotation kotlin">annotation kotlin<sup>1</sup></a></li>
 		
 			<li><a href="/tags/cache/" title="cache">cache<sup>2</sup></a></li>
 		
