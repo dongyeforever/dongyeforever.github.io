@@ -4,14 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>北京巴士操作指南 | dongye&#39;s blog</title>
+    <title>Android小技巧OnClickListener去重 | dongye&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="dongye">
     
-    <meta name="description" content="如何添加公交路线小程序首页头部展示的是当前位置的天气情况，包括实时温度和空气质量。天气下面的搜索框就是添加公交路线的入口。点击搜索框跳转到【添加公交路线】页面。
-输入你要添加的公交路线，如101，或者专101等…系统会匹配出相关公交路线。
-点击公交路线，跳转到【选择行车方向】页面。点击你要查询公交的">
+    <meta name="description" content="当View被快速多次点击，onClickListener事件的onClick(View view)会执行多次。
+12345678910111213141516171819202122232425/** * A &amp;#123;@linkplain View.OnClickListener click l">
     
     
     
@@ -73,15 +72,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/03/14/bus-miniprogram-intro/" title="北京巴士操作指南" itemprop="url">北京巴士操作指南</a>
+      <a href="/2020/09/06/debounce-onclick/" title="Android小技巧OnClickListener去重" itemprop="url">Android小技巧OnClickListener去重</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://blog.lovek.vip" title="dongye">dongye</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-03-14T04:19:16.000Z" itemprop="datePublished">更新日期: 2019-03-14</time>
-    <!-- 更新日期:<time datetime="2019-03-14T07:35:04.957Z" itemprop="dateModified">2019-03-14</time>
+    <time datetime="2020-09-06T15:14:00.000Z" itemprop="datePublished">更新日期: 2020-09-06</time>
+    <!-- 更新日期:<time datetime="2020-09-06T15:22:27.524Z" itemprop="dateModified">2020-09-06</time>
      -->
   </p>
 </header>
@@ -90,40 +89,27 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何添加公交路线"><span class="toc-number">1.</span> <span class="toc-text">如何添加公交路线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何分享给好友"><span class="toc-number">2.</span> <span class="toc-text">如何分享给好友</span></a></li></ol>
+		
 		</div>
 		
-		<h3 id="如何添加公交路线"><a href="#如何添加公交路线" class="headerlink" title="如何添加公交路线"></a>如何添加公交路线</h3><p>小程序首页头部展示的是当前位置的天气情况，包括实时温度和空气质量。天气下面的搜索框就是添加公交路线的入口。点击搜索框跳转到【添加公交路线】页面。<br><img src="/images/bus_1.webp" alt=""></p>
-<p>输入你要添加的公交路线，如101，或者专101等…系统会匹配出相关公交路线。<br><img src="/images/bus_w.webp" alt=""></p>
-<p>点击公交路线，跳转到【选择行车方向】页面。点击你要查询公交的方向<br><img src="/images/bus_3.webp" alt=""></p>
-<p>同理点击公交行车方向后，跳转到【选择上车站】页面。这里点击你要乘坐公交的上车站即可。</p>
-<p><img src="/images/bus_4.webp" alt=""><br><img src="/images/bus_5.webp" alt=""></p>
-<p>添加完公交路线后，系统会自动保存您的乘车路线到首页列表，方便您下次快速选择。</p>
-<h3 id="如何分享给好友"><a href="#如何分享给好友" class="headerlink" title="如何分享给好友"></a>如何分享给好友</h3><p>有两种方式分享小程序。</p>
-<p>一是和所有微信小程序一样，可以通过点击右上角【···】按钮，选择弹出菜单中的转发；</p>
-<p>二是在实时公交详情页面，点击分享按钮即可发送给微信好友。</p>
-<p>希望大家多转发一下~~ 方便您的家人和朋友~~</p>
-<p><em>-end-</em></p>
+		<p>当View被快速多次点击，onClickListener事件的<code>onClick(View view)</code>会执行多次。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * A &#123;<span class="doctag">@linkplain</span> View.OnClickListener click listener&#125; that debounces multiple clicks posted in the</span></span><br><span class="line"><span class="comment"> * same frame. A click on one button disables all buttons for that frame.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">DebouncingOnClickListener</span> <span class="title">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> static <span class="keyword">final</span> Runnable ENABLE_AGAIN = () -&gt; enabled = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">private</span> static <span class="keyword">final</span> Handler MAIN = new Handler(Looper.getMainLooper());</span><br><span class="line"></span><br><span class="line">  static boolean enabled = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span> <span class="keyword">public</span> <span class="keyword">final</span> void onClick(View v) &#123;</span><br><span class="line">    <span class="keyword">if</span> (enabled) &#123;</span><br><span class="line">      enabled = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Post to the main looper directly rather than going through the view.</span></span><br><span class="line">      <span class="comment">// Ensure that ENABLE_AGAIN will be executed, avoid static field &#123;@link #enabled&#125;</span></span><br><span class="line">      <span class="comment">// staying in false state.</span></span><br><span class="line">      MAIN.post(ENABLE_AGAIN);</span><br><span class="line"></span><br><span class="line">      doClick(v);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">abstract</span> void doClick(View v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>来源：<a href="https://github.com/JakeWharton/butterknife/blob/27232288409731720e46f198d1e388517f453d97/butterknife-runtime/src/main/java/butterknife/internal/DebouncingOnClickListener.java" target="_blank" rel="noopener">butterknife中DebouncingOnClickListener</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/小程序/">小程序</a>
-  </div>
-
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a>
+  <a class="article-category-link" href="/categories/Android/">Android</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://blog.lovek.vip/2019/03/14/bus-miniprogram-intro/" data-title="北京巴士操作指南 | dongye&#39;s blog" data-tsina="" class="share clearfix">
+  <div data-url="http://blog.lovek.vip/2020/09/06/debounce-onclick/" data-title="Android小技巧OnClickListener去重 | dongye&#39;s blog" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -132,19 +118,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2019/11/23/chrome-extension/" title="chrome扩展开发">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  chrome扩展开发</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/12/16/android-view-layout/"  title="View绘制的layout过程">
+<a href="/2020/09/06/annotation-bindview/"  title="ButterKnife中注解">
  <strong>NEXT:</strong><br/> 
- <span>View绘制的layout过程
+ <span>ButterKnife中注解
 </span>
 </a>
 </div>
@@ -174,7 +152,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何添加公交路线"><span class="toc-number">1.</span> <span class="toc-text">如何添加公交路线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何分享给好友"><span class="toc-number">2.</span> <span class="toc-text">如何分享给好友</span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">
