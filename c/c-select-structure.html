@@ -1,0 +1,283 @@
+
+  
+    <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Rui&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Rui">
+    
+    <meta name="description" content="简单即是美">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Rui&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+      <body>
+        <header>
+          <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Rui&#39;s blog" title="Rui&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Rui&#39;s blog">Rui&#39;s blog</a></h1>
+				<h2 class="blog-motto">恰同学少年</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">存档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:blog.lovek.vip">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+        </header>
+        <div id="container">
+          <div id="main" class="page" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/c/c-select-structure.html" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://blog.lovek.vip" title="Rui">Rui</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-10-12T03:00:35.649Z" itemprop="datePublished">更新日期: 2020-10-12</time>
+    <!-- 更新日期:<time datetime="2020-10-09T06:51:11.323Z" itemprop="dateModified">2020-10-09</time>
+     -->
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<h4 id="算法的概念及其描述方法"><a href="#算法的概念及其描述方法" class="headerlink" title="算法的概念及其描述方法"></a>算法的概念及其描述方法</h4><p>数据结构 + 算法 =  程序</p>
+<ul>
+<li><p>算法：解决一个具体问题而采取的确定、有限、有序、可执行的操作步骤（其中某些步骤的顺序是不能改变的）</p>
+</li>
+<li><p>数据结构（Date Structure)是计算机存储、组织数据的方式，指相互之间存在一种或多种特定关系的数据元素的集合</p>
+</li>
+</ul>
+<h4 id="关系运算符与关系表达式"><a href="#关系运算符与关系表达式" class="headerlink" title="关系运算符与关系表达式"></a>关系运算符与关系表达式</h4><p>简单程序基本操作：</p>
+<p>输入所需的数据——&gt;进行运算和数据处理——&gt;输出运算结果</p>
+<p>（这是一种常见的程序结构，即顺序结构。赋值和数据的输入/输出是顺序结构中最典型的操作，主要由表达式语句组成。表达式语句由表达式后接一个分号组成）</p>
+<h5 id="关系表达式"><a href="#关系表达式" class="headerlink" title="关系表达式"></a>关系表达式</h5><p>用关系运算符将两个操作数连接起来组成的表达式。通常用于表达一个判断条件，结果只有两种可能：“真”或“假”</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">在C语言中，<span class="number">1</span>表示真，<span class="number">0</span>表示假</span><br><span class="line">    <span class="comment">//只要表达式的值为0，则表达式的值为假，即判断条件不成立；若表达式的值为非零值（包括负数），则表达式的值为真，即表达式所表示的判断条件成立</span></span><br></pre></td></tr></table></figure>
+<h4 id="用于单分支控制的条件语句"><a href="#用于单分支控制的条件语句" class="headerlink" title="用于单分支控制的条件语句"></a>用于单分支控制的条件语句</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(条件判断表达式) &#123; 语句A &#125;  <span class="comment">//若条件表达式的值为真，则执行语句A，否则不做任何操作，直接执行if语句后面的语句</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">if</span> (a &gt; <span class="number">20</span>) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a的值大于20"</span>);</span><br><span class="line">	a = a - <span class="number">20</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a = %d"</span>, a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="用于双分支控制的条件语句"><a href="#用于双分支控制的条件语句" class="headerlink" title="用于双分支控制的条件语句"></a>用于双分支控制的条件语句</h4><p>用于解决双分支选择问题的if-else语句，一般形式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>（表达式p）&#123; 语句<span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">else</span> &#123; 语句<span class="number">2</span> &#125;</span><br><span class="line">    <span class="comment">//如果表达式p的值为真，则执行语句1，否则执行语句2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">if</span>(a &gt; b)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a &gt; b\n"</span>) ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a &lt;= b\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="条件运算符和条件表达式"><a href="#条件运算符和条件表达式" class="headerlink" title="条件运算符和条件表达式"></a>条件运算符和条件表达式</h4><p><code>条件运算符</code>：C语言中唯一的一个<code>三元运算符</code>，运算时需要三个操作数，简化if-else结构</p>
+<p><code>条件表达式</code>：由条件运算符及其相应的操作数构成的表达式。一般形式：</p>
+<p><code>条件表达式 ? 条件为真表达式 ：条件为假表达式</code></p>
+<p>含义：若表达式1的值非0，则该条件表达式的值为表达式2得值，否则是表达式3的值</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">10</span>;</span><br><span class="line">a &gt; b ? <span class="built_in">printf</span>(<span class="string">"a &gt; b\n"</span>); : <span class="built_in">printf</span>(<span class="string">"a &lt;= b\n"</span>);</span><br><span class="line"><span class="comment">// 是否需要做饭 ？ 做饭 ：不做饭</span></span><br></pre></td></tr></table></figure>
+<h4 id="用于多分支控制的条件语句"><a href="#用于多分支控制的条件语句" class="headerlink" title="用于多分支控制的条件语句"></a>用于多分支控制的条件语句</h4><p>形式：else-if，即</p>
+<p>if（表达式1）语句1</p>
+<p>else if（表达式2）语句2</p>
+<p>···</p>
+<p>else if（表达式m）语句m</p>
+<p>else 语句m + 1</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 示例 分数等级：优 良 中 差</span></span><br></pre></td></tr></table></figure>
+<h4 id="用于多路选择的-switch-语句"><a href="#用于多路选择的-switch-语句" class="headerlink" title="用于多路选择的 switch 语句"></a>用于多路选择的 switch 语句</h4><p>代替条件语句从而简化程序设计</p>
+<p>一般形式如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (表达式)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">case</span> 常量 <span class="number">1</span>：</span><br><span class="line">       		可执行语句序列<span class="number">1</span></span><br><span class="line">   <span class="keyword">case</span> 常量 <span class="number">2</span>：</span><br><span class="line">       		可执行语句序列<span class="number">2</span></span><br><span class="line">   ···</span><br><span class="line">   <span class="keyword">case</span> 常量 n:</span><br><span class="line">         	可执行语句序列n</span><br><span class="line">   <span class="keyword">default</span>:</span><br><span class="line">        可执行语句序列n + <span class="number">1</span></span><br><span class="line">&#125;   </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">10</span> ;</span><br><span class="line"><span class="keyword">switch</span>(a)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">10</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"a = 10\n"</span>) ;</span><br><span class="line">        <span class="keyword">break</span> ;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">20</span>:</span><br><span class="line">        pintf(<span class="string">"a = 20\n"</span>) ;</span><br><span class="line">        <span class="keyword">break</span> ;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"default\n"</span>) ;</span><br><span class="line">        <span class="keyword">break</span> ;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//break不能缺少</span></span><br></pre></td></tr></table></figure>
+<h4 id="逻辑运算符和逻辑表达式"><a href="#逻辑运算符和逻辑表达式" class="headerlink" title="逻辑运算符和逻辑表达式"></a>逻辑运算符和逻辑表达式</h4><p><code>逻辑与运算的特点</code>：仅当两个操作数都为真时，运算结果才为真，反之为假</p>
+<p><code>逻辑或运算特点</code>：两个操作数中只要有一个为真，运算结果就为真；反之为假</p>
+<p><code>逻辑非运算符特点</code>:若操作数的值为真，则其逻辑非运算结果为假，反之为真</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">与</span><br><span class="line">    <span class="number">1</span> &amp;&amp; <span class="number">0</span> = <span class="number">0</span></span><br><span class="line">    <span class="number">0</span> &amp;&amp; <span class="number">1</span> = <span class="number">0</span></span><br><span class="line">    <span class="number">0</span> &amp;&amp; <span class="number">0</span> = <span class="number">0</span></span><br><span class="line">    <span class="number">1</span> &amp;&amp; <span class="number">1</span> = <span class="number">1</span></span><br><span class="line">或</span><br><span class="line">    <span class="number">1</span> || <span class="number">0</span> = <span class="number">1</span></span><br><span class="line">    <span class="number">0</span> || <span class="number">1</span> = <span class="number">1</span></span><br><span class="line">    <span class="number">0</span> || <span class="number">0</span> = <span class="number">0</span></span><br><span class="line">    <span class="number">1</span> || <span class="number">1</span> = <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">非</span><br><span class="line">    !<span class="number">1</span> = <span class="number">0</span></span><br><span class="line">    !<span class="number">0</span> = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：运算符 &amp;&amp; 和 || 都具有“短路”特性</p>
+</blockquote>
+<p>!(条件1 &amp;&amp; 条件2)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int a  = <span class="number">30</span>;</span><br><span class="line">int b = <span class="number">25</span>;</span><br><span class="line"><span class="keyword">if</span>(!(a &gt; <span class="number">20</span> &amp;&amp; b &gt; <span class="number">20</span>)) &#123; <span class="comment">// 等价于 !a&gt;20 || !b&gt;20</span></span><br><span class="line">    printf(<span class="string">"都大于20"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!(a &gt; <span class="number">20</span> || b &gt; <span class="number">20</span>)) &#123; <span class="comment">// 等价于 !a&gt;20 &amp;&amp; !b&gt;20</span></span><br><span class="line">    printf(<span class="string">"都不大于20"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://blog.lovek.vip/c/c-select-structure.html" data-title="Rui&#39;s blog" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+	
+	<!-- gitment评论框 start -->
+	<div id="gitment" class="ds-thread"></div>
+	<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+	<script src="https://billts.site/js/gitment.js"></script>
+	<script>
+		var gitment = new Gitment({
+			id: 'dongyeforever',
+			owner: 'dongyeforever',
+			repo: 'dongyeforever.github.io',
+			oauth: {
+			client_id: '075768b5cc6d617a818d',
+			client_secret: '241315e01ddfcb437dc933485c8607cc005ec648'
+			},
+		})
+		gitment.render('gitment')
+	</script>
+
+</div>  
+        </div>
+        <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2020 
+		
+		<a href="http://blog.lovek.vip" target="_blank" title="Rui">Rui</a>
+		
+		</p>
+</div>
+</footer>
+        <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-76853415-1', 'blog.lovek.vip');  
+ga('send', 'pageview');
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:5em;right:50px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.svg"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+
+      </body>
+     </html>
+     
