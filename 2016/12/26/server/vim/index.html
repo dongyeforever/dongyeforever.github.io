@@ -1,0 +1,432 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Vim常用操作 | Rui&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Rui">
+    
+    <meta name="description" content="vim模式：编辑模式（命令模式）输入模式末行模式
+模式转换：编辑–&amp;gt;输入：i：在当前光标所在字符的前面，转为输入模式a：在当前光标所在字符的后面，转为输入模式o：在当前光标所在行的下方，新建一行，转为输入模式I：在当前光标所在行的行首，转为输入模式A：在当前光标所在行的行尾，转为输入模式O：在">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Rui&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Rui&#39;s blog" title="Rui&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Rui&#39;s blog">Rui&#39;s blog</a></h1>
+				<h2 class="blog-motto">恰同学少年</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">存档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:blog.lovek.vip">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/12/26/server/vim/" title="Vim常用操作" itemprop="url">Vim常用操作</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://blog.lovek.vip" title="Rui">Rui</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-12-26T04:19:16.000Z" itemprop="datePublished">更新日期: 2016-12-26</time>
+    <!-- 更新日期:<time datetime="2019-03-14T06:10:20.156Z" itemprop="dateModified">2019-03-14</time>
+     -->
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#vim模式："><span class="toc-number">1.</span> <span class="toc-text">vim模式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一、打开文件"><span class="toc-number">2.</span> <span class="toc-text">一、打开文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、关闭文件"><span class="toc-number">3.</span> <span class="toc-text">二、关闭文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、翻屏"><span class="toc-number">4.</span> <span class="toc-text">四、翻屏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、编辑"><span class="toc-number">5.</span> <span class="toc-text">五、编辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、删除命令：d"><span class="toc-number">6.</span> <span class="toc-text">六、删除命令：d</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七、粘贴命令-p"><span class="toc-number">7.</span> <span class="toc-text">七、粘贴命令 p</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八、复制-y（yank）"><span class="toc-number">8.</span> <span class="toc-text">八、复制 y（yank）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#九、修改：先删除内容再转换为输入模式"><span class="toc-number">9.</span> <span class="toc-text">九、修改：先删除内容再转换为输入模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十、替换："><span class="toc-number">10.</span> <span class="toc-text">十、替换：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十一：撤销编辑"><span class="toc-number">11.</span> <span class="toc-text">十一：撤销编辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十二、重复前一次编辑操作"><span class="toc-number">12.</span> <span class="toc-text">十二、重复前一次编辑操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十三、可视化模式"><span class="toc-number">13.</span> <span class="toc-text">十三、可视化模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十四、查找"><span class="toc-number">14.</span> <span class="toc-text">十四、查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十五、查找并替换"><span class="toc-number">15.</span> <span class="toc-text">十五、查找并替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十六、使用vim编辑多个文件"><span class="toc-number">16.</span> <span class="toc-text">十六、使用vim编辑多个文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十七、分屏显示一个文件"><span class="toc-number">17.</span> <span class="toc-text">十七、分屏显示一个文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十八、分窗口显示多个文件"><span class="toc-number">18.</span> <span class="toc-text">十八、分窗口显示多个文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十九、将当前文中部分内容另存为另外-一个文件"><span class="toc-number">19.</span> <span class="toc-text">十九、将当前文中部分内容另存为另外 一个文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二十、将另一个文件的内容填充到当前文件"><span class="toc-number">20.</span> <span class="toc-text">二十、将另一个文件的内容填充到当前文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二十一、和shell交互"><span class="toc-number">21.</span> <span class="toc-text">二十一、和shell交互</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二十二、高级话题"><span class="toc-number">22.</span> <span class="toc-text">二十二、高级话题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二十三、配置文件"><span class="toc-number">23.</span> <span class="toc-text">二十三、配置文件</span></a></li></ol>
+		</div>
+		
+		<h3 id="vim模式："><a href="#vim模式：" class="headerlink" title="vim模式："></a>vim模式：</h3><p>编辑模式（命令模式）<br>输入模式<br>末行模式</p>
+<p>模式转换：<br>编辑–&gt;输入：<br>i：在当前光标所在字符的前面，转为输入模式<br>a：在当前光标所在字符的后面，转为输入模式<br>o：在当前光标所在行的下方，新建一行，转为输入模式<br>I：在当前光标所在行的行首，转为输入模式<br>A：在当前光标所在行的行尾，转为输入模式<br>O：在当前光标所在行的上方，新建一行，转为输入模式</p>
+<p>输入–&gt;编辑：<br>ESC</p>
+<p>输入–&gt;末行：<br>:</p>
+<p>末行–&gt;编辑：<br>ESC，ESC</p>
+<h3 id="一、打开文件"><a href="#一、打开文件" class="headerlink" title="一、打开文件"></a>一、打开文件</h3><p>vim FILE<br>vim +#：打开文件直接定位到第#行<br>vim +：打开文件，定位至最后一行<br>vim +/PATTEN：打开文件，定位至第一次被PATTEN匹配到的行首</p>
+<p>默认处于编辑模式</p>
+<h3 id="二、关闭文件"><a href="#二、关闭文件" class="headerlink" title="二、关闭文件"></a>二、关闭文件</h3><p>1、末行模式下关闭文件<br>:q 退出<br>:wq 保存并退出<br>:q! 不保存退出<br>:w 保存<br>:w! 强行保存<br>:wq –&gt; :x<br>2、编辑模式下退出<br>ZZ：保存并退出</p>
+<p>###三、移动光标<br>1、逐字符移动<br>h：左<br>l：右<br>j：下<br>k：上</p>
+<pre><code>#h：移动#个字符
+</code></pre><p>2、逐单词移动<br>w：移至下一个单词词首<br>e：跳至当前或下一个单词词尾<br>b：跳至当前或前一个单词词首<br>3、行内跳转<br>0：绝对行首<br>^：行首的第一个非空白字符<br>$：绝对行尾<br>4、行间跳转</p>
+<pre><code>#G：跳转至第#行
+</code></pre><p>G：最后一行<br>末行模式下，直接给出行号即可</p>
+<h3 id="四、翻屏"><a href="#四、翻屏" class="headerlink" title="四、翻屏"></a>四、翻屏</h3><p>Ctrl+f：向下翻<br>Ctrl+b：向上翻</p>
+<p>Ctrl+d：向下翻半屏<br>Ctrl+u：向上翻半屏</p>
+<h3 id="五、编辑"><a href="#五、编辑" class="headerlink" title="五、编辑"></a>五、编辑</h3><p>x：删除光标所在的单个字符</p>
+<pre><code>#x：删除光标所在及其向后共#个字符
+</code></pre><h3 id="六、删除命令：d"><a href="#六、删除命令：d" class="headerlink" title="六、删除命令：d"></a>六、删除命令：d</h3><p>d$、 d0、#dw、#de、#db<br>dd：删除当前光标所在行</p>
+<pre><code>#dd：删除包括当前所在行在内的#行
+</code></pre><p>末行模式下：<br>StartADD,EndADD d：删除从start到end行<br>.：表示当前行<br>$：最后一行<br>+#：向下的#行</p>
+<h3 id="七、粘贴命令-p"><a href="#七、粘贴命令-p" class="headerlink" title="七、粘贴命令 p"></a>七、粘贴命令 p</h3><p>p：如果删除或复制的为整行，则粘贴至光标所在行的下方，如果复制 或删除的内容为非整行，则粘贴至光标所在字符的后面<br>P：如果删除或复制的为整行，则粘贴至光标所在行的上方，如果复制 或删除的内容为非整行，则粘贴至光标所在字符的前面</p>
+<h3 id="八、复制-y（yank）"><a href="#八、复制-y（yank）" class="headerlink" title="八、复制 y（yank）"></a>八、复制 y（yank）</h3><p>用法同d命令</p>
+<h3 id="九、修改：先删除内容再转换为输入模式"><a href="#九、修改：先删除内容再转换为输入模式" class="headerlink" title="九、修改：先删除内容再转换为输入模式"></a>九、修改：先删除内容再转换为输入模式</h3><p>c：用法同d</p>
+<h3 id="十、替换："><a href="#十、替换：" class="headerlink" title="十、替换："></a>十、替换：</h3><p>r：替换单个字符<br>R：替换模式</p>
+<h3 id="十一：撤销编辑"><a href="#十一：撤销编辑" class="headerlink" title="十一：撤销编辑"></a>十一：撤销编辑</h3><p>u：（undo）撤销前一次操作，可多次使用</p>
+<pre><code>#u：直接撤销#次编辑操作
+</code></pre><p>撤销最近一次撤销：Ctrl+r</p>
+<h3 id="十二、重复前一次编辑操作"><a href="#十二、重复前一次编辑操作" class="headerlink" title="十二、重复前一次编辑操作"></a>十二、重复前一次编辑操作</h3><pre><code>.
+</code></pre><h3 id="十三、可视化模式"><a href="#十三、可视化模式" class="headerlink" title="十三、可视化模式"></a>十三、可视化模式</h3><p>v：按字符选取<br>V：按矩形块选取</p>
+<h3 id="十四、查找"><a href="#十四、查找" class="headerlink" title="十四、查找"></a>十四、查找</h3><p>/PATTERN<br>n：下一个<br>N：上一个<br>?PATTERN：倒着找</p>
+<h3 id="十五、查找并替换"><a href="#十五、查找并替换" class="headerlink" title="十五、查找并替换"></a>十五、查找并替换</h3><p>在末行模式下使用s命令<br>ADDR1,ADDR2@PATTERN@string@gi：<br>g：全局替换<br>i：忽略大小写<br>例如 :.,$s/aa/AA/g：表示从当前行，到末行把aa替换为AA，全局替换<br>%：表示全文 :%s/aa/AA/g</p>
+<h3 id="十六、使用vim编辑多个文件"><a href="#十六、使用vim编辑多个文件" class="headerlink" title="十六、使用vim编辑多个文件"></a>十六、使用vim编辑多个文件</h3><p>vim FILE1 FILE2 FILE3<br>:next：切换至下一个文件<br>:prev<br>:last<br>:first</p>
+<p>退出<br>:qa 全部退出</p>
+<h3 id="十七、分屏显示一个文件"><a href="#十七、分屏显示一个文件" class="headerlink" title="十七、分屏显示一个文件"></a>十七、分屏显示一个文件</h3><p>Ctrl+w, s：水平拆分窗口<br>Ctrl+w,v：垂直拆分</p>
+<p>在窗口间切换光标：<br>Ctrl+w，↑↓←→</p>
+<h3 id="十八、分窗口显示多个文件"><a href="#十八、分窗口显示多个文件" class="headerlink" title="十八、分窗口显示多个文件"></a>十八、分窗口显示多个文件</h3><p>vim -o：水平分割 显示<br>vim -O：垂直分割显示</p>
+<h3 id="十九、将当前文中部分内容另存为另外-一个文件"><a href="#十九、将当前文中部分内容另存为另外-一个文件" class="headerlink" title="十九、将当前文中部分内容另存为另外 一个文件"></a>十九、将当前文中部分内容另存为另外 一个文件</h3><p>末行模式下使用w命令<br>:w<br>:w /path</p>
+<h3 id="二十、将另一个文件的内容填充到当前文件"><a href="#二十、将另一个文件的内容填充到当前文件" class="headerlink" title="二十、将另一个文件的内容填充到当前文件"></a>二十、将另一个文件的内容填充到当前文件</h3><p>:r</p>
+<h3 id="二十一、和shell交互"><a href="#二十一、和shell交互" class="headerlink" title="二十一、和shell交互"></a>二十一、和shell交互</h3><p>:! COMMAND</p>
+<h3 id="二十二、高级话题"><a href="#二十二、高级话题" class="headerlink" title="二十二、高级话题"></a>二十二、高级话题</h3><p>1.显示行号<br>:set nu：number 行号</p>
+<p>:set nonu</p>
+<p>2.显示忽略大小写<br>:set ic（ignorecase）</p>
+<p>:set noic（noignorecase）</p>
+<p>3.设定自动缩进<br>:set autoindent<br>:set ai</p>
+<p>:set noai</p>
+<p>4.查找到的文本高亮显示或取消<br>:set hlsearch<br>:set nohlsearch</p>
+<p>5.语法高亮<br>:syntax on<br>:syntax off</p>
+<h3 id="二十三、配置文件"><a href="#二十三、配置文件" class="headerlink" title="二十三、配置文件"></a>二十三、配置文件</h3><p>/etc/vimrc<br>/home/user/.vimrc</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/linux/">linux</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://blog.lovek.vip/2016/12/26/server/vim/" data-title="Vim常用操作 | Rui&#39;s blog" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/01/02/server/bandwagonhost/" title="搬瓦工shadowsocks安装配置">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  搬瓦工shadowsocks安装配置</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/10/20/android-LayoutInflater/"  title="Android LayoutInflater理解">
+ <strong>NEXT:</strong><br/> 
+ <span>Android LayoutInflater理解
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+	<!-- gitment评论框 start -->
+	<div id="gitment" class="ds-thread"></div>
+	<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+	<script src="https://billts.site/js/gitment.js"></script>
+	<script>
+		var gitment = new Gitment({
+			id: 'dongyeforever',
+			owner: 'dongyeforever',
+			repo: 'dongyeforever.github.io',
+			oauth: {
+			client_id: '075768b5cc6d617a818d',
+			client_secret: '241315e01ddfcb437dc933485c8607cc005ec648'
+			},
+		})
+		gitment.render('gitment')
+	</script>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#vim模式："><span class="toc-number">1.</span> <span class="toc-text">vim模式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一、打开文件"><span class="toc-number">2.</span> <span class="toc-text">一、打开文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、关闭文件"><span class="toc-number">3.</span> <span class="toc-text">二、关闭文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、翻屏"><span class="toc-number">4.</span> <span class="toc-text">四、翻屏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、编辑"><span class="toc-number">5.</span> <span class="toc-text">五、编辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、删除命令：d"><span class="toc-number">6.</span> <span class="toc-text">六、删除命令：d</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七、粘贴命令-p"><span class="toc-number">7.</span> <span class="toc-text">七、粘贴命令 p</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八、复制-y（yank）"><span class="toc-number">8.</span> <span class="toc-text">八、复制 y（yank）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#九、修改：先删除内容再转换为输入模式"><span class="toc-number">9.</span> <span class="toc-text">九、修改：先删除内容再转换为输入模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十、替换："><span class="toc-number">10.</span> <span class="toc-text">十、替换：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十一：撤销编辑"><span class="toc-number">11.</span> <span class="toc-text">十一：撤销编辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十二、重复前一次编辑操作"><span class="toc-number">12.</span> <span class="toc-text">十二、重复前一次编辑操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十三、可视化模式"><span class="toc-number">13.</span> <span class="toc-text">十三、可视化模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十四、查找"><span class="toc-number">14.</span> <span class="toc-text">十四、查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十五、查找并替换"><span class="toc-number">15.</span> <span class="toc-text">十五、查找并替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十六、使用vim编辑多个文件"><span class="toc-number">16.</span> <span class="toc-text">十六、使用vim编辑多个文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十七、分屏显示一个文件"><span class="toc-number">17.</span> <span class="toc-text">十七、分屏显示一个文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十八、分窗口显示多个文件"><span class="toc-number">18.</span> <span class="toc-text">十八、分窗口显示多个文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十九、将当前文中部分内容另存为另外-一个文件"><span class="toc-number">19.</span> <span class="toc-text">十九、将当前文中部分内容另存为另外 一个文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二十、将另一个文件的内容填充到当前文件"><span class="toc-number">20.</span> <span class="toc-text">二十、将另一个文件的内容填充到当前文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二十一、和shell交互"><span class="toc-number">21.</span> <span class="toc-text">二十一、和shell交互</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二十二、高级话题"><span class="toc-number">22.</span> <span class="toc-text">二十二、高级话题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二十三、配置文件"><span class="toc-number">23.</span> <span class="toc-text">二十三、配置文件</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Android/" title="Android">Android<sup>18</sup></a></li>
+		
+			<li><a href="/categories/Dart/" title="Dart">Dart<sup>4</sup></a></li>
+		
+			<li><a href="/categories/Web/" title="Web">Web<sup>4</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>1</sup></a></li>
+		
+			<li><a href="/categories/小程序/" title="小程序">小程序<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Dart/" title="Dart">Dart<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Retrofit/" title="Retrofit">Retrofit<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Web/" title="Web">Web<sup>2</sup></a></li>
+		
+			<li><a href="/tags/android-studio/" title="android studio">android studio<sup>3</sup></a></li>
+		
+			<li><a href="/tags/annotation/" title="annotation">annotation<sup>1</sup></a></li>
+		
+			<li><a href="/tags/annotation-kotlin/" title="annotation kotlin">annotation kotlin<sup>1</sup></a></li>
+		
+			<li><a href="/tags/anotation/" title="anotation">anotation<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cache/" title="cache">cache<sup>2</sup></a></li>
+		
+			<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+		
+			<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+		
+			<li><a href="/tags/stetho/" title="stetho">stetho<sup>1</sup></a></li>
+		
+			<li><a href="/tags/小程序/" title="小程序">小程序<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2020 
+		
+		<a href="http://blog.lovek.vip" target="_blank" title="Rui">Rui</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-76853415-1', 'blog.lovek.vip');  
+ga('send', 'pageview');
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:5em;right:50px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.svg"/></a>
+</div>
+<script src="/js/totop.js"></script>
+
+
+  </body>
+</html>
