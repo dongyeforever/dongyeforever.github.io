@@ -80,52 +80,147 @@
     </p>
   <p class="article-time">
     <time datetime="2020-10-10T02:03:51.000Z" itemprop="datePublished">更新日期: 2020-10-10</time>
-    <!-- 更新日期:<time datetime="2020-10-14T02:45:32.848Z" itemprop="dateModified">2020-10-14</time>
+    <!-- 更新日期:<time datetime="2020-10-15T01:54:44.723Z" itemprop="dateModified">2020-10-15</time>
      -->
   </p>
 </header>
 	<div class="article-content">
 		
 		
-		<h4 id="算法的概念及其描述方法"><a href="#算法的概念及其描述方法" class="headerlink" title="算法的概念及其描述方法"></a>算法的概念及其描述方法</h4><p>数据结构 + 算法 =  程序</p>
+		<h4 id="算法的概念及其描述方法"><a href="#算法的概念及其描述方法" class="headerlink" title="算法的概念及其描述方法"></a>算法的概念及其描述方法</h4><p>数据结构 + 算法 = 程序</p>
 <ul>
-<li><p>算法：解决一个具体问题而采取的确定、有限、有序、可执行的操作步骤（其中某些步骤的顺序是不能改变的）</p>
-</li>
-<li><p>数据结构（Date Structure)是计算机存储、组织数据的方式，指相互之间存在一种或多种特定关系的数据元素的集合</p>
-</li>
+<li>算法：解决一个具体问题而采取的确定、有限、有序、可执行的操作步骤。（其中某些步骤的顺序是不能改变的）</li>
+<li>数据结构（Date Structure)：是计算机存储、组织数据的方式，指相互之间存在一种或多种特定关系的数据元素的集合）</li>
 </ul>
-<h4 id="关系运算符与关系表达式"><a href="#关系运算符与关系表达式" class="headerlink" title="关系运算符与关系表达式"></a>关系运算符与关系表达式</h4><p>简单程序基本操作：</p>
-<p>输入所需的数据——&gt;进行运算和数据处理——&gt;输出运算结果</p>
+<h4 id="关系运算符与关系表达式"><a href="#关系运算符与关系表达式" class="headerlink" title="关系运算符与关系表达式"></a>关系运算符与关系表达式</h4><p>简单的程序基本操作：</p>
+<p>输入所需的数据  –&gt;  进行运算和数据处理  –&gt;  输出运算结果</p>
 <p>（这是一种常见的程序结构，即顺序结构。赋值和数据的输入/输出是顺序结构中最典型的操作，主要由表达式语句组成。表达式语句由表达式后接一个分号组成）</p>
+<h5 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">意义</th>
+<th style="text-align:center">举例</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">大于</td>
+<td style="text-align:center">10&gt;5</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">&gt;=</td>
+<td style="text-align:center">大于等于</td>
+<td style="text-align:center">10&gt;=10</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">小于</td>
+<td style="text-align:center">10&lt;5</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;=</td>
+<td style="text-align:center">小于等于</td>
+<td style="text-align:center">10&lt;=10</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">==</td>
+<td style="text-align:center">等于</td>
+<td style="text-align:center">10==5</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">!=</td>
+<td style="text-align:center">不等于</td>
+<td style="text-align:center">10!=5</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+<p>注意：&gt;=,&lt;=,==,!=这种符号之间<code>不能存在空格</code></p>
 <h5 id="关系表达式"><a href="#关系表达式" class="headerlink" title="关系表达式"></a>关系表达式</h5><p>用关系运算符将两个操作数连接起来组成的表达式。通常用于表达一个判断条件，结果只有两种可能：“真”或“假”</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">在C语言中，<span class="number">1</span>表示真，<span class="number">0</span>表示假</span><br><span class="line">    <span class="comment">//只要表达式的值为0，则表达式的值为假，即判断条件不成立；若表达式的值为非零值（包括负数），则表达式的值为真，即表达式所表示的判断条件成立</span></span><br></pre></td></tr></table></figure>
-<h4 id="用于单分支控制的条件语句"><a href="#用于单分支控制的条件语句" class="headerlink" title="用于单分支控制的条件语句"></a>用于单分支控制的条件语句</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(条件判断表达式) &#123; 语句A &#125;  <span class="comment">//若条件表达式的值为真，则执行语句A，否则不做任何操作，直接执行if语句后面的语句</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">if</span> (a &gt; <span class="number">20</span>) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a的值大于20"</span>);</span><br><span class="line">	a = a - <span class="number">20</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a = %d"</span>, a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="用于双分支控制的条件语句"><a href="#用于双分支控制的条件语句" class="headerlink" title="用于双分支控制的条件语句"></a>用于双分支控制的条件语句</h4><p>用于解决双分支选择问题的if-else语句，一般形式：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>（表达式p）&#123; 语句<span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">else</span> &#123; 语句<span class="number">2</span> &#125;</span><br><span class="line">    <span class="comment">//如果表达式p的值为真，则执行语句1，否则执行语句2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">if</span>(a &gt; b)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a &gt; b\n"</span>) ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a &lt;= b\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="条件运算符和条件表达式"><a href="#条件运算符和条件表达式" class="headerlink" title="条件运算符和条件表达式"></a>条件运算符和条件表达式</h4><p><code>条件运算符</code>：C语言中唯一的一个<code>三元运算符</code>，运算时需要三个操作数，简化if-else结构</p>
-<p><code>条件表达式</code>：由条件运算符及其相应的操作数构成的表达式。一般形式：</p>
-<p><code>条件表达式 ? 条件为真表达式 ：条件为假表达式</code></p>
-<p>含义：若表达式1的值非0，则该条件表达式的值为表达式2得值，否则是表达式3的值</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">10</span>;</span><br><span class="line">a &gt; b ? <span class="built_in">printf</span>(<span class="string">"a &gt; b\n"</span>); : <span class="built_in">printf</span>(<span class="string">"a &lt;= b\n"</span>);</span><br><span class="line"><span class="comment">// 是否需要做饭 ？ 做饭 ：不做饭</span></span><br></pre></td></tr></table></figure>
-<h4 id="用于多分支控制的条件语句"><a href="#用于多分支控制的条件语句" class="headerlink" title="用于多分支控制的条件语句"></a>用于多分支控制的条件语句</h4><p>形式：else-if，即</p>
-<p>if（表达式1）语句1</p>
-<p>else if（表达式2）语句2</p>
-<p>···</p>
-<p>else if（表达式m）语句m</p>
-<p>else 语句m + 1</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 示例 分数等级：优 良 中 差</span></span><br></pre></td></tr></table></figure>
-<h4 id="用于多路选择的-switch-语句"><a href="#用于多路选择的-switch-语句" class="headerlink" title="用于多路选择的 switch 语句"></a>用于多路选择的 switch 语句</h4><p>代替条件语句从而简化程序设计</p>
-<p>一般形式如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (表达式)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">case</span> 常量 <span class="number">1</span>：</span><br><span class="line">       		可执行语句序列<span class="number">1</span></span><br><span class="line">   <span class="keyword">case</span> 常量 <span class="number">2</span>：</span><br><span class="line">       		可执行语句序列<span class="number">2</span></span><br><span class="line">   ···</span><br><span class="line">   <span class="keyword">case</span> 常量 n:</span><br><span class="line">         	可执行语句序列n</span><br><span class="line">   <span class="keyword">default</span>:</span><br><span class="line">        可执行语句序列n + <span class="number">1</span></span><br><span class="line">&#125;   </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">10</span> ;</span><br><span class="line"><span class="keyword">switch</span>(a)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">10</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"a = 10\n"</span>) ;</span><br><span class="line">        <span class="keyword">break</span> ;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">20</span>:</span><br><span class="line">        pintf(<span class="string">"a = 20\n"</span>) ;</span><br><span class="line">        <span class="keyword">break</span> ;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"default\n"</span>) ;</span><br><span class="line">        <span class="keyword">break</span> ;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//break不能缺少</span></span><br></pre></td></tr></table></figure>
-<h4 id="逻辑运算符和逻辑表达式"><a href="#逻辑运算符和逻辑表达式" class="headerlink" title="逻辑运算符和逻辑表达式"></a>逻辑运算符和逻辑表达式</h4><p><code>逻辑与运算的特点</code>：仅当两个操作数都为真时，运算结果才为真，反之为假</p>
-<p><code>逻辑或运算特点</code>：两个操作数中只要有一个为真，运算结果就为真；反之为假</p>
-<p><code>逻辑非运算符特点</code>:若操作数的值为真，则其逻辑非运算结果为假，反之为真</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">与</span><br><span class="line">    <span class="number">1</span> &amp;&amp; <span class="number">0</span> = <span class="number">0</span></span><br><span class="line">    <span class="number">0</span> &amp;&amp; <span class="number">1</span> = <span class="number">0</span></span><br><span class="line">    <span class="number">0</span> &amp;&amp; <span class="number">0</span> = <span class="number">0</span></span><br><span class="line">    <span class="number">1</span> &amp;&amp; <span class="number">1</span> = <span class="number">1</span></span><br><span class="line">或</span><br><span class="line">    <span class="number">1</span> || <span class="number">0</span> = <span class="number">1</span></span><br><span class="line">    <span class="number">0</span> || <span class="number">1</span> = <span class="number">1</span></span><br><span class="line">    <span class="number">0</span> || <span class="number">0</span> = <span class="number">0</span></span><br><span class="line">    <span class="number">1</span> || <span class="number">1</span> = <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">非</span><br><span class="line">    !<span class="number">1</span> = <span class="number">0</span></span><br><span class="line">    !<span class="number">0</span> = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在C语言中，用非<span class="number">0</span>值表示<span class="string">"真"</span>,用<span class="number">0</span>值表示<span class="string">"假"</span>.即一般用<span class="number">1</span>表示<span class="string">"真"</span>,<span class="number">0</span>表示<span class="string">"假"</span></span><br></pre></td></tr></table></figure>
+<p>//只要表达式的值为0，则表达式的值为假，即判断不成立；若表达式的值为非0值（包括负数），则表达式的值为真，即表达式所表示的判断条件成立</p>
+<h5 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">意义</th>
+<th style="text-align:center">举例</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">&amp;&amp;</td>
+<td style="text-align:center">与</td>
+<td style="text-align:center">0&amp;&amp;1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">\</td>
+<td style="text-align:center">\</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">或</td>
+<td>0\</td>
+<td>\</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:center">!</td>
+<td style="text-align:center">非</td>
+<td style="text-align:center">!0</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+<p>逻辑运算的值也是有两种分别为真和假，C语言中用整型1和0表示</p>
+<p>求值规则如下：</p>
+<p><strong>与运算&amp;&amp;</strong></p>
+<p>参与运算的两个变量都为真，结果才为真，否则为假。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span> &gt;= <span class="number">5</span> &amp;&amp; <span class="number">7</span> &gt; <span class="number">5</span>   <span class="comment">//因为5 = 5且7 &gt; 5,两者都为真，所以运算结果为真</span></span><br></pre></td></tr></table></figure>
+<p><strong>或运算||</strong></p>
+<p>参与运算的两个变量只要有一个为真，结果就为真；两个变量都为假。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span> &gt;= <span class="number">5</span> || <span class="number">5</span> &gt; <span class="number">8</span>   <span class="comment">//因为5 = 5为真，5 &gt; 8为假，一真一假结果为真</span></span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>注：运算符 &amp;&amp; 和 || 都具有“短路”特性</p>
+<p>注：运算符&amp;&amp;和||都具有“短路”特性</p>
+<p>//要使a &amp;&amp; b运算结果为真则要求：a为假，则不计算b；</p>
+<p>要使a || b运算结果为假则要求：a为真，则不计算b</p>
 </blockquote>
-<p>!(条件1 &amp;&amp; 条件2)</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int a  = <span class="number">30</span>;</span><br><span class="line">int b = <span class="number">25</span>;</span><br><span class="line"><span class="keyword">if</span>(!(a &gt; <span class="number">20</span> &amp;&amp; b &gt; <span class="number">20</span>)) &#123; <span class="comment">// 等价于 !a&gt;20 || !b&gt;20</span></span><br><span class="line">    printf(<span class="string">"都大于20"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!(a &gt; <span class="number">20</span> || b &gt; <span class="number">20</span>)) &#123; <span class="comment">// 等价于 !a&gt;20 &amp;&amp; !b&gt;20</span></span><br><span class="line">    printf(<span class="string">"都不大于20"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>非运算!</strong></p>
+<p>参与运算的变量为真时，结果为假；参与运算量为假时，结果为真。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!(<span class="number">5</span> &gt; <span class="number">8</span>)  <span class="comment">//因为5 &gt; 8为假，所以!(5 &gt; 8)为真</span></span><br></pre></td></tr></table></figure>
+<h4 id="用于单分支控制的条件语句"><a href="#用于单分支控制的条件语句" class="headerlink" title="用于单分支控制的条件语句"></a>用于单分支控制的条件语句</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(条件判断表达式)</span><br><span class="line">&#123;</span><br><span class="line">    执行代码块;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//若表达式的值为真，则执行其后的语句，否则不做任何操作</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：if()后面没有分号，直接写{}</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">if</span>(a &gt; <span class="number">20</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a的值大于20"</span>)；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="用于双分支控制的条件语句"><a href="#用于双分支控制的条件语句" class="headerlink" title="用于双分支控制的条件语句"></a>用于双分支控制的条件语句</h4><p>简单的if-else语句的基本结构：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(条件判断表达式)</span><br><span class="line">&#123;</span><br><span class="line">    执行代码块<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    执行代码块<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//若表达式的值为真，则执行代码块1,否则执行代码块2</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：if()后面没有分号，直接写{},else后面也没有分号，直接写{}</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">if</span>(b &lt; <span class="number">10</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"b的值小于10"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"b的值不大于10"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="多分支控制的条件语句"><a href="#多分支控制的条件语句" class="headerlink" title="多分支控制的条件语句"></a>多分支控制的条件语句</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span>-<span class="keyword">if</span>,即:</span><br><span class="line"><span class="keyword">if</span>(表达式<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">    执行代码块<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">···</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(表达式m)</span><br><span class="line">&#123;</span><br><span class="line">    执行代码块m;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    执行代码块n;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//依次判断表达式的值，当某个值为真时，则执行对应代码块，否则执行代码块n</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：当某一条件为真的时候，则不会向下执行该分支结构的其他语句</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//评价甲的学习情况，等级分为优(90+),良(80+),中(60+),差(60以下)四个等级</span></span><br><span class="line"><span class="keyword">int</span> c = <span class="number">85</span>;</span><br><span class="line"><span class="keyword">if</span>(c &gt;= <span class="number">90</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"棒棒哒\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(c &gt;= <span class="number">80</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"表现不错\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(c &gt;= <span class="number">60</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"继续加油\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"别灰心\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="switch语句"><a href="#switch语句" class="headerlink" title="switch语句"></a>switch语句</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(表达式)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">case</span>常量<span class="number">1</span>:</span><br><span class="line">   语句序列<span class="number">1</span>;</span><br><span class="line">   <span class="keyword">break</span>;</span><br><span class="line">   <span class="keyword">case</span>常量<span class="number">2</span>:</span><br><span class="line">   语句序列<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">        ···</span><br><span class="line">   <span class="keyword">case</span>常量n:</span><br><span class="line">   语句序列n;</span><br><span class="line">   <span class="keyword">break</span>;</span><br><span class="line">   <span class="keyword">default</span>:</span><br><span class="line">   语句序列n+<span class="number">1</span>;</span><br><span class="line">   <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//有break与无break是有区别的，没有break时，只要语句中有一个case匹配，剩下的都要执行；break则是直接跳出switch语句</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：1.switch的case后只能接<code>整型或者字符型常量表达式</code>,不可以是小数或者字符</p>
+<p>2.case后的break不能少</p>
+<p>3.default语句如果不需要可以不要</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> m = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">switch</span>(m)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">10</span>:</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"m = 10\n "</span>);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">20</span>:</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"m = 20\n"</span>);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"default\n"</span>);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="三元-目）运算符"><a href="#三元-目）运算符" class="headerlink" title="三元(目）运算符"></a>三元(目）运算符</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">表达式<span class="number">1</span>? 表达式<span class="number">2</span> :表达式<span class="number">3</span>;</span><br><span class="line"><span class="comment">//先判断表达式1的值是否为真，是则执行表达式2；否则执行表达式3</span></span><br><span class="line"><span class="keyword">int</span> d = <span class="number">90</span>;</span><br><span class="line"><span class="keyword">int</span> e = <span class="number">80</span>;</span><br><span class="line">d &gt; e?</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"d &gt; e\n"</span>):</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"d &lt;= e\n"</span>);</span><br></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
