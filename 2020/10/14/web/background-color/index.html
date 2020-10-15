@@ -73,7 +73,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2020/10/14/web/bg-color/" title="从图像提取主色" itemprop="url">从图像提取主色</a>
+      <a href="/2020/10/14/web/background-color/" title="从图像提取主色" itemprop="url">从图像提取主色</a>
   </h1>
   <p class="article-author">By
     
@@ -81,7 +81,7 @@
     </p>
   <p class="article-time">
     <time datetime="2020-10-14T04:19:16.000Z" itemprop="datePublished">更新日期: 2020-10-14</time>
-    <!-- 更新日期:<time datetime="2020-10-14T03:38:16.141Z" itemprop="dateModified">2020-10-14</time>
+    <!-- 更新日期:<time datetime="2020-10-15T02:19:07.791Z" itemprop="dateModified">2020-10-15</time>
      -->
   </p>
 </header>
@@ -100,7 +100,7 @@
 <h3 id="2-rgbaster-js"><a href="#2-rgbaster-js" class="headerlink" title="2. rgbaster.js"></a>2. rgbaster.js</h3><h5 id="添加依赖库-1"><a href="#添加依赖库-1" class="headerlink" title="添加依赖库"></a>添加依赖库</h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"rgbaster": "^2.1.1"</span><br></pre></td></tr></table></figure>
 <h5 id="导入import-1"><a href="#导入import-1" class="headerlink" title="导入import"></a>导入import</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> rgbaster <span class="keyword">from</span> <span class="string">'rgbaster'</span></span><br></pre></td></tr></table></figure>
 <h5 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> imageUrl = song.picture</span><br><span class="line">rgbaster(imageUrl, &#123;</span><br><span class="line">  ignore: [<span class="string">'rgb(255,255,255)'</span>, <span class="string">'rgb(0,0,0)'</span>],  <span class="comment">// 要忽略识别的颜色</span></span><br><span class="line">  scale: <span class="number">0.5</span> <span class="comment">// 查询时缩小图片，降低精度换取识别速度提高</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> imgColor = res[<span class="number">0</span>].color</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">    bgColor: imgColor</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>参考:</p>
+<p>参考文章:</p>
 <p><a href="https://cloud.tencent.com/developer/article/1132389" target="_blank" rel="noopener">前端图片主题色提取</a></p>
 <p><a href="http://y.qq.com/m/demo/2018/magic_color.html" target="_blank" rel="noopener">魔法色预览工具</a></p>
   
@@ -122,7 +122,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://blog.lovek.vip/2020/10/14/web/bg-color/" data-title="从图像提取主色 | Rui&#39;s blog" data-tsina="" class="share clearfix">
+  <div data-url="http://blog.lovek.vip/2020/10/14/web/background-color/" data-title="从图像提取主色 | Rui&#39;s blog" data-tsina="" class="share clearfix">
   </div>
 
 </div>
