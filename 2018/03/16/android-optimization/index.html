@@ -1,97 +1,252 @@
-
- <!DOCTYPE HTML>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.lovek.vip","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="每个人都知道一个 App 的成功，与这个 App 的性能体验有着很密切的关系。但是如何让你的 App 拥有极致性能体验呢？在 DroidCon NYC 2015 的这个分享里，Boris Farber 带来了他关于 Android Api 以及如何避免一些常见坑的经验。带你了解如何缩短启动时间，优化滑动效果，创建更加顺滑的用户体验。 Save the date for Droidcon SF in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="10 条提升 Android 性能的建议">
+<meta property="og:url" content="http://blog.lovek.vip/2018/03/16/android-optimization/index.html">
+<meta property="og:site_name" content="Rui&#39;s blog">
+<meta property="og:description" content="每个人都知道一个 App 的成功，与这个 App 的性能体验有着很密切的关系。但是如何让你的 App 拥有极致性能体验呢？在 DroidCon NYC 2015 的这个分享里，Boris Farber 带来了他关于 Android Api 以及如何避免一些常见坑的经验。带你了解如何缩短启动时间，优化滑动效果，创建更加顺滑的用户体验。 Save the date for Droidcon SF in">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-03-16T11:19:00.000Z">
+<meta property="article:modified_time" content="2019-03-14T06:10:20.153Z">
+<meta property="article:author" content="Rui">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://blog.lovek.vip/2018/03/16/android-optimization/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>10 条提升 Android 性能的建议 | Rui's blog</title>
   
-    <title>10 条提升 Android 性能的建议 | Rui&#39;s blog</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
-    
-    <meta name="author" content="Rui">
-    
-    <meta name="description" content="每个人都知道一个 App 的成功，与这个 App 的性能体验有着很密切的关系。但是如何让你的 App 拥有极致性能体验呢？在 DroidCon NYC 2015 的这个分享里，Boris Farber 带来了他关于 Android Api 以及如何避免一些常见坑的经验。带你了解如何缩短启动时间，优化">
-    
-    
-    
-    
-    <link rel="alternate" href="/atom.xml" title="Rui&#39;s blog" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/pacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
-    
-    
-<link rel="stylesheet" href="/css/style.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-76853415-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-76853415-1');
+      }
+    </script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.svg" alt="Rui&#39;s blog" title="Rui&#39;s blog"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Rui&#39;s blog">Rui&#39;s blog</a></h1>
-				<h2 class="blog-motto">恰同学少年</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					
-						<li><a href="/">首页</a></li>
-					
-						<li><a href="/archives">存档</a></li>
-					
-						<li><a href="/about">关于</a></li>
-					
-					<li>
-					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:blog.lovek.vip">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Rui's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">恰同学少年</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
 </div>
 
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
     </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+
     
-      <a href="/2018/03/16/android-optimization/" title="10 条提升 Android 性能的建议" itemprop="url">10 条提升 Android 性能的建议</a>
-  </h1>
-  <p class="article-author">By
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
     
-      <a href="http://blog.lovek.vip" title="Rui">Rui</a>
-    </p>
-  <p class="article-time">
-    <time datetime="2018-03-16T11:19:00.000Z" itemprop="datePublished">更新日期: 2018-03-16</time>
-    <!-- 更新日期:<time datetime="2019-03-14T06:10:20.153Z" itemprop="dateModified">2019-03-14</time>
-     -->
-  </p>
-</header>
-	<div class="article-content">
-		
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介-0-00"><span class="toc-number">1.</span> <span class="toc-text">简介 (0:00)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Activity-泄漏-1-17"><span class="toc-number">2.</span> <span class="toc-text">Activity 泄漏 (1:17)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何避免-Activity-泄漏-8-37"><span class="toc-number">3.</span> <span class="toc-text">如何避免 Activity 泄漏? (8:37)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#滑动-10-05"><span class="toc-number">4.</span> <span class="toc-text">滑动 (10:05)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图片-11-26"><span class="toc-number">5.</span> <span class="toc-text">图片 (11:26)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存-12-13"><span class="toc-number">6.</span> <span class="toc-text">内存(12:13)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络-12-54"><span class="toc-number">7.</span> <span class="toc-text">网络(12:54)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#大-JSON-14-35"><span class="toc-number">8.</span> <span class="toc-text">大 JSON (14:35)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何优化滑动速度-16-56"><span class="toc-number">9.</span> <span class="toc-text">如何优化滑动速度? (16:56)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#并发-APIs-18-00"><span class="toc-number">10.</span> <span class="toc-text">并发 APIs (18:00)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IntentService-19-07"><span class="toc-number">11.</span> <span class="toc-text">IntentService (19:07)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AsyncTask-19-56"><span class="toc-number">12.</span> <span class="toc-text">AsyncTask (19:56)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Executor-Framework-21-11"><span class="toc-number">13.</span> <span class="toc-text">Executor Framework (21:11)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deprecation-22-42"><span class="toc-number">14.</span> <span class="toc-text">Deprecation (22:42)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#架构-27-03"><span class="toc-number">15.</span> <span class="toc-text">架构 (27:03)</span></a></li></ol>
-		</div>
-		
-		<p>每个人都知道一个 App 的成功，与这个 App 的性能体验有着很密切的关系。但是如何让你的 App 拥有极致性能体验呢？在 DroidCon NYC 2015 的这个分享里，Boris Farber 带来了他关于 Android Api 以及如何避免一些常见坑的经验。带你了解如何缩短启动时间，优化滑动效果，创建更加顺滑的用户体验。</p>
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.lovek.vip/2018/03/16/android-optimization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="Rui">
+      <meta itemprop="description" content="简单即是美">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rui's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          10 条提升 Android 性能的建议
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-16 19:19:00" itemprop="dateCreated datePublished" datetime="2018-03-16T19:19:00+08:00">2018-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-03-14 14:10:20" itemprop="dateModified" datetime="2019-03-14T14:10:20+08:00">2019-03-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>每个人都知道一个 App 的成功，与这个 App 的性能体验有着很密切的关系。但是如何让你的 App 拥有极致性能体验呢？在 DroidCon NYC 2015 的这个分享里，Boris Farber 带来了他关于 Android Api 以及如何避免一些常见坑的经验。带你了解如何缩短启动时间，优化滑动效果，创建更加顺滑的用户体验。</p>
 <p>Save the date for Droidcon SF in March — a conference with best-in-class presentations from leaders in all parts of the Android ecosystem.</p>
 <h3 id="简介-0-00"><a href="#简介-0-00" class="headerlink" title="简介 (0:00)"></a>简介 (0:00)</h3><p>大家好，我是 Boris，现在是 Google 的一枚员工，目前专注于需要高性能的 App。这个分享是我长期以来从错误中，以及在给合作伙伴做咨询的时候攒下的最佳实践。如果你有一个小型的 App，读过之后，会在你的 App 成长阶段起到帮助。</p>
 <p>我常常会见到那些启动时间很长，滑动不流畅，甚至出现没有反应的 App。我们通常要花很多时间去改善这些问题，毕竟我们都希望自己的 App 能够成功。</p>
@@ -164,295 +319,262 @@
 <p>时常有人问我：“Picasso 和 Glide 哪个更好？我改用 Volley 还是 OkHttp？”，这种问题根本没有 100% 正确的答案。不过，当我在选择一个库的时候，我会用下面的 Checklist 来决策：</p>
 <p>确保它能够解决你的问题。<br>确保它和当前所有的依赖能正常工作。<br>检查依赖<br>留意一下依赖的版本冲突<br>了解维护情况和成本<br>总的来说，提及架构和设计，最好的方法就是让你的程序最快响应。确保用户能够快速理解你的 App，并且拥有良好体验。</p>
 <p><a href="https://realm.io/cn/news/droidcon-farber-improving-android-app-performance/?w=1&amp;w=1" target="_blank" rel="noopener">转自：https://realm.io/cn/news/droidcon-farber-improving-android-app-performance/?w=1&amp;w=1</a></p>
-  
-	</div>
-		<footer class="article-footer clearfix">
 
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Android/">Android</a>
-</div>
-
-
-
-<div class="article-share" id="share">
-
-  <div data-url="http://blog.lovek.vip/2018/03/16/android-optimization/" data-title="10 条提升 Android 性能的建议 | Rui&#39;s blog" data-tsina="" class="share clearfix">
-  </div>
-
-</div>
-</footer>   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2018/04/21/android-memory-leak/" title="Android中常见的内存泄漏汇总">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  Android中常见的内存泄漏汇总</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/2018/02/06/web/js-function-apply-call/"  title="JavaScript中apply和call">
- <strong>NEXT:</strong><br/> 
- <span>JavaScript中apply和call
-</span>
-</a>
-</div>
-
-</nav>
-
-	
-	<!-- gitment评论框 start -->
-	<div id="gitment" class="ds-thread"></div>
-	<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
-	<script src="https://billts.site/js/gitment.js"></script>
-	<script>
-		var gitment = new Gitment({
-			id: 'dongyeforever',
-			owner: 'dongyeforever',
-			repo: 'dongyeforever.github.io',
-			oauth: {
-			client_id: '075768b5cc6d617a818d',
-			client_secret: '241315e01ddfcb437dc933485c8607cc005ec648'
-			},
-		})
-		gitment.render('gitment')
-	</script>
-
-</div>  
-
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介-0-00"><span class="toc-number">1.</span> <span class="toc-text">简介 (0:00)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Activity-泄漏-1-17"><span class="toc-number">2.</span> <span class="toc-text">Activity 泄漏 (1:17)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何避免-Activity-泄漏-8-37"><span class="toc-number">3.</span> <span class="toc-text">如何避免 Activity 泄漏? (8:37)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#滑动-10-05"><span class="toc-number">4.</span> <span class="toc-text">滑动 (10:05)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图片-11-26"><span class="toc-number">5.</span> <span class="toc-text">图片 (11:26)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存-12-13"><span class="toc-number">6.</span> <span class="toc-text">内存(12:13)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络-12-54"><span class="toc-number">7.</span> <span class="toc-text">网络(12:54)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#大-JSON-14-35"><span class="toc-number">8.</span> <span class="toc-text">大 JSON (14:35)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何优化滑动速度-16-56"><span class="toc-number">9.</span> <span class="toc-text">如何优化滑动速度? (16:56)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#并发-APIs-18-00"><span class="toc-number">10.</span> <span class="toc-text">并发 APIs (18:00)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IntentService-19-07"><span class="toc-number">11.</span> <span class="toc-text">IntentService (19:07)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AsyncTask-19-56"><span class="toc-number">12.</span> <span class="toc-text">AsyncTask (19:56)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Executor-Framework-21-11"><span class="toc-number">13.</span> <span class="toc-text">Executor Framework (21:11)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deprecation-22-42"><span class="toc-number">14.</span> <span class="toc-text">Deprecation (22:42)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#架构-27-03"><span class="toc-number">15.</span> <span class="toc-text">架构 (27:03)</span></a></li></ol>
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">分类</p>
-		<ul>
-		
-			<li><a href="/categories/Android/" title="Android">Android<sup>18</sup></a></li>
-		
-			<li><a href="/categories/Dart/" title="Dart">Dart<sup>4</sup></a></li>
-		
-			<li><a href="/categories/Web/" title="Web">Web<sup>6</sup></a></li>
-		
-			<li><a href="/categories/git/" title="git">git<sup>1</sup></a></li>
-		
-			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
-		
-			<li><a href="/categories/python/" title="python">python<sup>1</sup></a></li>
-		
-			<li><a href="/categories/小程序/" title="小程序">小程序<sup>2</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">标签</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/Dart/" title="Dart">Dart<sup>4</sup></a></li>
-		
-			<li><a href="/tags/Retrofit/" title="Retrofit">Retrofit<sup>2</sup></a></li>
-		
-			<li><a href="/tags/Web/" title="Web">Web<sup>3</sup></a></li>
-		
-			<li><a href="/tags/android-studio/" title="android studio">android studio<sup>3</sup></a></li>
-		
-			<li><a href="/tags/annotation/" title="annotation">annotation<sup>1</sup></a></li>
-		
-			<li><a href="/tags/annotation-kotlin/" title="annotation kotlin">annotation kotlin<sup>1</sup></a></li>
-		
-			<li><a href="/tags/anotation/" title="anotation">anotation<sup>1</sup></a></li>
-		
-			<li><a href="/tags/cache/" title="cache">cache<sup>2</sup></a></li>
-		
-			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
-		
-			<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
-		
-			<li><a href="/tags/markdown/" title="markdown">markdown<sup>2</sup></a></li>
-		
-			<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
-		
-			<li><a href="/tags/stetho/" title="stetho">stetho<sup>1</sup></a></li>
-		
-			<li><a href="/tags/小程序/" title="小程序">小程序<sup>2</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
-</div>
-
-</aside>
-</div>
     </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<div class="social-font clearfix">
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
-		
-		<a href="http://blog.lovek.vip" target="_blank" title="Rui">Rui</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.1.0.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
+
+    
+    
+    
+        <div class="reward-container">
+  <div>赞赏是最好的支持</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
       
-      $('#toc.toc-aside').css('display', 'none');
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Rui WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+
+  </div>
+</div>
+
         
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Rui
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://blog.lovek.vip/2018/03/16/android-optimization/" title="10 条提升 Android 性能的建议">http://blog.lovek.vip/2018/03/16/android-optimization/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/02/06/web/js-function-apply-call/" rel="prev" title="JavaScript中apply和call">
+      <i class="fa fa-chevron-left"></i> JavaScript中apply和call
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/04/21/android-memory-leak/" rel="next" title="Android中常见的内存泄漏汇总">
+      Android中常见的内存泄漏汇总 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
     }
   });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
 </script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
-});
-</script>
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
 
+  <aside class="sidebar">
+    <div class="sidebar-inner">
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina');
-  var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
-  });
-});     
-</script>
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
 
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介-0-00"><span class="nav-number">1.</span> <span class="nav-text">简介 (0:00)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity-泄漏-1-17"><span class="nav-number">2.</span> <span class="nav-text">Activity 泄漏 (1:17)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何避免-Activity-泄漏-8-37"><span class="nav-number">3.</span> <span class="nav-text">如何避免 Activity 泄漏? (8:37)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滑动-10-05"><span class="nav-number">4.</span> <span class="nav-text">滑动 (10:05)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图片-11-26"><span class="nav-number">5.</span> <span class="nav-text">图片 (11:26)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存-12-13"><span class="nav-number">6.</span> <span class="nav-text">内存(12:13)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络-12-54"><span class="nav-number">7.</span> <span class="nav-text">网络(12:54)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大-JSON-14-35"><span class="nav-number">8.</span> <span class="nav-text">大 JSON (14:35)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何优化滑动速度-16-56"><span class="nav-number">9.</span> <span class="nav-text">如何优化滑动速度? (16:56)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发-APIs-18-00"><span class="nav-number">10.</span> <span class="nav-text">并发 APIs (18:00)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IntentService-19-07"><span class="nav-number">11.</span> <span class="nav-text">IntentService (19:07)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AsyncTask-19-56"><span class="nav-number">12.</span> <span class="nav-text">AsyncTask (19:56)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Executor-Framework-21-11"><span class="nav-number">13.</span> <span class="nav-text">Executor Framework (21:11)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deprecation-22-42"><span class="nav-number">14.</span> <span class="nav-text">Deprecation (22:42)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构-27-03"><span class="nav-number">15.</span> <span class="nav-text">架构 (27:03)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
 
-
-
-<script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-76853415-1', 'blog.lovek.vip');  
-ga('send', 'pageview');
-</script>
-
-
-<div id="totop" style="position:fixed;bottom:5em;right:50px;cursor: pointer;">
-<a title="返回顶部"><img src="/img/scrollup.svg"/></a>
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rui"
+      src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">Rui</p>
+  <div class="site-description" itemprop="description">简单即是美</div>
 </div>
-<script src="/js/totop.js"></script>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dongyeforever" title="GitHub → https://github.com/dongyeforever" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:rui@lovek.vip" title="E-Mail → mailto:rui@lovek.vip" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
-  </body>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  <span class="author">Copyright </span>
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rui</span>
+  <span class="author"> Powered by Hexo</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '075768b5cc6d617a818d',
+      clientSecret: '12a4af5fd77c65a4ab68791bce732d6c9e3b7364',
+      repo        : 'dongyeforever.github.io',
+      owner       : 'dongyeforever',
+      admin       : ['dongyeforever'],
+      id          : '5554f215685643a79019fe19de5d4c6c',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
 </html>
