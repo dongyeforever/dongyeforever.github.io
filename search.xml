@@ -1562,11 +1562,37 @@ getMeasuredWidth() / getMeasuredHeight()：获得 View测量的宽 / 高
 <h5 id="图片、超链接"><a href="#图片、超链接" class="headerlink" title="图片、超链接"></a>图片、超链接</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">图片格式：![腾讯网](https://mat1.gtimg.com/pingjs/ext2020/qqindex2018/dist/img/qq_logo_2x.png)</span><br><span class="line"></span><br><span class="line">超链接格式：[腾讯网](https://www.qq.com/)</span><br></pre></td></tr></table></figure>
 <h5 id="CheckBox"><a href="#CheckBox" class="headerlink" title="CheckBox"></a>CheckBox</h5><p>可勾选的复选框。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">- [ ] 内容  // 注意空格</span><br><span class="line">- [x] 勾选内容</span><br></pre></td></tr></table></figure>
-<h5 id="代码格式"><a href="#代码格式" class="headerlink" title="代码格式"></a>代码格式</h5><p>以<code></code>语言`开头</p>
-<p>以<code></code>结束`。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">​```java</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"hello world"</span>);</span><br><span class="line">&#125;</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&#96;&#96;&#96;xml</span><br><span class="line">​&#96;&#96;&#96;xml</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;&lt;title&gt;百度一下&lt;&#x2F;title&gt;&lt;&#x2F;head&gt;</span><br><span class="line">    &lt;body&gt;&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 预览效果</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">- Microsoft</span><br><span class="line">- Google</span><br><span class="line">- Apple</span><br><span class="line">  - iPhone</span><br><span class="line">  - iPad</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1. Microsoft &#x2F;&#x2F; 序号后加一个空格</span><br><span class="line">2. Google</span><br><span class="line">3. Apple</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#96;反引号包围的内容&#96;会高亮显示。</span><br><span class="line">&#96;&#96;嵌套的话，可以使用&#96;两个双引号&#96;嵌套在外面&#96;&#96;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; 引用内容</span><br><span class="line">&gt; 注意事项</span><br><span class="line">&gt; 多行引用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**两个星号包围的是粗体**</span><br><span class="line">*一个星号包围的是斜体*</span><br><span class="line"></span><br><span class="line">~~删除线~~</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">图片格式：![腾讯网](https:&#x2F;&#x2F;mat1.gtimg.com&#x2F;pingjs&#x2F;ext2020&#x2F;qqindex2018&#x2F;dist&#x2F;img&#x2F;qq_logo_2x.png)</span><br><span class="line"></span><br><span class="line">超链接格式：[腾讯网](https:&#x2F;&#x2F;www.qq.com&#x2F;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- [ ] 内容  &#x2F;&#x2F; 注意空格</span><br><span class="line">- [x] 勾选内容</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;java</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    System.out.println(&quot;hello world&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="代码格式"><a href="#代码格式" class="headerlink" title="代码格式"></a>代码格式</h5><p>以 ```语言 开头，以 ``` 结束。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"hello world"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">title</span>&gt;</span>百度一下<span class="tag">&lt;/<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="预览效果"><a href="#预览效果" class="headerlink" title="预览效果"></a>预览效果</h4><hr>
+<ul>
+<li>Microsoft</li>
+<li>Google</li>
+<li>Apple<ul>
+<li>iPhone</li>
+<li>iPad</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>Microsoft // 序号后加一个空格</li>
+<li>Google</li>
+<li>Apple</li>
+</ol>
+<p><code>反引号包围的内容</code>会高亮显示。<br><code>嵌套的话，可以使用`两个双引号`嵌套在外面</code></p>
+<blockquote>
+<p>引用内容<br>注意事项<br>多行引用</p>
+</blockquote>
+<p><strong>两个星号包围的是粗体</strong><br><em>一个星号包围的是斜体</em></p>
+<p><del>删除线</del></p>
+<p>图片格式：<img src="https://mat1.gtimg.com/pingjs/ext2020/qqindex2018/dist/img/qq_logo_2x.png" alt="腾讯网"></p>
+<p>超链接格式：<a href="https://www.qq.com/" target="_blank" rel="noopener">腾讯网</a></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"></input> 内容  // 注意空格</li>
+<li style="list-style: none"><input type="checkbox" checked></input> 勾选内容</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"hello world"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Web</category>
