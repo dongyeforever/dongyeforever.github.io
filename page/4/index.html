@@ -250,10 +250,6 @@
 <p>地址：<a href="http://wiki.eoeandroid.com/Android_API_Guides" target="_blank" rel="noopener">http://wiki.eoeandroid.com/Android_API_Guides</a></p>
 <p>Android Dev Guides<br>Google Java编程风格指南中文版</p>
 <p>英文地址：<a href="http://google-styleguide.googlecode.com/svn/trunk/javaguide.html" target="_blank" rel="noopener">http://google-styleguide.googlecode.com/svn/trunk/javaguide.html</a></p>
-<p>地址0：<a href="http://hawstein.com/posts/google-java-style.html" target="_blank" rel="noopener">http://hawstein.com/posts/google-java-style.html</a></p>
-<p>地址1：<a href="https://github.com/codeset/google-java-styleguide" target="_blank" rel="noopener">https://github.com/codeset/google-java-styleguide</a></p>
-<p>Android Proguard混淆配置指南</p>
-<p>地址：<a href="https://github.com/inferjay/AndroidProguardGuide/" target="_blank" rel="noopener">https://github.com/inferjay/AndroidProguardGuide/</a></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2014/10/26/AndroidDevTools/#more" rel="contents">
@@ -334,20 +330,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>设置build.gradle文件：</p>
+           <p>设置build.gradle文件：</p>
 <p>在配置的android节点下加入下面的内容：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sourceSets &#123;  </span><br><span class="line">    main &#123;  </span><br><span class="line">        jniLibs.srcDirs = [<span class="string">'libs'</span>]  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>或者在源码main子目录下建jniLibs目录，把libs下的so库按目录结构丢进去，如下图:</p>
-<p><img src="/images/2014101201.png" alt></p>
+<p><img src="/images/2014101201.png" alt=""></p>
 
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/10/12/android-studio-so/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 
@@ -569,9 +557,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="Stuido特殊"><a href="#Stuido特殊" class="headerlink" title="Stuido特殊"></a>Stuido特殊</h2><p>Ctrl+Q 快速的查看的 类，函数的 文档问信息描述<br>Ctrl+P 方法参数提示<br>Alt+ left/right 切换代码视图<br>Alt+ Up/Down 在方法间快速移动定位<br>Alt+1 最大化当前的Edit或View (再按则反之)<br>Ctrl+E或者Alt+Shift+C 最近更改的代码</p>
-<p>一些基本的快捷键，如果需要完整的快捷键，可以边学边深入。</p>
-<p>转载请注明出处：<a href="https://blog.lovek.vip/2014/10/12/android-studio-shortcutkey/">https://blog.lovek.vip/2014/10/12/android-studio-shortcutkey/</a></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2014/10/12/android-studio-shortcutkey/#more" rel="contents">
@@ -657,73 +642,6 @@
 <p>Linux 平台<br><a href="http://sourceforge.net/p/retext/home/ReText/" target="_blank" rel="noopener">ReText</a></p>
 <p>Mac 平台<br><a href="http://mouapp.com/" target="_blank" rel="noopener">Mou</a></p>
 <p>在线编辑器<br><a href="https://zybuluo.com/mdeditor" target="_blank" rel="noopener">Cmd Markdown</a>(推荐)</p>
-<p>浏览器插件<br><a href="https://chrome.google.com/webstore/detail/oknndfeeopgpibecfjljjfanledpbkog" target="_blank" rel="noopener">MaDe</a> (Chrome)</p>
-<h2 id="以下是Markdown代码"><a href="#以下是Markdown代码" class="headerlink" title="以下是Markdown代码"></a>以下是Markdown代码</h2><pre><code># 这里是一级标题
-### 这里是三级标题
-###### 这里是六级标题
-
-最大为六级，木有七级！
-段落前面没有缩进，看到了吧。
-
-要想使用缩进，在中文输入法中改成「全角」输入，再按两个空格
-
-行尾一个回车换行，显示效果依然是是一行。
-我说的对吧~
-
-想要分成两行，需要在行尾输入两个空格。  
-我说的对吧~
-
-想要开始一个新的段落，乖乖的按两下回车吧
-
-我说的对吧~
-
-**两个星号包围的是粗体**
-
-*一个星号包围的是斜体*
-
-&gt; 引用内容，多行的话，用两个空格结尾吧  
-是吧~
-
-`反引号包围的是行内代码`，这个按键在「Tab」上边
-
-``嵌套的话，可以使用`两个双引号`嵌套在外面``
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#三个反引号包围的是代码块。</span></span><br><span class="line"><span class="comment">#会显示行号。</span></span><br><span class="line"><span class="comment">#也有高亮显示</span></span><br><span class="line"><span class="comment">#我上面加了python，你也可以不加。如果不能高亮，那么还是加上吧。。另外，如果你的代码块包</span></span><br><span class="line"></span><br><span class="line">围的是html，那你应该写html而不是python</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">print</span> os.sep</span><br></pre></td></tr></table></figure>
-嵌套的话，可以使用六个反引号嵌套在外面。
-
-1. 有序列表1，注意点之后的空格。
-2. 有序列表2.
-1. 我这里写成1，在显示时还是3，厉害不。
-
-1. 有序列表1
- 详细内容，注意前面有一个空格
-2. 有序列表2
-详细内容
-
-- 无序列表1
-- 无序列表2
-- 无序列表3
- - 小1，注意前面有一个空格
- - 小2
-
-超级链接：[我的博客](http://dongyeforever.github.io/)
-
-插入图片：![好看不](http://ww2.sinaimg.cn/large/5e8cb366jw1e62o63tkv3j20dh078q5a.jpg)
-
-另外，markdown完全兼容html，你可以用html插入这些东西，例如：
-
-&lt;iframe height=498 width=510 src=&quot;http://v.youku.com/v_show/id_XNzU5Njk2MTk2.html&quot; frameborder=0 allowfullscreen&gt;&lt;/iframe&gt;
-
-
-~~删除线~~
-
-
-分割线用`---`，注意单独一样，上面必须是一个空行
-
----
-
-更多高级的格式，请果断插入html标签
-</code></pre><hr>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2014/10/11/web/markdown-intro/#more" rel="contents">
