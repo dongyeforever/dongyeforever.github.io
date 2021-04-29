@@ -20,19 +20,17 @@
     var CONFIG = {"hostname":"blog.lovek.vip","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="当View被快速多次点击，onClickListener事件的onClick(View view)会执行多次。 12345678910111213141516171819202122232425&#x2F;** * A &amp;#123;@linkplain View.OnClickListener click listener&amp;#125; that debounces multiple clicks poste">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android小技巧OnClickListener去重">
-<meta property="og:url" content="http://blog.lovek.vip/2020/09/06/web/debounce-onclick/index.html">
+  <meta name="description" content="简单即是美">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rui&#39;s blog">
+<meta property="og:url" content="http://blog.lovek.vip/archives/2021/04/index.html">
 <meta property="og:site_name" content="Rui&#39;s blog">
-<meta property="og:description" content="当View被快速多次点击，onClickListener事件的onClick(View view)会执行多次。 12345678910111213141516171819202122232425&#x2F;** * A &amp;#123;@linkplain View.OnClickListener click listener&amp;#125; that debounces multiple clicks poste">
+<meta property="og:description" content="简单即是美">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-09-06T15:14:00.000Z">
-<meta property="article:modified_time" content="2020-09-06T15:22:27.524Z">
 <meta property="article:author" content="Rui">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://blog.lovek.vip/2020/09/06/web/debounce-onclick/">
+<link rel="canonical" href="http://blog.lovek.vip/archives/2021/04/">
 
 
 <script id="page-configurations">
@@ -40,12 +38,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true,
+    isPost : false,
     lang   : 'en'
   };
 </script>
 
-  <title>Android小技巧OnClickListener去重 | Rui's blog</title>
+  <title>Archive | Rui's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-76853415-1"></script>
     <script>
@@ -186,130 +184,57 @@
         <div class="content-wrap">
           
 
-          <div class="content post posts-expand">
+          <div class="content archive">
             
 
-    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://blog.lovek.vip/2020/09/06/web/debounce-onclick/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.jpg">
-      <meta itemprop="name" content="Rui">
-      <meta itemprop="description" content="简单即是美">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rui's blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Android小技巧OnClickListener去重
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-09-06 23:14:00 / Modified: 23:22:27" itemprop="dateCreated datePublished" datetime="2020-09-06T23:14:00+08:00">2020-09-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <p>当View被快速多次点击，onClickListener事件的<code>onClick(View view)</code>会执行多次。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * A &#123;<span class="doctag">@linkplain</span> View.OnClickListener click listener&#125; that debounces multiple clicks posted in the</span></span><br><span class="line"><span class="comment"> * same frame. A click on one button disables all buttons for that frame.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">DebouncingOnClickListener</span> <span class="title">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> static <span class="keyword">final</span> Runnable ENABLE_AGAIN = () -&gt; enabled = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">private</span> static <span class="keyword">final</span> Handler MAIN = new Handler(Looper.getMainLooper());</span><br><span class="line"></span><br><span class="line">  static boolean enabled = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span> <span class="keyword">public</span> <span class="keyword">final</span> void onClick(View v) &#123;</span><br><span class="line">    <span class="keyword">if</span> (enabled) &#123;</span><br><span class="line">      enabled = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Post to the main looper directly rather than going through the view.</span></span><br><span class="line">      <span class="comment">// Ensure that ENABLE_AGAIN will be executed, avoid static field &#123;@link #enabled&#125;</span></span><br><span class="line">      <span class="comment">// staying in false state.</span></span><br><span class="line">      MAIN.post(ENABLE_AGAIN);</span><br><span class="line"></span><br><span class="line">      doClick(v);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">abstract</span> void doClick(View v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>来源：<a href="https://github.com/JakeWharton/butterknife/blob/27232288409731720e46f198d1e388517f453d97/butterknife-runtime/src/main/java/butterknife/internal/DebouncingOnClickListener.java" target="_blank" rel="noopener">butterknife中DebouncingOnClickListener</a></p>
-
-    </div>
-
-    
-    
-    
-        <div class="reward-container">
-  <div>赞赏是最好的支持</div>
-  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    Donate
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.png" alt="Rui WeChat Pay">
-        <p>WeChat Pay</p>
+  
+  <div class="post-block">
+    <div class="posts-collapse">
+      <div class="collection-title">
+        
+        <span class="collection-header">OK! 35 posts in total. Keep on posting.</span>
       </div>
 
-  </div>
-</div>
-
-        
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>Post author:  </strong>Rui
-  </li>
-  <li class="post-copyright-link">
-    <strong>Post link: </strong>
-    <a href="http://blog.lovek.vip/2020/09/06/web/debounce-onclick/" title="Android小技巧OnClickListener去重">http://blog.lovek.vip/2020/09/06/web/debounce-onclick/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
-  </li>
-</ul>
-</div>
-
-
-      <footer class="post-footer">
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2020/09/01/annotation-kt/" rel="prev" title="注解 in kotlin">
-      <i class="fa fa-chevron-left"></i> 注解 in kotlin
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/09/07/annotation-bindview/" rel="next" title="ButterKnife中注解">
-      ButterKnife中注解 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      
+    <div class="collection-year">
+      <span class="collection-header">2021</span>
     </div>
-      </footer>
-    
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2021-04-20T23:55:16+08:00"
+              content="2021-04-20">
+          04-20
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/2021/04/20/server/elk/" itemprop="url">
+            <span itemprop="name">git 知识点</span>
+          </a>
+      </div>
+
+    </header>
   </article>
+
+
+    </div>
+  </div>
   
   
+  
+
   
 
 
 
           </div>
           
-    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -479,26 +404,6 @@
 
   
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
-
-<script>
-NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
-    var gitalk = new Gitalk({
-      clientID    : '075768b5cc6d617a818d',
-      clientSecret: '12a4af5fd77c65a4ab68791bce732d6c9e3b7364',
-      repo        : 'dongyeforever.github.io',
-      owner       : 'dongyeforever',
-      admin       : ['dongyeforever'],
-      id          : '0f2430d43ad287b27f942710400c72fe',
-      proxy       : 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
-        language: 'zh-CN',
-      distractionFreeMode: false
-    });
-    gitalk.render('gitalk-container');
-  }, window.Gitalk);
-});
-</script>
 
 </body>
 </html>

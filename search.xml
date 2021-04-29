@@ -1641,4 +1641,154 @@ getMeasuredWidth() / getMeasuredHeight()：获得 View测量的宽 / 高
         <tag>小程序</tag>
       </tags>
   </entry>
+  <entry>
+    <title>git 知识点</title>
+    <url>/2021/04/20/server/elk/</url>
+    <content><![CDATA[<h4 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h4><p>elastic search 安装</p>
+<h6 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h6><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">// 下载</span><br><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.12.0-linux-x86_64.tar.gz</span><br><span class="line">tar -zxvf elasticsearch-7.12.0-linux-x86_64.tar.gz</span><br><span class="line">sudo mv elasticsearch-7.12.0 /usr/local/elasticsearch</span><br></pre></td></tr></table></figure>
+<h6 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h6><p>修改 <code>config</code> 目录下 <code>elasticsearch.yml</code> 文件。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim elasticsearch.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">//</span> <span class="string">去掉行开头的</span> <span class="comment"># 并重命名集群名，这里命名为 my-el</span></span><br><span class="line"><span class="string">cluster.name:</span> <span class="string">my-el</span></span><br><span class="line"><span class="string">node.name:</span> <span class="string">node-1</span></span><br><span class="line"></span><br><span class="line"><span class="string">//</span> <span class="string">可以使用ip地址访问</span></span><br><span class="line"><span class="string">network.host:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line"><span class="string">node.data</span> <span class="string">:</span> <span class="literal">true</span></span><br><span class="line"><span class="string">discovery.seed_hosts</span> <span class="string">:</span> <span class="string">[]</span></span><br><span class="line"><span class="string">cluster.initial_master_nodes</span> <span class="string">:</span> <span class="string">["node-1"]</span></span><br></pre></td></tr></table></figure>
+<p>启动之后测试是否正常运行。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./elasticsearch -d</span><br><span class="line"></span><br><span class="line">curl 127.0.0.1:9200</span><br></pre></td></tr></table></figure>
+<p>返回</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">name: "node-1",</span><br><span class="line">cluster_name: "my-el",</span><br><span class="line">cluster_uuid: "MmEwssVBQUqOzbT5GNkq9g",</span><br><span class="line">version: &#123;</span><br><span class="line">number: "7.12.0",</span><br><span class="line">build_flavor: "default",</span><br><span class="line">build_type: "tar",</span><br><span class="line">build_hash: "78722783c38caa25a70982b5b042074cde5d3b3a",</span><br><span class="line">build_date: "2021-03-18T06:17:15.410153305Z",</span><br><span class="line">build_snapshot: false,</span><br><span class="line">lucene_version: "8.8.0",</span><br><span class="line">minimum_wire_compatibility_version: "6.8.0",</span><br><span class="line">minimum_index_compatibility_version: "6.0.0-beta1"</span><br><span class="line">&#125;,</span><br><span class="line">tagline: "You Know, for Search"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> root 用户无法启动？</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">如果是 root 用户，需要切换到普通账号或者新建 ES 账号</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> groupadd elasticsearch</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> useradd -g elasticsearch elasticsearch</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> chown -R elasticsearch:elasticsearch elasticsearch</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> su elasticsearch</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>内存不足？</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sysctl -w vm.max_map_count=262144</span><br></pre></td></tr></table></figure>
+<h5 id="elasticsearch-head"><a href="#elasticsearch-head" class="headerlink" title="elasticsearch-head"></a>elasticsearch-head</h5><p>安装 </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone git://github.com/mobz/elasticsearch-head.git</span><br><span class="line">cd elasticsearch-head</span><br><span class="line">npm install</span><br><span class="line">npm run start</span><br><span class="line">open http://localhost:9100/</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>跨域问题：Access to XMLHttpRequest at ‘<a href="http://xx.xx:9200/_stats&#39;" target="_blank" rel="noopener">http://xx.xx:9200/_stats&#39;</a> from origin ‘<a href="http://localhost:9100&#39;">http://localhost:9100&#39;</a> has been blocked by CORS policy</p>
+</blockquote>
+<p>修改<code>elasticsearch.yml</code>文件</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># cors</span></span><br><span class="line"><span class="string">http.cors.enabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="string">http.cors.allow-origin:</span> <span class="string">"*"</span></span><br></pre></td></tr></table></figure>
+<h5 id="elastic-search-使用"><a href="#elastic-search-使用" class="headerlink" title="elastic search 使用"></a>elastic search 使用</h5><p><code>index</code>MySQL<code>database</code>概念，一个index就是一个数据库。</p>
+<p><code>type</code>相当于MySQL中table的概念，一个type就是一个表。这个会在8.x废弃掉。</p>
+<p><code>document</code>即文档，相当于MySQL中的一条数据，ES的数据类似于Mongo，如<code>[&quot;name&quot;: &quot;qii404&quot;, &quot;age&quot;: 23]</code>。我们通过<strong>复合查询</strong>功能框模拟Curl请求实现。</p>
+<p><img src="https://ww1.sinaimg.cn/large/a489ef7dly1gpk44mombdj20x209un39.jpg" alt="image-20210415081505191"></p>
+<blockquote>
+<p>类型名称 8.X 会废弃，使用默认的 <code>_doc</code>。</p>
+</blockquote>
+<h6 id="PUT"><a href="#PUT" class="headerlink" title="PUT"></a>PUT</h6><ul>
+<li>创建索引及对应的字段类型，相当于MySQL建表。</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">PUT video_index2</span><br><span class="line">&#123;<span class="attr">"mappings"</span>:&#123;<span class="attr">"properties"</span>:&#123;<span class="attr">"name"</span>:&#123;<span class="attr">"type"</span>:<span class="string">"text"</span>&#125;,<span class="attr">"age"</span>:&#123;<span class="attr">"type"</span>:<span class="string">"long"</span>&#125;,<span class="attr">"birthday"</span>:&#123;<span class="attr">"type"</span>:<span class="string">"date"</span>&#125;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>旧版写法：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">PUT 索引名/~类型名~/文档id</span><br><span class="line">PUT video_index2/user/1 # 创建索引（type为user）并添加数据</span><br><span class="line">&#123;<span class="attr">"name"</span>:<span class="string">"Rui"</span>, <span class="attr">"age"</span>: <span class="number">18</span>&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>put 可以用来修改文档。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PUT video_index/user/1 # 修改age为3，同时会删除name属性</span><br><span class="line">&#123;"age": 3&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h6><p>更新 <code>name</code> 字段的值。每次修改 <code>version</code>会加1。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">POST video_index2/_doc/1/_update</span><br><span class="line">&#123;<span class="attr">"doc"</span>:&#123;<span class="attr">"name"</span>:<span class="string">"Rui123"</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>更新建议用 POST xxx/_update ，避免 PUT 更新造成字段丢失。</p>
+</blockquote>
+<h6 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h6><figure class="highlight"><table><tr><td class="code"><pre><span class="line">// 删除索引</span><br><span class="line">DELETE video_index2/</span><br><span class="line">// 删除文档</span><br><span class="line">DELETE video_index2/_doc/1</span><br></pre></td></tr></table></figure>
+<h6 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h6><figure class="highlight"><table><tr><td class="code"><pre><span class="line">// 得到索引信息</span><br><span class="line">GET video_index</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET video_index/_doc/_search?q=name:Rui</span><br><span class="line">// 等价于</span><br><span class="line">GET video_index/_doc/_search</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"query"</span>: &#123;<span class="attr">"match"</span>: &#123; <span class="attr">"name"</span>: <span class="string">"Rui"</span>&#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>_source</code>指定过滤输出字段。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET video_index/_doc/_search</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"query"</span>: &#123;<span class="attr">"match"</span>: &#123; <span class="attr">"name"</span>: <span class="string">"Rui"</span>&#125;&#125;,</span><br><span class="line">  <span class="attr">"_source"</span>: [<span class="string">"name"</span>, <span class="string">"birthday"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>sort</code>根据字段排序</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET video_index/_doc/_search</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"query"</span>: &#123;<span class="attr">"match"</span>: &#123; <span class="attr">"name"</span>: <span class="string">"Rui"</span>&#125;&#125;,</span><br><span class="line">  <span class="attr">"sort"</span>: [&#123;<span class="attr">"age"</span>: &#123;<span class="attr">"order"</span>: <span class="string">"desc"</span>&#125;&#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>from</code> 和<code>size</code>分页</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET video_index/_doc/_search</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"query"</span>: &#123;<span class="attr">"match"</span>: &#123; <span class="attr">"name"</span>: <span class="string">"Rui"</span>&#125;&#125;,</span><br><span class="line">  <span class="attr">"sort"</span>: [&#123;<span class="attr">"age"</span>: &#123;<span class="attr">"order"</span>: <span class="string">"desc"</span>&#125;&#125;],</span><br><span class="line">  <span class="attr">"from"</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">"size"</span>: <span class="number">10</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>must</code> (and)  所有条件都要符合，where id = 1 and name = zhangsan</p>
+<p><code>should</code>（or）where  name = xx  or age = 18</p>
+<p><code>must_not</code>(not)</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET video_index/_doc/_search</span><br><span class="line">&#123;<span class="attr">"query"</span>:&#123;<span class="attr">"bool"</span>:&#123;<span class="attr">"should"</span>:[&#123;<span class="attr">"match"</span>:&#123;<span class="attr">"name"</span>:<span class="string">"Rui"</span>&#125;&#125;,&#123;<span class="attr">"match"</span>:&#123;<span class="attr">"age"</span>:<span class="number">18</span>&#125;&#125;]&#125;&#125;&#125;</span><br><span class="line"></span><br><span class="line">GET video_index/_doc/_search</span><br><span class="line">&#123;<span class="attr">"query"</span>:&#123;<span class="attr">"bool"</span>:&#123;<span class="attr">"must"</span>:[&#123;<span class="attr">"match"</span>:&#123;<span class="attr">"name"</span>:<span class="string">"Rui"</span>&#125;&#125;,&#123;<span class="attr">"match"</span>:&#123;<span class="attr">"age"</span>:<span class="number">18</span>&#125;&#125;]&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p><code>filter</code>过滤</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET video_index/_doc/_search</span><br><span class="line">&#123;<span class="attr">"query"</span>:&#123;<span class="attr">"bool"</span>:&#123;<span class="attr">"filter"</span>:&#123;<span class="attr">"range"</span>:&#123;<span class="attr">"age"</span>:&#123;<span class="attr">"gt"</span>:<span class="number">18</span>&#125;&#125;&#125;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>gt/gte 大于/大于等于</li>
+<li>lt/lte 小于/小于等于</li>
+<li>eq 等于</li>
+</ul>
+<p>基础语法说明如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">关键词</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">match_all</td>
+<td style="text-align:left">查询简单的 匹配所有文档。在没有指定查询方式时，它是默认的查询</td>
+</tr>
+<tr>
+<td style="text-align:left">match</td>
+<td style="text-align:left">用于全文搜索或者精确查询，如果在一个精确值的字段上使用它， 例如数字、日期、布尔或者一个 not_analyzed 字符串字段，那么它将会精确匹配给定的值</td>
+</tr>
+<tr>
+<td style="text-align:left">range</td>
+<td style="text-align:left">查询找出那些落在指定区间内的数字或者时间 gt 大于；gte 大于等于；lt 小于；lte 小于等于</td>
+</tr>
+<tr>
+<td style="text-align:left">term</td>
+<td style="text-align:left">被用于精确值 匹配</td>
+</tr>
+<tr>
+<td style="text-align:left">terms</td>
+<td style="text-align:left">terms 查询和 term 查询一样，但它允许你指定多值进行匹配</td>
+</tr>
+<tr>
+<td style="text-align:left">exists</td>
+<td style="text-align:left">查找那些指定字段中有值的文档</td>
+</tr>
+<tr>
+<td style="text-align:left">missing</td>
+<td style="text-align:left">查找那些指定字段中无值的文档</td>
+</tr>
+<tr>
+<td style="text-align:left">must</td>
+<td style="text-align:left">多组合查询 必须匹配这些条件才能被包含进来</td>
+</tr>
+<tr>
+<td style="text-align:left">must_not</td>
+<td style="text-align:left">多组合查询 必须不匹配这些条件才能被包含进来</td>
+</tr>
+<tr>
+<td style="text-align:left">should</td>
+<td style="text-align:left">多组合查询 如果满足这些语句中的任意语句，将增加 _score ，否则，无任何影响。它们主要用于修正每个文档的相关性得分</td>
+</tr>
+<tr>
+<td style="text-align:left">filter</td>
+<td style="text-align:left">多组合查询 这些语句对评分没有贡献，只是根据过滤标准来排除或包含文档</td>
+</tr>
+</tbody>
+</table>
+<h6 id="高亮查询"><a href="#高亮查询" class="headerlink" title="高亮查询"></a>高亮查询</h6><figure class="highlight"><table><tr><td class="code"><pre><span class="line">GET video_index/_doc/_search</span><br><span class="line">&#123;<span class="attr">"query"</span>:&#123;<span class="attr">"match"</span>:&#123;<span class="attr">"name"</span>:<span class="string">"qi"</span>&#125;&#125;,<span class="attr">"highlight"</span>:&#123;<span class="attr">"fields"</span>:&#123;<span class="attr">"name"</span>:&#123;&#125;&#125;&#125;&#125;</span><br><span class="line"></span><br><span class="line">// 返回结果</span><br><span class="line">"highlight":&#123;</span><br><span class="line">    "name":[</span><br><span class="line">        <span class="string">"&lt;em&gt;qi&lt;/em&gt;"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">GET video_index/_doc/_search</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"query"</span>:&#123;<span class="attr">"match"</span>:&#123;<span class="attr">"name"</span>:<span class="string">"qi"</span>&#125;&#125;,</span><br><span class="line">  <span class="attr">"highlight"</span>: &#123;</span><br><span class="line">    <span class="attr">"pre_tags"</span>: <span class="string">"&lt;span class='key' style='color:red'&gt;"</span>,</span><br><span class="line">    <span class="attr">"post_tags"</span>: <span class="string">"&lt;/span&gt;"</span>,</span><br><span class="line">    <span class="attr">"fields"</span>: &#123;</span><br><span class="line">      <span class="attr">"name"</span>: &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 返回结果</span><br><span class="line">"highlight":&#123;</span><br><span class="line">    "name":[</span><br><span class="line">        &lt;span class='key' style='color:red'&gt;qi&lt;/span&gt;"</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="ik-分词器"><a href="#ik-分词器" class="headerlink" title="ik 分词器"></a>ik 分词器</h5><p><a href="https://github.com/medcl/elasticsearch-analysis-ik/releases/tag/v7.12.0" target="_blank" rel="noopener">https://github.com/medcl/elasticsearch-analysis-ik/releases/tag/v7.12.0</a></p>
+<p>复制到 <code>elasticsearch/plugins/</code>目录下，重启<code>elasticsearch</code>。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">// 出现加载插件的 log</span><br><span class="line">[INFO ][o.e.p.PluginsService     ] [node-1] loaded plugin [analysis-ik]</span><br></pre></td></tr></table></figure>
+<p><code>ik_smart</code> 最小粒度划分  <code>ik_max_word</code> 最细粒度划分。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">POST _analyze</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"analyzer"</span>:<span class="string">"ik_smart"</span>,</span><br><span class="line">    <span class="attr">"text"</span>:<span class="string">"中华人民"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"tokens"</span>:[</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"token"</span>:<span class="string">"中华人民"</span>,</span><br><span class="line">            <span class="attr">"start_offset"</span>:<span class="number">0</span>,</span><br><span class="line">            <span class="attr">"end_offset"</span>:<span class="number">7</span>,</span><br><span class="line">            <span class="attr">"type"</span>:<span class="string">"CN_WORD"</span>,</span><br><span class="line">            <span class="attr">"position"</span>:<span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">POST _analyze</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"analyzer"</span>:<span class="string">"ik_max_word"</span>,</span><br><span class="line">    <span class="attr">"text"</span>:<span class="string">"中华人民"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"tokens"</span>:[</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"token"</span>:<span class="string">"中华人民"</span>,</span><br><span class="line">            <span class="attr">"start_offset"</span>:<span class="number">0</span>,</span><br><span class="line">            <span class="attr">"end_offset"</span>:<span class="number">7</span>,</span><br><span class="line">            <span class="attr">"type"</span>:<span class="string">"CN_WORD"</span>,</span><br><span class="line">            <span class="attr">"position"</span>:<span class="number">0</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"token"</span>:<span class="string">"中华"</span>,</span><br><span class="line">            <span class="attr">"start_offset"</span>:<span class="number">0</span>,</span><br><span class="line">            <span class="attr">"end_offset"</span>:<span class="number">2</span>,</span><br><span class="line">            <span class="attr">"type"</span>:<span class="string">"CN_WORD"</span>,</span><br><span class="line">            <span class="attr">"position"</span>:<span class="number">2</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"token"</span>:<span class="string">"华人"</span>,</span><br><span class="line">            <span class="attr">"start_offset"</span>:<span class="number">1</span>,</span><br><span class="line">            <span class="attr">"end_offset"</span>:<span class="number">3</span>,</span><br><span class="line">            <span class="attr">"type"</span>:<span class="string">"CN_WORD"</span>,</span><br><span class="line">            <span class="attr">"position"</span>:<span class="number">3</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"token"</span>:<span class="string">"人民"</span>,</span><br><span class="line">            <span class="attr">"start_offset"</span>:<span class="number">2</span>,</span><br><span class="line">            <span class="attr">"end_offset"</span>:<span class="number">4</span>,</span><br><span class="line">            <span class="attr">"type"</span>:<span class="string">"CN_WORD"</span>,</span><br><span class="line">            <span class="attr">"position"</span>:<span class="number">5</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>自定义词典：编辑<code>config/IKAnalyzer.cfg.xml</code>文件</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--用户可以在这里配置自己的扩展字典 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"ext_dict"</span>&gt;</span>my.dic<span class="tag">&lt;/<span class="name">entry</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>关于分词</p>
+</blockquote>
+<ul>
+<li>match 会根据分词器分词解析并进行查询。</li>
+<li>term 查询直接通过倒排索引指定词条精确匹配。</li>
+</ul>
+<blockquote>
+<p>两个类型</p>
+</blockquote>
+<ul>
+<li>keyword 不会被分词器解析</li>
+<li>text 可以被分词器解析</li>
+</ul>
+]]></content>
+  </entry>
 </search>
