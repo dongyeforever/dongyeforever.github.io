@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.lovek.vip","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="MySQLLAST_INSERT_ID()：函数返回最后一条记录的id SQL语句SELECT12345678-- SELECT * FROM stu WHERE class_id IS NOT null;-- SELECT sname, IFNULL(class_id,&#39;未分配&#39;) as cid FROM stu;-- 排序-- SELECT * FROM stu ORDER BY class_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL">
+<meta property="og:url" content="http://blog.lovek.vip/2021/08/24/server/mysql/index.html">
+<meta property="og:site_name" content="Rui&#39;s blog">
+<meta property="og:description" content="MySQLLAST_INSERT_ID()：函数返回最后一条记录的id SQL语句SELECT12345678-- SELECT * FROM stu WHERE class_id IS NOT null;-- SELECT sname, IFNULL(class_id,&#39;未分配&#39;) as cid FROM stu;-- 排序-- SELECT * FROM stu ORDER BY class_">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-24T13:15:33.000Z">
+<meta property="article:modified_time" content="2021-08-24T03:06:35.662Z">
+<meta property="article:author" content="Rui">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://blog.lovek.vip/2021/08/24/server/mysql/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>MySQL | Rui's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-76853415-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-76853415-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Rui's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">恰同学少年</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.lovek.vip/2021/08/24/server/mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="Rui">
+      <meta itemprop="description" content="简单即是美">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rui's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-08-24 21:15:33 / Modified: 11:06:35" itemprop="dateCreated datePublished" datetime="2021-08-24T21:15:33+08:00">2021-08-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/server/" itemprop="url" rel="index"><span itemprop="name">server</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h4><p>LAST_INSERT_ID()：函数返回最后一条记录的id</p>
+<h4 id="SQL语句"><a href="#SQL语句" class="headerlink" title="SQL语句"></a>SQL语句</h4><h5 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- SELECT * FROM stu WHERE class_id IS NOT null;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- SELECT sname, IFNULL(class_id,'未分配') as cid FROM stu;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 排序</span></span><br><span class="line"><span class="comment">-- SELECT * FROM stu ORDER BY class_id ASC, age ASC;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> stu <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">id</span> <span class="keyword">DESC</span> <span class="keyword">LIMIT</span> <span class="number">2</span>, <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h5><p>insert 三种方式：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tb_name (col1, col2, ...) <span class="keyword">VALUES</span> (val1, val2, ...) [ (val1, val2, ...) ...]</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tutors <span class="keyword">SET</span> Tname=<span class="string">'Tom'</span>, Gender=<span class="string">"F"</span>, Age=<span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tutors(<span class="keyword">Name</span>,Gender,Age) <span class="keyword">SELECT</span> <span class="keyword">Name</span>,Gender,Age <span class="keyword">FROM</span> students <span class="keyword">WHERE</span> Age&gt;<span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tb_name <span class="keyword">WHERE</span> condition;</span><br></pre></td></tr></table></figure>
+<h5 id="TRUNCATE"><a href="#TRUNCATE" class="headerlink" title="TRUNCATE"></a>TRUNCATE</h5><p>清空表，并重置AUTOINCREMENT计数器。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; TRUNCATE student;</span><br></pre></td></tr></table></figure>
+<h5 id="UPDATE"><a href="#UPDATE" class="headerlink" title="UPDATE"></a>UPDATE</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> tb_name <span class="keyword">set</span> col1=...,col2=... <span class="keyword">WHERE</span></span><br></pre></td></tr></table></figure>
+<h4 id="数据表结构修改"><a href="#数据表结构修改" class="headerlink" title="数据表结构修改"></a>数据表结构修改</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 修改表名</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">RENAME</span> stus;</span><br><span class="line"><span class="keyword">RENAME</span> <span class="keyword">TABLE</span> stus <span class="keyword">TO</span> stu_bak;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改字段</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">MODIFY</span> sname <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span><br><span class="line"><span class="comment">-- 修改字段名</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">CHANGE</span> sname <span class="keyword">name</span> <span class="built_in">CHAR</span>(<span class="number">30</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 添加字段</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">CHANGE</span> sname <span class="keyword">name</span> <span class="built_in">CHAR</span>(<span class="number">30</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> [<span class="keyword">AFTER</span> <span class="keyword">id</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除字段</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">DROP</span> sex;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 添加主键</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">add</span> PRIMARY <span class="keyword">key</span>(<span class="keyword">id</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="mysql-内置函数"><a href="#mysql-内置函数" class="headerlink" title="mysql 内置函数"></a>mysql 内置函数</h4><h5 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h5><p>left(str, len) right(str, len) mid(str, len)</p>
+<p>CHAR_LENGTH(str) CONCAT(str, str2)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">IF</span>(<span class="keyword">CHAR_LENGTH</span>(cname) &gt; <span class="number">8</span>, <span class="keyword">CONCAT</span>(<span class="keyword">LEFT</span>(cname,<span class="number">8</span>),<span class="string">'...'</span>), cname) <span class="keyword">FROM</span> stu_bak;</span><br></pre></td></tr></table></figure>
+<h5 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> stu_bak <span class="keyword">WHERE</span> cname REGEXP <span class="string">'^小'</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h5><table>
+<thead>
+<tr>
+<th>MySQL数据类型</th>
+<th>范围（有符号）</th>
+<th>范围（无符号）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tinyint(m)</td>
+<td>1个字节 范围(-128~127)</td>
+<td>(0，255)</td>
+</tr>
+<tr>
+<td>smallint(m)</td>
+<td>2个字节 范围(-32768~32767)</td>
+<td>(0，65 535)</td>
+</tr>
+<tr>
+<td>mediumint(m)</td>
+<td>3个字节 范围(-8388608~8388607)</td>
+<td>(0，16 777 215)</td>
+</tr>
+<tr>
+<td>int(m)</td>
+<td>4个字节 范围(-2147483648~2147483647)</td>
+<td>(0，4 294 967 295)</td>
+</tr>
+<tr>
+<td>bigint(m)</td>
+<td>8个字节 范围(+-9.22*10的18次方)</td>
+<td>(0，18 446 744 073 709 551 615)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>取值范围如果加了unsigned，则最大值翻倍，如tinyint unsigned的取值范围为(0~256)。</li>
+<li>m的含义不是允许字段的长度，而是显示长度，在为字段设置 <code>zerofill</code> 时有效。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">ADD</span> stu_count <span class="built_in">smallint</span>(<span class="number">6</span>) ZEROFILL <span class="keyword">default</span> <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h5><table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">大小</th>
+<th style="text-align:left">范围（有符号）</th>
+<th style="text-align:left">范围（无符号）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">FLOAT</td>
+<td style="text-align:left">4 字节</td>
+<td style="text-align:left">(-3.402 823 466 E+38，-1.175 494 351 E-38)，0，(1.175 494 351 E-38，3.402 823 466 351 E+38)</td>
+<td style="text-align:left">0，(1.175 494 351 E-38，3.402 823 466 E+38)</td>
+</tr>
+<tr>
+<td style="text-align:left">DOUBLE</td>
+<td style="text-align:left">8 字节</td>
+<td style="text-align:left">(-1.797 693 134 862 315 7 E+308，-2.225 073 858 507 201 4 E-308)，0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td style="text-align:left">0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+</tr>
+<tr>
+<td style="text-align:left">DECIMAL</td>
+<td style="text-align:left">DECIMAL(M,D) ，m&lt;65 是总个数，d&lt;30</td>
+<td style="text-align:left">依赖于M和D的值</td>
+<td style="text-align:left">依赖于M和D的值</td>
+</tr>
+</tbody>
+</table>
+<p>下面是检测浮点数精度的示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table class add e FLOAT(10,2);</span><br><span class="line">update class set e &#x3D; 12345678.66 where id&#x3D;11;</span><br></pre></td></tr></table></figure>
+<p>查看结果时会发布浮点数结果不精确。</p>
+<ul>
+<li>float：2^23 = 8388608，一共七位，这意味着最多能有7位有效数字，但绝对能保证的为6位，即float的精度为6~7位有效数字</li>
+<li>double：2^52 = 4503599627370496，一共16位，double的精度为15~16位</li>
+<li>浮点型在数据库中存放的是近似值，而定点类型在数据库中存放的是精确值</li>
+<li>decimal(m,d) 参数m&lt;65 是总个数，d&lt;30且 d&lt;m 是小数位</li>
+<li>对货币等对精度敏感的数据，应该用定点数decimal存储</li>
+</ul>
+<h5 id="浮点型-1"><a href="#浮点型-1" class="headerlink" title="浮点型"></a>浮点型</h5><table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">大小</th>
+<th style="text-align:left">范围（有符号）</th>
+<th style="text-align:left">范围（无符号）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">FLOAT</td>
+<td style="text-align:left">4 字节</td>
+<td style="text-align:left">(-3.402 823 466 E+38，-1.175 494 351 E-38)，0，(1.175 494 351 E-38，3.402 823 466 351 E+38)</td>
+<td style="text-align:left">0，(1.175 494 351 E-38，3.402 823 466 E+38)</td>
+</tr>
+<tr>
+<td style="text-align:left">DOUBLE</td>
+<td style="text-align:left">8 字节</td>
+<td style="text-align:left">(-1.797 693 134 862 315 7 E+308，-2.225 073 858 507 201 4 E-308)，0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td style="text-align:left">0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+</tr>
+<tr>
+<td style="text-align:left">DECIMAL</td>
+<td style="text-align:left">DECIMAL(M,D) ，m&lt;65 是总个数，d&lt;30</td>
+<td style="text-align:left">依赖于M和D的值</td>
+<td style="text-align:left">依赖于M和D的值</td>
+</tr>
+</tbody>
+</table>
+<p>下面是检测浮点数精度的示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table class add e FLOAT(10,2);</span><br><span class="line">update class set e &#x3D; 12345678.66 where id&#x3D;11;</span><br></pre></td></tr></table></figure>
+<p>查看结果时会发布浮点数结果不精确。</p>
+<ul>
+<li>float：2^23 = 8388608，一共七位，这意味着最多能有7位有效数字，但绝对能保证的为6位，即float的精度为6~7位有效数字</li>
+<li>double：2^52 = 4503599627370496，一共16位，double的精度为15~16位</li>
+<li>浮点型在数据库中存放的是近似值，而定点类型在数据库中存放的是精确值</li>
+<li>decimal(m,d) 参数m&lt;65 是总个数，d&lt;30且 d&lt;m 是小数位</li>
+<li>对货币等对精度敏感的数据，应该用定点数decimal存储</li>
+</ul>
+<h5 id="ENUM"><a href="#ENUM" class="headerlink" title="ENUM"></a>ENUM</h5><p>ENUM 类型因为只允许在集合中取得一个值，有点类似于单选项。在处理相互排拆的数据时容易让人理解，比如人类的性别。换个枚举最大可以有 65535 个成员值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE stu ADD sex ENUM(&#39;男&#39;,&#39;女&#39;) DEFAULT NULL;</span><br></pre></td></tr></table></figure>
+<p>可以使用索引或值添加enum数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> stu (sname,class_id,sex) <span class="keyword">VALUES</span>(<span class="string">'李岗'</span>,<span class="number">1</span>,<span class="string">'男'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> stu (sname,class_id,sex) <span class="keyword">VALUES</span>(<span class="string">'李玉'</span>,<span class="number">1</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>可以使用值与索引检索ENUM</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> stu <span class="keyword">WHERE</span> sex=<span class="string">'女'</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> stu <span class="keyword">WHERE</span> sex=<span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="SET"><a href="#SET" class="headerlink" title="SET"></a>SET</h5><p>SET 类型与 ENUM 类型相似但不相同。SET 类型可以从预定义的集合中取得任意数量的值。一个 SET 类型最多可以包含 64 项元素。</p>
+<p>使用SET类型添加文章属性字段</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> article <span class="keyword">ADD</span> flag <span class="keyword">SET</span>(<span class="string">'推荐'</span>,<span class="string">'置顶'</span>,<span class="string">'图文'</span>,<span class="string">'热门'</span>);</span><br></pre></td></tr></table></figure>
+<p>添加数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> article (title,<span class="keyword">status</span>,flag)<span class="keyword">VALUES</span>(<span class="string">'后盾人'</span>,<span class="number">1</span>,<span class="string">'图文,推荐,置顶'</span>);</span><br></pre></td></tr></table></figure>
+<p>使用 <code>find_in_set</code> 查找数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> article <span class="keyword">WHERE</span> find_in_set(<span class="string">'图文'</span>,flag);</span><br></pre></td></tr></table></figure>
+<p>使用<code>like</code> 查找数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> article <span class="keyword">WHERE</span> flag <span class="keyword">like</span> <span class="string">'%置顶%'</span></span><br></pre></td></tr></table></figure>
+<h5 id="二进制比较"><a href="#二进制比较" class="headerlink" title="二进制比较"></a>二进制比较</h5><p>可以使用二进制方式对SET类型进行模糊筛选。</p>
+<table>
+<thead>
+<tr>
+<th>SET成员</th>
+<th>十进制值</th>
+<th>二进制值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>推荐</td>
+<td>1</td>
+<td>0001</td>
+</tr>
+<tr>
+<td>置顶</td>
+<td>2</td>
+<td>0010</td>
+</tr>
+<tr>
+<td>图文</td>
+<td>4</td>
+<td>0100</td>
+</tr>
+<tr>
+<td>热门</td>
+<td>8</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>获取包含图文与推荐的文章</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> article <span class="keyword">WHERE</span> flag &amp; <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="时间日期"><a href="#时间日期" class="headerlink" title="时间日期"></a>时间日期</h4><table>
+<thead>
+<tr>
+<th>日期时间类型</th>
+<th>占用空间</th>
+<th>日期格式</th>
+<th>最小值</th>
+<th>最大值</th>
+<th>零值表示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DATETIME</td>
+<td>8 bytes</td>
+<td>YYYY-MM-DD HH:MM:SS</td>
+<td>1000-01-01 00:00:00</td>
+<td>9999-12-31 23:59:59</td>
+<td>0000-00-00 00:00:00</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>4 bytes</td>
+<td>YYYY-MM-DD HH:MM:SS</td>
+<td>1970-01-01 08:00:01</td>
+<td>2038-01-19 03:14:07</td>
+<td>00000000000000</td>
+</tr>
+<tr>
+<td>DATE</td>
+<td>4 bytes</td>
+<td>YYYY-MM-DD</td>
+<td>1000-01-01</td>
+<td>9999-12-31</td>
+<td>0000-00-00</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td>3 bytes</td>
+<td>HH:MM:SS</td>
+<td>-838:59:59</td>
+<td>838:59:59</td>
+<td>00:00:00</td>
+</tr>
+<tr>
+<td>YEAR</td>
+<td>1 bytes</td>
+<td>YYYY</td>
+<td>1901</td>
+<td>2155</td>
+<td>0000</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Mysql保存日期格式使用 YYYY-MM-DD HH:MM:SS的ISO 8601标准</li>
+<li>向数据表储存日期与时间必须使用ISO格式</li>
+</ul>
+<p>参考 <a href="https://doc.houdunren.com/mysql/5%20%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4.html#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0" target="_blank" rel="noopener">日期时间函数文档</a></p>
+<h4 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h4><p>RDBMS：ACID(原子性，一致性，隔离性，持久性)</p>
+<p>事务日志</p>
+<ul>
+<li>重做日志 redo log</li>
+<li>撤销日志 undo log</li>
+</ul>
+<h5 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h5><table>
+<thead>
+<tr>
+<th>事务隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>读未提交（read-uncommitted）</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>最低的事务隔离级别，一个事务还没提交时，它做的变更就能被别的事务看到</td>
+</tr>
+<tr>
+<td>不可重复读（read-committed）</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+<td>保证一个事物提交后才能被另外一个事务读取。另外一个事务不能读取该事物未提交的数据。</td>
+</tr>
+<tr>
+<td>可重复读（repeatable-read）</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+<td>多次读取同一范围的数据会返回第一次查询的快照，即使其他事务对该数据做了更新修改。事务在执行期间看到的数据前后必须是一致的。</td>
+</tr>
+<tr>
+<td>串行化（serializable）</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>事务 100% 隔离，可避免脏读、不可重复读、幻读的发生。花费最高代价但最可靠的事务隔离级别。</td>
+</tr>
+</tbody>
+</table>
+<p>当高并发访问会遇到多个事务的隔离问题，可能会出现以下：</p>
+<ol>
+<li>脏读：事务A读取了事务B更新的数据，然后B回滚操作，那么A读取到的数据是脏数据</li>
+<li>不可重复读：事务 A 多次读取同一数据，事务 B 在事务A多次读取的过程中，对数据作了更新并提交，导致事务A多次读取同一数据时，结果不一致。</li>
+<li>幻读：系统管理员A将数据库中所有学生的成绩从具体分数改为ABCDE等级，但是系统管理员B就在这个时候插入了一条具体分数的记录，当系统管理员A改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。</li>
+</ol>
+<blockquote>
+<p>不可重复读的和幻读很容易混淆，不可重复读侧重于修改，幻读侧重于新增或删除。解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表</p>
+</blockquote>
+<p>MySQL 默认隔离级别<code>可重读(REPEATABLE-READ)</code>。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW GLOBAL VARIABLES LIKE '%iso%';</span><br><span class="line"><span class="comment"># 修改</span></span><br><span class="line">mysql&gt; SET transaction_isolation='READ-UNCOMMITTED';</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置会话隔离级别，影响当前连接</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br><span class="line"><span class="comment"># 设置全局隔离级别，影响全局连接</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br></pre></td></tr></table></figure>
+<p>事务 SQL 语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; START TANSACTION;</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tutors <span class="keyword">WHERE</span> Tname <span class="keyword">like</span> <span class="string">'stu%'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ROLLBACK</span>; // 回滚</span><br><span class="line"><span class="keyword">COMMIT</span>; // 提交</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>建议： 明确使用事务，并且关闭自动提交；</p>
+<p>mysql&gt; set autocommit=0;</p>
+</blockquote>
+<p>保存点： SAVEPOINT</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SAVEPOINT point;</span><br><span class="line">mysql&gt; ROLLBACK TO point;</span><br></pre></td></tr></table></figure>
+<p>日志：</p>
+<h4 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h4><p>锁粒度： 从大到小，MySQL服务器仅支持表级锁，行锁需要由存储引擎完成。</p>
+<ul>
+<li>表锁</li>
+<li>页锁</li>
+<li>行锁</li>
+</ul>
+<p><code>InnoDB</code> 是主流储存引擎并支持行级锁的，有更高的并发处理性能。</p>
+<ul>
+<li>行锁开销大，锁表慢</li>
+<li>行锁高并发下可并行处理，性能更高</li>
+<li>行锁是针对索引加的锁，在通过索引检索时才会应用行锁，否则使用表锁。</li>
+<li>在事务执行过程中，随时都可以执行锁定，锁在执行 COMMIT或者ROLLBACK的时候释放</li>
+</ul>
+<blockquote>
+<ol>
+<li><p>使用非索引字段筛选时，将造成全表锁定即表级锁，应该避免这种情况发生，提升数据库的并发性能。</p>
+</li>
+<li><p>查询没有指定明确范围时也会造成大量记录的锁定。</p>
+</li>
+</ol>
+</blockquote>
+<h5 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h5><p>非观锁指对数据被外界修改持保守态度，在整个数据处理过程中，将数据处于锁定状态，可以很好地解决并发事务的更新丢失问题。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> goods <span class="keyword">WHERE</span> <span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">FOR</span> <span class="keyword">UPDATE</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> goods <span class="keyword">SET</span> <span class="keyword">num</span>=<span class="keyword">num</span><span class="number">-2</span> <span class="keyword">WHERE</span> <span class="keyword">id</span>=<span class="number">1</span>; </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h5 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h5><p>在每次去拿数据的时候认为别人不会修改，不对数据上锁，但是在提交更新的时候会判断在此期间数据是否被更改，如果被更改则提交失败。</p>
+<p>下面使用版本字段来实现乐观锁操作，并实现更改商品库存的案例。</p>
+<ol>
+<li>事务A查询商品库存，获取了商品记录，记录中有VERSION字段用于记录版本号（目前为0）</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> goods <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>事务B同时查询，也获取了版本号为0的记录</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> goods <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>事务A更改库存，并增加版本号</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> goods <span class="keyword">SET</span> <span class="keyword">num</span>=<span class="keyword">num</span><span class="number">-10</span>,<span class="keyword">VERSION</span> =<span class="keyword">VERSION</span>+<span class="number">1</span> <span class="keyword">WHERE</span> <span class="keyword">VERSION</span>=<span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>事务B更改数据，但使用的是事务B查询到的0号版本，因为事务A已经提交版本号为1，造成事务B修改失败，保证了数据的完整性。</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> goods <span class="keyword">SET</span> <span class="keyword">num</span>=<span class="keyword">num</span><span class="number">-10</span>,<span class="keyword">VERSION</span> =<span class="keyword">VERSION</span>+<span class="number">1</span> <span class="keyword">WHERE</span> <span class="keyword">VERSION</span>=<span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="表锁机制"><a href="#表锁机制" class="headerlink" title="表锁机制"></a>表锁机制</h5><p>针对一些不支持事务的处理引擎可以使用锁表的方式控制业务。</p>
+<ul>
+<li>读锁：共享锁</li>
+<li>写锁：独占锁</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLES</span> tb_name &#123;<span class="keyword">READ</span>|WRITE&#125;</span><br><span class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span></span><br></pre></td></tr></table></figure>
+<h4 id="源码编译"><a href="#源码编译" class="headerlink" title="源码编译"></a>源码编译</h4><p><a href="https://www.jianshu.com/p/117dab1b658d" target="_blank" rel="noopener">https://www.jianshu.com/p/117dab1b658d</a></p>
+<p>cmake . -DBUILD_CONFIG=mysql_release -DCPACK_MONOLITHIC_INSTALL=ON -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci -DMYSQLX_TCP_PORT=33060 -DMYSQL_UNIX_ADDR=/usr/local/mysql/mysql.sock -DMYSQL_TCP_PORT=3306 -DMYSQLX_UNIX_ADDR=/usr/local/mysql/mysqlx.sock -DMYSQL_DATADIR=/usr/local/mysql/data -DSYSCONFDIR=/usr/local/mysql/etc -DENABLE_DOWNLOADS=ON -DWITH_BOOST=system</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">启动命令：/etc/init.d/mysqld start</span><br><span class="line">关闭命令：/etc/init.d/mysqld stop</span><br></pre></td></tr></table></figure>
+<p> 修改 root 密码</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> <span class="keyword">user</span> <span class="keyword">SET</span> <span class="keyword">PASSWORD</span>=<span class="keyword">PASSWORD</span>(<span class="string">'rootroot'</span>) <span class="keyword">WHERE</span> <span class="keyword">User</span>=<span class="string">'root'</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h4><p>mysql 命令行 <code>\c</code>表示取消本条SQL，后面不需要写 <code>;</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show databases \c</span><br></pre></td></tr></table></figure>
+<p>自连接效率好于子查询。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s2.sname <span class="keyword">FROM</span> stu <span class="keyword">as</span> s1 </span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> stu <span class="keyword">as</span> s2 <span class="keyword">on</span> s1.class_id= s2.class_id</span><br><span class="line"><span class="keyword">WHERE</span> s1.sname = <span class="string">'张三'</span> <span class="keyword">AND</span> s2.sname != <span class="string">'张三'</span>;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>赞赏是最好的支持</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Rui WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Rui
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://blog.lovek.vip/2021/08/24/server/mysql/" title="MySQL">http://blog.lovek.vip/2021/08/24/server/mysql/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/21/web/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="prev" title="区块链">
+      <i class="fa fa-chevron-left"></i> 区块链
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL"><span class="nav-number">1.</span> <span class="nav-text">MySQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL语句"><span class="nav-number">2.</span> <span class="nav-text">SQL语句</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#SELECT"><span class="nav-number">2.1.</span> <span class="nav-text">SELECT</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#INSERT"><span class="nav-number">2.2.</span> <span class="nav-text">INSERT</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DELETE"><span class="nav-number">2.3.</span> <span class="nav-text">DELETE</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TRUNCATE"><span class="nav-number">2.4.</span> <span class="nav-text">TRUNCATE</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UPDATE"><span class="nav-number">2.5.</span> <span class="nav-text">UPDATE</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据表结构修改"><span class="nav-number">3.</span> <span class="nav-text">数据表结构修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mysql-内置函数"><span class="nav-number">4.</span> <span class="nav-text">mysql 内置函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#字符串"><span class="nav-number">4.1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#正则表达式"><span class="nav-number">4.2.</span> <span class="nav-text">正则表达式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#整型"><span class="nav-number">4.3.</span> <span class="nav-text">整型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#浮点型"><span class="nav-number">4.4.</span> <span class="nav-text">浮点型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#浮点型-1"><span class="nav-number">4.5.</span> <span class="nav-text">浮点型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ENUM"><span class="nav-number">4.6.</span> <span class="nav-text">ENUM</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SET"><span class="nav-number">4.7.</span> <span class="nav-text">SET</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二进制比较"><span class="nav-number">4.8.</span> <span class="nav-text">二进制比较</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时间日期"><span class="nav-number">5.</span> <span class="nav-text">时间日期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务"><span class="nav-number">6.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#隔离级别"><span class="nav-number">6.1.</span> <span class="nav-text">隔离级别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁"><span class="nav-number">7.</span> <span class="nav-text">锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#悲观锁"><span class="nav-number">7.1.</span> <span class="nav-text">悲观锁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#乐观锁"><span class="nav-number">7.2.</span> <span class="nav-text">乐观锁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#表锁机制"><span class="nav-number">7.3.</span> <span class="nav-text">表锁机制</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#源码编译"><span class="nav-number">8.</span> <span class="nav-text">源码编译</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tips"><span class="nav-number">9.</span> <span class="nav-text">Tips</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rui"
+      src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">Rui</p>
+  <div class="site-description" itemprop="description">简单即是美</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dongyeforever" title="GitHub → https://github.com/dongyeforever" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:rui@lovek.vip" title="E-Mail → mailto:rui@lovek.vip" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  <span class="author">Copyright </span>
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rui</span>
+  <span class="author"> Powered by Hexo</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '075768b5cc6d617a818d',
+      clientSecret: '12a4af5fd77c65a4ab68791bce732d6c9e3b7364',
+      repo        : 'dongyeforever.github.io',
+      owner       : 'dongyeforever',
+      admin       : ['dongyeforever'],
+      id          : 'a34cbf5d2570e30baa7868dc46597314',
+      proxy       : 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

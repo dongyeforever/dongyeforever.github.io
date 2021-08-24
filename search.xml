@@ -1642,7 +1642,7 @@ getMeasuredWidth() / getMeasuredHeight()：获得 View测量的宽 / 高
       </tags>
   </entry>
   <entry>
-    <title>git 知识点</title>
+    <title>Elasticsearch</title>
     <url>/2021/04/20/server/elk/</url>
     <content><![CDATA[<h4 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h4><p>elastic search 安装</p>
 <h6 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h6><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">// 下载</span><br><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.12.0-linux-x86_64.tar.gz</span><br><span class="line">tar -zxvf elasticsearch-7.12.0-linux-x86_64.tar.gz</span><br><span class="line">sudo mv elasticsearch-7.12.0 /usr/local/elasticsearch</span><br></pre></td></tr></table></figure>
@@ -1790,5 +1790,502 @@ getMeasuredWidth() / getMeasuredHeight()：获得 View测量的宽 / 高
 <li>text 可以被分词器解析</li>
 </ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>MySQL</title>
+    <url>/2021/08/24/server/mysql/</url>
+    <content><![CDATA[<h4 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h4><p>LAST_INSERT_ID()：函数返回最后一条记录的id</p>
+<h4 id="SQL语句"><a href="#SQL语句" class="headerlink" title="SQL语句"></a>SQL语句</h4><h5 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h5><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- SELECT * FROM stu WHERE class_id IS NOT null;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- SELECT sname, IFNULL(class_id,'未分配') as cid FROM stu;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 排序</span></span><br><span class="line"><span class="comment">-- SELECT * FROM stu ORDER BY class_id ASC, age ASC;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> stu <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">id</span> <span class="keyword">DESC</span> <span class="keyword">LIMIT</span> <span class="number">2</span>, <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h5><p>insert 三种方式：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tb_name (col1, col2, ...) <span class="keyword">VALUES</span> (val1, val2, ...) [ (val1, val2, ...) ...]</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tutors <span class="keyword">SET</span> Tname=<span class="string">'Tom'</span>, Gender=<span class="string">"F"</span>, Age=<span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tutors(<span class="keyword">Name</span>,Gender,Age) <span class="keyword">SELECT</span> <span class="keyword">Name</span>,Gender,Age <span class="keyword">FROM</span> students <span class="keyword">WHERE</span> Age&gt;<span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h5><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tb_name <span class="keyword">WHERE</span> condition;</span><br></pre></td></tr></table></figure>
+<h5 id="TRUNCATE"><a href="#TRUNCATE" class="headerlink" title="TRUNCATE"></a>TRUNCATE</h5><p>清空表，并重置AUTOINCREMENT计数器。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">mysql &gt; TRUNCATE student;</span><br></pre></td></tr></table></figure>
+<h5 id="UPDATE"><a href="#UPDATE" class="headerlink" title="UPDATE"></a>UPDATE</h5><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> tb_name <span class="keyword">set</span> col1=...,col2=... <span class="keyword">WHERE</span></span><br></pre></td></tr></table></figure>
+<h4 id="数据表结构修改"><a href="#数据表结构修改" class="headerlink" title="数据表结构修改"></a>数据表结构修改</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 修改表名</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">RENAME</span> stus;</span><br><span class="line"><span class="keyword">RENAME</span> <span class="keyword">TABLE</span> stus <span class="keyword">TO</span> stu_bak;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改字段</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">MODIFY</span> sname <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span><br><span class="line"><span class="comment">-- 修改字段名</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">CHANGE</span> sname <span class="keyword">name</span> <span class="built_in">CHAR</span>(<span class="number">30</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 添加字段</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">CHANGE</span> sname <span class="keyword">name</span> <span class="built_in">CHAR</span>(<span class="number">30</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> [<span class="keyword">AFTER</span> <span class="keyword">id</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除字段</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">DROP</span> sex;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 添加主键</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">add</span> PRIMARY <span class="keyword">key</span>(<span class="keyword">id</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="mysql-内置函数"><a href="#mysql-内置函数" class="headerlink" title="mysql 内置函数"></a>mysql 内置函数</h4><h5 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h5><p>left(str, len) right(str, len) mid(str, len)</p>
+<p>CHAR_LENGTH(str) CONCAT(str, str2)</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">IF</span>(<span class="keyword">CHAR_LENGTH</span>(cname) &gt; <span class="number">8</span>, <span class="keyword">CONCAT</span>(<span class="keyword">LEFT</span>(cname,<span class="number">8</span>),<span class="string">'...'</span>), cname) <span class="keyword">FROM</span> stu_bak;</span><br></pre></td></tr></table></figure>
+<h5 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h5><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> stu_bak <span class="keyword">WHERE</span> cname REGEXP <span class="string">'^小'</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h5><table>
+<thead>
+<tr>
+<th>MySQL数据类型</th>
+<th>范围（有符号）</th>
+<th>范围（无符号）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tinyint(m)</td>
+<td>1个字节 范围(-128~127)</td>
+<td>(0，255)</td>
+</tr>
+<tr>
+<td>smallint(m)</td>
+<td>2个字节 范围(-32768~32767)</td>
+<td>(0，65 535)</td>
+</tr>
+<tr>
+<td>mediumint(m)</td>
+<td>3个字节 范围(-8388608~8388607)</td>
+<td>(0，16 777 215)</td>
+</tr>
+<tr>
+<td>int(m)</td>
+<td>4个字节 范围(-2147483648~2147483647)</td>
+<td>(0，4 294 967 295)</td>
+</tr>
+<tr>
+<td>bigint(m)</td>
+<td>8个字节 范围(+-9.22*10的18次方)</td>
+<td>(0，18 446 744 073 709 551 615)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>取值范围如果加了unsigned，则最大值翻倍，如tinyint unsigned的取值范围为(0~256)。</li>
+<li>m的含义不是允许字段的长度，而是显示长度，在为字段设置 <code>zerofill</code> 时有效。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> stu_bak <span class="keyword">ADD</span> stu_count <span class="built_in">smallint</span>(<span class="number">6</span>) ZEROFILL <span class="keyword">default</span> <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h5><table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">大小</th>
+<th style="text-align:left">范围（有符号）</th>
+<th style="text-align:left">范围（无符号）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">FLOAT</td>
+<td style="text-align:left">4 字节</td>
+<td style="text-align:left">(-3.402 823 466 E+38，-1.175 494 351 E-38)，0，(1.175 494 351 E-38，3.402 823 466 351 E+38)</td>
+<td style="text-align:left">0，(1.175 494 351 E-38，3.402 823 466 E+38)</td>
+</tr>
+<tr>
+<td style="text-align:left">DOUBLE</td>
+<td style="text-align:left">8 字节</td>
+<td style="text-align:left">(-1.797 693 134 862 315 7 E+308，-2.225 073 858 507 201 4 E-308)，0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td style="text-align:left">0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+</tr>
+<tr>
+<td style="text-align:left">DECIMAL</td>
+<td style="text-align:left">DECIMAL(M,D) ，m&lt;65 是总个数，d&lt;30</td>
+<td style="text-align:left">依赖于M和D的值</td>
+<td style="text-align:left">依赖于M和D的值</td>
+</tr>
+</tbody>
+</table>
+<p>下面是检测浮点数精度的示例</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alter table class add e FLOAT(10,2);</span><br><span class="line">update class set e &#x3D; 12345678.66 where id&#x3D;11;</span><br></pre></td></tr></table></figure>
+<p>查看结果时会发布浮点数结果不精确。</p>
+<ul>
+<li>float：2^23 = 8388608，一共七位，这意味着最多能有7位有效数字，但绝对能保证的为6位，即float的精度为6~7位有效数字</li>
+<li>double：2^52 = 4503599627370496，一共16位，double的精度为15~16位</li>
+<li>浮点型在数据库中存放的是近似值，而定点类型在数据库中存放的是精确值</li>
+<li>decimal(m,d) 参数m&lt;65 是总个数，d&lt;30且 d&lt;m 是小数位</li>
+<li>对货币等对精度敏感的数据，应该用定点数decimal存储</li>
+</ul>
+<h5 id="浮点型-1"><a href="#浮点型-1" class="headerlink" title="浮点型"></a>浮点型</h5><table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">大小</th>
+<th style="text-align:left">范围（有符号）</th>
+<th style="text-align:left">范围（无符号）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">FLOAT</td>
+<td style="text-align:left">4 字节</td>
+<td style="text-align:left">(-3.402 823 466 E+38，-1.175 494 351 E-38)，0，(1.175 494 351 E-38，3.402 823 466 351 E+38)</td>
+<td style="text-align:left">0，(1.175 494 351 E-38，3.402 823 466 E+38)</td>
+</tr>
+<tr>
+<td style="text-align:left">DOUBLE</td>
+<td style="text-align:left">8 字节</td>
+<td style="text-align:left">(-1.797 693 134 862 315 7 E+308，-2.225 073 858 507 201 4 E-308)，0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td style="text-align:left">0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+</tr>
+<tr>
+<td style="text-align:left">DECIMAL</td>
+<td style="text-align:left">DECIMAL(M,D) ，m&lt;65 是总个数，d&lt;30</td>
+<td style="text-align:left">依赖于M和D的值</td>
+<td style="text-align:left">依赖于M和D的值</td>
+</tr>
+</tbody>
+</table>
+<p>下面是检测浮点数精度的示例</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alter table class add e FLOAT(10,2);</span><br><span class="line">update class set e &#x3D; 12345678.66 where id&#x3D;11;</span><br></pre></td></tr></table></figure>
+<p>查看结果时会发布浮点数结果不精确。</p>
+<ul>
+<li>float：2^23 = 8388608，一共七位，这意味着最多能有7位有效数字，但绝对能保证的为6位，即float的精度为6~7位有效数字</li>
+<li>double：2^52 = 4503599627370496，一共16位，double的精度为15~16位</li>
+<li>浮点型在数据库中存放的是近似值，而定点类型在数据库中存放的是精确值</li>
+<li>decimal(m,d) 参数m&lt;65 是总个数，d&lt;30且 d&lt;m 是小数位</li>
+<li>对货币等对精度敏感的数据，应该用定点数decimal存储</li>
+</ul>
+<h5 id="ENUM"><a href="#ENUM" class="headerlink" title="ENUM"></a>ENUM</h5><p>ENUM 类型因为只允许在集合中取得一个值，有点类似于单选项。在处理相互排拆的数据时容易让人理解，比如人类的性别。换个枚举最大可以有 65535 个成员值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER TABLE stu ADD sex ENUM(&#39;男&#39;,&#39;女&#39;) DEFAULT NULL;</span><br></pre></td></tr></table></figure>
+<p>可以使用索引或值添加enum数据</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> stu (sname,class_id,sex) <span class="keyword">VALUES</span>(<span class="string">'李岗'</span>,<span class="number">1</span>,<span class="string">'男'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> stu (sname,class_id,sex) <span class="keyword">VALUES</span>(<span class="string">'李玉'</span>,<span class="number">1</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>可以使用值与索引检索ENUM</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> stu <span class="keyword">WHERE</span> sex=<span class="string">'女'</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> stu <span class="keyword">WHERE</span> sex=<span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="SET"><a href="#SET" class="headerlink" title="SET"></a>SET</h5><p>SET 类型与 ENUM 类型相似但不相同。SET 类型可以从预定义的集合中取得任意数量的值。一个 SET 类型最多可以包含 64 项元素。</p>
+<p>使用SET类型添加文章属性字段</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> article <span class="keyword">ADD</span> flag <span class="keyword">SET</span>(<span class="string">'推荐'</span>,<span class="string">'置顶'</span>,<span class="string">'图文'</span>,<span class="string">'热门'</span>);</span><br></pre></td></tr></table></figure>
+<p>添加数据</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> article (title,<span class="keyword">status</span>,flag)<span class="keyword">VALUES</span>(<span class="string">'后盾人'</span>,<span class="number">1</span>,<span class="string">'图文,推荐,置顶'</span>);</span><br></pre></td></tr></table></figure>
+<p>使用 <code>find_in_set</code> 查找数据</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> article <span class="keyword">WHERE</span> find_in_set(<span class="string">'图文'</span>,flag);</span><br></pre></td></tr></table></figure>
+<p>使用<code>like</code> 查找数据</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> article <span class="keyword">WHERE</span> flag <span class="keyword">like</span> <span class="string">'%置顶%'</span></span><br></pre></td></tr></table></figure>
+<h5 id="二进制比较"><a href="#二进制比较" class="headerlink" title="二进制比较"></a>二进制比较</h5><p>可以使用二进制方式对SET类型进行模糊筛选。</p>
+<table>
+<thead>
+<tr>
+<th>SET成员</th>
+<th>十进制值</th>
+<th>二进制值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>推荐</td>
+<td>1</td>
+<td>0001</td>
+</tr>
+<tr>
+<td>置顶</td>
+<td>2</td>
+<td>0010</td>
+</tr>
+<tr>
+<td>图文</td>
+<td>4</td>
+<td>0100</td>
+</tr>
+<tr>
+<td>热门</td>
+<td>8</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>获取包含图文与推荐的文章</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> article <span class="keyword">WHERE</span> flag &amp; <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="时间日期"><a href="#时间日期" class="headerlink" title="时间日期"></a>时间日期</h4><table>
+<thead>
+<tr>
+<th>日期时间类型</th>
+<th>占用空间</th>
+<th>日期格式</th>
+<th>最小值</th>
+<th>最大值</th>
+<th>零值表示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DATETIME</td>
+<td>8 bytes</td>
+<td>YYYY-MM-DD HH:MM:SS</td>
+<td>1000-01-01 00:00:00</td>
+<td>9999-12-31 23:59:59</td>
+<td>0000-00-00 00:00:00</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>4 bytes</td>
+<td>YYYY-MM-DD HH:MM:SS</td>
+<td>1970-01-01 08:00:01</td>
+<td>2038-01-19 03:14:07</td>
+<td>00000000000000</td>
+</tr>
+<tr>
+<td>DATE</td>
+<td>4 bytes</td>
+<td>YYYY-MM-DD</td>
+<td>1000-01-01</td>
+<td>9999-12-31</td>
+<td>0000-00-00</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td>3 bytes</td>
+<td>HH:MM:SS</td>
+<td>-838:59:59</td>
+<td>838:59:59</td>
+<td>00:00:00</td>
+</tr>
+<tr>
+<td>YEAR</td>
+<td>1 bytes</td>
+<td>YYYY</td>
+<td>1901</td>
+<td>2155</td>
+<td>0000</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Mysql保存日期格式使用 YYYY-MM-DD HH:MM:SS的ISO 8601标准</li>
+<li>向数据表储存日期与时间必须使用ISO格式</li>
+</ul>
+<p>参考 <a href="https://doc.houdunren.com/mysql/5%20%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4.html#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0" target="_blank" rel="noopener">日期时间函数文档</a></p>
+<h4 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h4><p>RDBMS：ACID(原子性，一致性，隔离性，持久性)</p>
+<p>事务日志</p>
+<ul>
+<li>重做日志 redo log</li>
+<li>撤销日志 undo log</li>
+</ul>
+<h5 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h5><table>
+<thead>
+<tr>
+<th>事务隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>读未提交（read-uncommitted）</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>最低的事务隔离级别，一个事务还没提交时，它做的变更就能被别的事务看到</td>
+</tr>
+<tr>
+<td>不可重复读（read-committed）</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+<td>保证一个事物提交后才能被另外一个事务读取。另外一个事务不能读取该事物未提交的数据。</td>
+</tr>
+<tr>
+<td>可重复读（repeatable-read）</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+<td>多次读取同一范围的数据会返回第一次查询的快照，即使其他事务对该数据做了更新修改。事务在执行期间看到的数据前后必须是一致的。</td>
+</tr>
+<tr>
+<td>串行化（serializable）</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>事务 100% 隔离，可避免脏读、不可重复读、幻读的发生。花费最高代价但最可靠的事务隔离级别。</td>
+</tr>
+</tbody>
+</table>
+<p>当高并发访问会遇到多个事务的隔离问题，可能会出现以下：</p>
+<ol>
+<li>脏读：事务A读取了事务B更新的数据，然后B回滚操作，那么A读取到的数据是脏数据</li>
+<li>不可重复读：事务 A 多次读取同一数据，事务 B 在事务A多次读取的过程中，对数据作了更新并提交，导致事务A多次读取同一数据时，结果不一致。</li>
+<li>幻读：系统管理员A将数据库中所有学生的成绩从具体分数改为ABCDE等级，但是系统管理员B就在这个时候插入了一条具体分数的记录，当系统管理员A改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。</li>
+</ol>
+<blockquote>
+<p>不可重复读的和幻读很容易混淆，不可重复读侧重于修改，幻读侧重于新增或删除。解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表</p>
+</blockquote>
+<p>MySQL 默认隔离级别<code>可重读(REPEATABLE-READ)</code>。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql&gt; SHOW GLOBAL VARIABLES LIKE '%iso%';</span><br><span class="line"><span class="comment"># 修改</span></span><br><span class="line">mysql&gt; SET transaction_isolation='READ-UNCOMMITTED';</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置会话隔离级别，影响当前连接</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br><span class="line"><span class="comment"># 设置全局隔离级别，影响全局连接</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br></pre></td></tr></table></figure>
+<p>事务 SQL 语句</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql &gt; START TANSACTION;</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> tutors <span class="keyword">WHERE</span> Tname <span class="keyword">like</span> <span class="string">'stu%'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ROLLBACK</span>; // 回滚</span><br><span class="line"><span class="keyword">COMMIT</span>; // 提交</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>建议： 明确使用事务，并且关闭自动提交；</p>
+<p>mysql&gt; set autocommit=0;</p>
+</blockquote>
+<p>保存点： SAVEPOINT</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">mysql&gt; SAVEPOINT point;</span><br><span class="line">mysql&gt; ROLLBACK TO point;</span><br></pre></td></tr></table></figure>
+<p>日志：</p>
+<h4 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h4><p>锁粒度： 从大到小，MySQL服务器仅支持表级锁，行锁需要由存储引擎完成。</p>
+<ul>
+<li>表锁</li>
+<li>页锁</li>
+<li>行锁</li>
+</ul>
+<p><code>InnoDB</code> 是主流储存引擎并支持行级锁的，有更高的并发处理性能。</p>
+<ul>
+<li>行锁开销大，锁表慢</li>
+<li>行锁高并发下可并行处理，性能更高</li>
+<li>行锁是针对索引加的锁，在通过索引检索时才会应用行锁，否则使用表锁。</li>
+<li>在事务执行过程中，随时都可以执行锁定，锁在执行 COMMIT或者ROLLBACK的时候释放</li>
+</ul>
+<blockquote>
+<ol>
+<li><p>使用非索引字段筛选时，将造成全表锁定即表级锁，应该避免这种情况发生，提升数据库的并发性能。</p>
+</li>
+<li><p>查询没有指定明确范围时也会造成大量记录的锁定。</p>
+</li>
+</ol>
+</blockquote>
+<h5 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h5><p>非观锁指对数据被外界修改持保守态度，在整个数据处理过程中，将数据处于锁定状态，可以很好地解决并发事务的更新丢失问题。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> goods <span class="keyword">WHERE</span> <span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">FOR</span> <span class="keyword">UPDATE</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> goods <span class="keyword">SET</span> <span class="keyword">num</span>=<span class="keyword">num</span><span class="number">-2</span> <span class="keyword">WHERE</span> <span class="keyword">id</span>=<span class="number">1</span>; </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h5 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h5><p>在每次去拿数据的时候认为别人不会修改，不对数据上锁，但是在提交更新的时候会判断在此期间数据是否被更改，如果被更改则提交失败。</p>
+<p>下面使用版本字段来实现乐观锁操作，并实现更改商品库存的案例。</p>
+<ol>
+<li>事务A查询商品库存，获取了商品记录，记录中有VERSION字段用于记录版本号（目前为0）</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> goods <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>事务B同时查询，也获取了版本号为0的记录</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> goods <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>事务A更改库存，并增加版本号</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> goods <span class="keyword">SET</span> <span class="keyword">num</span>=<span class="keyword">num</span><span class="number">-10</span>,<span class="keyword">VERSION</span> =<span class="keyword">VERSION</span>+<span class="number">1</span> <span class="keyword">WHERE</span> <span class="keyword">VERSION</span>=<span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>事务B更改数据，但使用的是事务B查询到的0号版本，因为事务A已经提交版本号为1，造成事务B修改失败，保证了数据的完整性。</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> goods <span class="keyword">SET</span> <span class="keyword">num</span>=<span class="keyword">num</span><span class="number">-10</span>,<span class="keyword">VERSION</span> =<span class="keyword">VERSION</span>+<span class="number">1</span> <span class="keyword">WHERE</span> <span class="keyword">VERSION</span>=<span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="表锁机制"><a href="#表锁机制" class="headerlink" title="表锁机制"></a>表锁机制</h5><p>针对一些不支持事务的处理引擎可以使用锁表的方式控制业务。</p>
+<ul>
+<li>读锁：共享锁</li>
+<li>写锁：独占锁</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLES</span> tb_name &#123;<span class="keyword">READ</span>|WRITE&#125;</span><br><span class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span></span><br></pre></td></tr></table></figure>
+<h4 id="源码编译"><a href="#源码编译" class="headerlink" title="源码编译"></a>源码编译</h4><p><a href="https://www.jianshu.com/p/117dab1b658d" target="_blank" rel="noopener">https://www.jianshu.com/p/117dab1b658d</a></p>
+<p>cmake . -DBUILD_CONFIG=mysql_release -DCPACK_MONOLITHIC_INSTALL=ON -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci -DMYSQLX_TCP_PORT=33060 -DMYSQL_UNIX_ADDR=/usr/local/mysql/mysql.sock -DMYSQL_TCP_PORT=3306 -DMYSQLX_UNIX_ADDR=/usr/local/mysql/mysqlx.sock -DMYSQL_DATADIR=/usr/local/mysql/data -DSYSCONFDIR=/usr/local/mysql/etc -DENABLE_DOWNLOADS=ON -DWITH_BOOST=system</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">启动命令：/etc/init.d/mysqld start</span><br><span class="line">关闭命令：/etc/init.d/mysqld stop</span><br></pre></td></tr></table></figure>
+<p> 修改 root 密码</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> <span class="keyword">user</span> <span class="keyword">SET</span> <span class="keyword">PASSWORD</span>=<span class="keyword">PASSWORD</span>(<span class="string">'rootroot'</span>) <span class="keyword">WHERE</span> <span class="keyword">User</span>=<span class="string">'root'</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h4><p>mysql 命令行 <code>\c</code>表示取消本条SQL，后面不需要写 <code>;</code>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">show databases \c</span><br></pre></td></tr></table></figure>
+<p>自连接效率好于子查询。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s2.sname <span class="keyword">FROM</span> stu <span class="keyword">as</span> s1 </span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> stu <span class="keyword">as</span> s2 <span class="keyword">on</span> s1.class_id= s2.class_id</span><br><span class="line"><span class="keyword">WHERE</span> s1.sname = <span class="string">'张三'</span> <span class="keyword">AND</span> s2.sname != <span class="string">'张三'</span>;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>server</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>区块链</title>
+    <url>/2021/07/21/web/%E5%8C%BA%E5%9D%97%E9%93%BE/</url>
+    <content><![CDATA[<h4 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h4><p><em>区块链</em>是一个共享的、不可更改的账本，可以促进在业务网络中记录交易和跟踪资产的过程。<em>资产</em>可以是有形的（例如房屋、汽车、现金、土地），也可以是无形的（例如知识产权、专利、版权、品牌）。几乎任何有价值的东西都可以在区块链网络上进行跟踪和交易，从而降低各方面的风险和成本。</p>
+<h5 id="比特币介绍"><a href="#比特币介绍" class="headerlink" title="比特币介绍"></a>比特币介绍</h5><p><code>区块链</code>技术是由比特币创造的，所以从介绍比特币的区块链开始。</p>
+<p>2008 年 10 月 31 日，中本聪向一个密码学邮件列表的所有成员发送了一个电子邮件，标题为“比特币：点对点电子现金论文”。</p>
+<p>比特币的三个组成部分为加密数字货币（cryptocurrency）、分布式账本（distributed ledger）、去中心网络（decentralized network），如下图所示</p>
+<p><img src="http://m.biancheng.net/uploads/allimg/190107/1-1Z10G3340AA.gif" alt="比特币的三个组成部分" style="zoom:67%;" /></p>
+<blockquote>
+<ul>
+<li>中本聪邮件见：<a href="https://www.mail-archive.com/cryptography@metzdowd.com/msg09959.html" target="_blank" rel="noopener">https://www.mail-archive.com/cryptography@metzdowd.com/msg09959.html</a></li>
+<li>比特币白皮书见：<a href="http://www.bitcoin.org/bitcoin.pdf" target="_blank" rel="noopener">www.bitcoin.org/bitcoin.pdf</a></li>
+</ul>
+</blockquote>
+<p>比特币系统包括三层：</p>
+<ul>
+<li>最上一层是比特币这种电子现金。这是整个系统的应用层。</li>
+<li>中间一层的功能是发行比特币与处理用户间的比特币转移。这一层也叫比特币协议（bitcoin protocol），是整个系统的应用协议层。</li>
+<li>最底层是比特币的分布式账本和去中心网络。这一层也被称为比特币<strong>区块链（bitcoin blockchain）</strong>，是整个系统的通用协议层。</li>
+</ul>
+<p><img src="http://m.biancheng.net/uploads/allimg/190107/1-1Z10G5134V26.gif" style="zoom:80%;" /></p>
+<p>比特币系统实现的去中心化的点对点电子现金，其发行与转账靠的是中间的比特币协议层。类比现实货币系统，这一层的角色相当于中央银行（发行货币）与银行（处理转账）等金融机构。</p>
+<p>“比特币协议”的这一层，又常被进一步细分为五层。它对应的是比特币协议和比特币区块链两个部分。在这个五层架构中，比特币协议层被细分为：应用层、激励层和共识层。</p>
+<p><img src="http://m.biancheng.net/uploads/allimg/190107/1-1Z10G35605934.gif" style="zoom:80%;" /></p>
+<p>在设计比特币系统时，创造性地把计算机算力竞争和经济激励相结合，形成了<code>工作量证明</code>（POW）共识机制，让挖矿计算机节点在计算竞争中完成了货币发行和记账功能，也完成了区块链账本和去中心网络的运维。</p>
+<h5 id="比特币的去中心化"><a href="#比特币的去中心化" class="headerlink" title="比特币的去中心化"></a>比特币的去中心化</h5><p>在互联网上的数字世界中，人们曾设计出各种各样的电子现金或数字现金方案。一直以来，数字世界中的“货币”有两种形式</p>
+<ul>
+<li>中心化的在线支付；例如 支付宝、微信支付</li>
+<li>中心化的计算机点数或互联网积分；例如 Q币、游戏币等互联网积分</li>
+</ul>
+<p>与现有中心化的电子现金系统（在线支付系统）相比，比特币是与之完全相反的：比特币的区块链系统是由<code>分布式账本</code>（即狭义的区块链）和去中心网络（点对点网络）组成的，形成链条的方式是工作量证明共识机制。最长链是由网络中的算力共同决定的，因而它是可信的，节点离开和加入依据的是最长链是可信的这一原则。这些组合起来形成了比特币系统。</p>
+<p><img src="http://m.biancheng.net/uploads/allimg/190107/1-1Z10G55130Y3.gif" style="zoom:80%;" /></p>
+<p><strong>1) 去中心化的点对点电子现金系统</strong></p>
+<p>比特币要做的是一个“点对点的电子现金系统”，发送方和接收方直接交易，它们之间不需要中介机构的介入。</p>
+<p>要去掉可信第三方等中介机构，就需要解决“双花问题”。在摘要中，中本聪给出了点对点网络的解决方案，并介绍了这个方案的核心——区块链。他并没有提到区块链（blockchain）这个词，但在论文中分别提到了区块（block）和链（chain）这两个概念。</p>
+<p><strong>2) 分布式账本</strong></p>
+<p>比特币的区块链是基于工作量证明形成的带时间戳、存储数据的数据块和由哈希指针连接成的链条。这个链条或者说账本以分布式的方式存储在比特币网络的各个节点上，因而也被称为分布式账本。</p>
+<p><strong>3) 工作量证明</strong></p>
+<p>比特币网络中的节点按照规则进行加密哈希计算，以竞争获得生成新区块的权利。节点在竞争获胜后就获得记账权，它生成区块成为最新区块后，就获得与新区块对应的挖矿奖励。</p>
+<p>工作量证明也是区块链账本的安全机制。如果不重做“工作量证明”所需的大量计算则此链条不可修改，这一共识机制保证了区块链上的数据的可靠性。</p>
+<p><strong>4) 最长链原则</strong></p>
+<p>在任何时刻，最长的链条是所有人都接受的最终记录。</p>
+<p>由于最长链是由网络中的主要算力完成的，因而只要它们不都与攻击者合作，那么它们生成的最长链就是可信的。这个原则被称为“最长链原则”。</p>
+<p><strong>5) 去中心网络</strong></p>
+<p>比特币的去中心网络的架构非常简洁，本身需要的基础设施很少。它可以在互联网网络上运行。计算机节点可以随时离开或加入这个去中心网络，在加入时它们只需遵守最长链原则即可。</p>
+<h5 id="比特币中区块链技术"><a href="#比特币中区块链技术" class="headerlink" title="比特币中区块链技术"></a>比特币中区块链技术</h5><h6 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h6><p>区块链是什么？一句话，它是一种特殊的分布式数据库。</p>
+<p>首先，区块链的主要作用是储存信息。任何需要保存的信息，都可以写入区块链，也可以从里面读取，所以它是“数据库”。</p>
+<p>其次，任何人都可以架设服务器，加入区块链网络，成为一个节点。区块链的世界里面，没有中心节点，每个节点都是平等的，都保存着整个数据库。你可以向任何一个节点，写入/读取数据，因为所有节点最后都会同步，保证区块链一致。</p>
+<p>因为人人都可以往里面写入数据，怎么才能保证数据是可信的呢？计算每个区块头的哈希来保证数据无法修改。</p>
+<h6 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h6><p>区块链由一个个<code>区块</code>（block）组成。区块很像数据库的记录，每次写入数据，就是创建一个区块。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017122703.png" style="zoom:50%;" /></p>
+<p>每个区块包含两个部分</p>
+<ul>
+<li>区块头（Head）：记录当前区块的特征值</li>
+<li>区块体（Body）：实际数据（比特币中的交易记录）</li>
+</ul>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017122704.png" style="zoom:70%;" /></p>
+<p>区块链的哈希长度是256位，这就是说，不管原始内容是什么，最后都会计算出一个256位的二进制数字。而且可以保证，只要原始内容不同，对应的哈希一定是不同的。</p>
+<p>区块与哈希是一一对应的，每个区块的哈希都是针对”区块头”（Head）计算的。也就是说，把区块头的各项特征值，按照顺序连接在一起，组成一个很长的字符串，再对这个字符串计算哈希。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Hash = SHA256( 区块头 )</span><br></pre></td></tr></table></figure>
+<p>区块头包含很多内容，其中有当前区块体的哈希，还有上一个区块的哈希。这意味着，如果当前区块体的内容变了，或者上一个区块的哈希变了，一定会引起当前区块的哈希改变。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2017/bg2017122705.png" style="zoom:80%;" /></p>
+<p>每个区块都连着上一个区块，这也是”区块链”这个名字的由来。</p>
+<h6 id="挖矿（mining）"><a href="#挖矿（mining）" class="headerlink" title="挖矿（mining）"></a>挖矿（mining）</h6><p>在候选区块的头部有一个 32 位的随机数区域，矿工需要反复调整随机数并计算，目标是让整个区块的哈希值小于一个“目标值”。如果试过所有的 32 位随机数可能性后，计算仍未能成功，那么就要改变币基（coinbase）的一个随机数，接着进行反复计算。计算哈希的过程叫做采矿，这需要大量的计算。</p>
+<p>这个计算是加密哈希计算（对比特币来说是 SHA-256），除了反复计算别无他法。</p>
+<p>矿工之间也在竞争，谁先算出哈希，谁就能第一个添加新区块进入区块链，从而享受这个区块的全部收益，而其他矿工将一无所获。</p>
+<h6 id="交易"><a href="#交易" class="headerlink" title="交易"></a>交易</h6><p><strong>一笔交易就是一个地址的比特币，转移到另一个地址。</strong>由于比特币的交易记录全部都是公开的，哪个地址拥有多少比特币，都是可以查到的。因此，支付方是否拥有足够的比特币，完成这笔交易，这是可以轻易验证的。</p>
+<p>比特币协议规定，申报交易的时候，除了交易金额，转出比特币的一方还必须提供以下数据。</p>
+<ul>
+<li>上一笔交易的 Hash（你从哪里得到这些比特币）</li>
+<li>本次交易双方的地址</li>
+<li>支付方的公钥</li>
+<li>支付方的私钥生成的数字签名</li>
+</ul>
+<h6 id="交易确认与区块链"><a href="#交易确认与区块链" class="headerlink" title="交易确认与区块链"></a>交易确认与区块链</h6><p>首先，所有的交易数据都会传送到矿工那里。矿工负责把这些交易写入区块链。</p>
+<p>根据比特币协议，一个区块的大小最大是 1MB，而一笔交易大概是500字节左右，因此一个区块最多可以包含2000多笔交易。矿工负责把这2000多笔交易打包在一起，组成一个区块，然后计算这个区块的哈希。</p>
+<h6 id="点对点网络"><a href="#点对点网络" class="headerlink" title="点对点网络"></a>点对点网络</h6><p>比特币是一个全世界的开放网络，只要你有服务器，就能加入这个网络，成为一个节点。每个节点都包含了整个区块链（目前大概 100多 GB），并且节点之间时刻不停地在同步信息。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2018/bg2018010408.png" style="zoom:67%;" /></p>
+<p>当你发生了一笔支付，你所在的节点就会把这笔交易告诉另一个节点，直至传遍整个网络。矿工从网上收集各种新发生的交易，将它们打包写入区块链。一旦写入成功， 矿工所在节点的区块链，就成为最新版本，其他节点都会来复制新增的区块，保证全网的区块链都是一致的。</p>
+<h5 id="P2P交易原理"><a href="#P2P交易原理" class="headerlink" title="P2P交易原理"></a>P2P交易原理</h5><p>比特币的交易是一种无需信任中介参与的<code>P2P</code>（Peer-to-peer）交易。</p>
+<p>传统的电子交易，交易双方必须通过银行这样的信任机构作为中介，这样可以保证交易的安全性，因为银行记录了交易双方的账户资金，能保证在一笔交易中，要么保证成功，要么交易无效，不存在一方到账而另一方没有付款的情况。</p>
+<p>但是在比特币这种去中心化的P2P网络中，并没有一个类似银行这样的信任机构存在，要想在两个节点之间达成交易，就必须实现一种在零信任的情况下安全交易的机制。</p>
+<h6 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h6><p>在比特币交易中，付款方就是通过数字签名来证明自己拥有某一笔比特币，并且，要把这笔比特币转移给指定的收款方。</p>
+<p>使用签名是为了验证某个声明确实是由某个人做出的。例如，在付款合同中签名，可以通过验证笔迹的方式核对身份。</p>
+<p>而在计算机中，用密码学理论设计的数字签名算法比验证笔迹更加可信。使用数字签名时，每个人都可以自己生成一个秘钥对，这个秘钥对包含一个<code>私钥</code>和一个<code>公钥</code>：私钥被称为Secret Key或者Private Key，私钥必须严格保密，不能泄漏给其他人；公钥被称为Public Key，可以公开给任何人。</p>
+<blockquote>
+<p>比特币采用的ECDSA签名算法需要一个私钥和公钥组成的秘钥对：私钥本质上就是一个1～2256的随机数，公钥是由私钥根据ECDSA算法推算出来的，通过私钥可以很容易推算出公钥，所以不必保存公钥，但是，通过公钥无法反推私钥，只能暴力破解。</p>
+</blockquote>
+<p>比特币使用数字签名保证零信任的可靠P2P交易：</p>
+<ul>
+<li>私钥是花费比特币的唯一手段；</li>
+<li>钱包软件是用来帮助用户管理私钥；</li>
+<li>所有交易被记录在区块链中，可以通过公钥查询所有交易信息。</li>
+</ul>
+<h6 id="比特币网络"><a href="#比特币网络" class="headerlink" title="比特币网络"></a>比特币网络</h6><p>比特币的 P2P 网络基于 TCP 构建，主网默认通信端口为 8333。</p>
+<p>以太坊的 P2P 网络则与比特币不太相同，以太坊 P2P 网络是一个完全加密的网络，提供 UDP 和 TCP 两种连接方式，主网默认 TCP 通信端口是 30303，推荐的 UDP 发现端口为 30301。</p>
+<p>比特币全节点组成的网络是一种全分布式的拓扑结构，节点与节点之间的传输过程更接近“泛洪算法”，即：交易从某个节点产生，接着广播到临近节点，临近节点一传十十传百，直至传播到全网。</p>
+<blockquote>
+<p>如何加入区块链网络？</p>
+</blockquote>
+<p>如果节点A是第一次连入比特币网络，那它首先会通过一种算法找到距离它最近的一个网络节点。</p>
+<p>节点将一条包含自身IP地址的消息发送给相邻节点，相邻的节点再将这条消息向与自己连接的节点进行分发广播，以此类推，最终导致新节点的IP地址在全网进行分发，每个网络节点都知道节点A的地址，可以与之建立直接连接。</p>
+<blockquote>
+<p>节点A 如何找到其他节点？</p>
+</blockquote>
+<p>节点A在找到相邻最近的节点之后，还会向与它相邻的节点索要它们已知节点的IP地址列表，拿到这些节点的IP地址列表之后，节点A便可以主动与这些节点建立直接的连接。</p>
+<blockquote>
+<p> 比特币网络中不同节点的数据如何同步？</p>
+</blockquote>
+<p>比特币网络中的节点在连接到相邻的节点之后，首先会和相邻的节点同步数据，然后再去和更多的节点进行数据交换和同步。</p>
+<p>在节点与节点之间进行数据同步的过程中会根据一个<code>哈希值</code>来判断谁的数据为最新的数据。</p>
+<p>如果节点发现本身的数据不是最新的，就会寻找拥有最新数据的节点进行下载。如果发现自己的数据为最新数据，则会告诉其他节点需要从它这里补充数据。其他的节点下载数据并验证通过之后，将会更新到自己的本地数据中。</p>
+<p>通过这种方式能保证网络中的所有节点都能及时得到最新数据。</p>
+<p>参考：</p>
+<p><a href="https://www.ibm.com/cn-zh/topics/what-is-blockchain" target="_blank" rel="noopener">IBM《区块链傻瓜书》</a></p>
+<p><a href="www.bitcoin.org/bitcoin.pdf">比特币白皮书</a></p>
+]]></content>
+      <categories>
+        <category>web</category>
+      </categories>
   </entry>
 </search>
